@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:report": "concurrently -n NEXT,TS -c magenta,cyan \"next dev\" \"tsc --noEmit --incremental --preserveWatchOutput --pretty --watch\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,6 +22,7 @@
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "autoprefixer": "^10.4.14",
+    "concurrently": "^8.0.1",
     "eslint": "^8.39.0",
     "eslint-config-next": "^13.4.1",
     "eslint-config-prettier": "^8.8.0",
