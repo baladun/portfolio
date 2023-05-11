@@ -2,18 +2,12 @@
 
 import Icon from '@icon-park/react/es/all';
 import { IconParkProps } from './types';
-import { useEffect, useState } from 'react';
+import { NoSsr } from '@/helpers/NoSsr';
 
 export function IconPark({ ...rest }: IconParkProps) {
-  const [hasMounted, setHasMounted] = useState(false);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  if (!hasMounted) {
-    return <span className="inline-block w-[1em]"></span>;
-  }
-
-  return <Icon {...rest} />;
+  return (
+    <NoSsr fallback={<span className="inline-block w-[1em]"></span>}>
+      <Icon {...rest} />
+    </NoSsr>
+  );
 }
