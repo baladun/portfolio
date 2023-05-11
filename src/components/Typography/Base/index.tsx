@@ -7,6 +7,7 @@ export function Base({
   kind,
   weight,
   color,
+  uppercase,
   className,
   children,
   ...rest
@@ -15,7 +16,8 @@ export function Base({
     getFamilyCssClass(kind), //
     getWeightCssClass(weight),
     getColorCssClass(color),
-    className
+    uppercase ? 'uppercase' : '',
+    className,
   );
 
   return (

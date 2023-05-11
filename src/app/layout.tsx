@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: LayoutRouteProps) {
-  const classNames = classnames(montserratFont.variable, madreRoseFont.variable);
+  const classNames = classnames(montserratFont.variable, madreRoseFont.variable, 'bg-snow', 'antialiased');
 
   return (
     <html lang="en">

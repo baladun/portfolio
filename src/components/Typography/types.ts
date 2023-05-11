@@ -4,4 +4,5 @@ export interface TypographyProps extends PropsWithChildren, HTMLAttributes<HTMLE
   kind?: 'primary' | 'secondary';
   weight?: 'thin' | 'extralight' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
   color?: 'black' | 'snow' | 'inherit' | 'current';
+  uppercase?: boolean;
 }
