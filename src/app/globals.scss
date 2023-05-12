@@ -1,0 +1,15 @@
+@use 'src/styles/utils' as utils;
+@import '@icon-park/react/styles/index.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .underline-custom-animated {
+    @include utils.underline-custom-animated()
+  }
+  .underline-custom-active {
+    @include utils.underline-custom-active()
+  }
+}

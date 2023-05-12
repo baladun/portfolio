@@ -11,7 +11,7 @@ export function Logo({ size, className, ...rest }: LogoProps) {
   );
   const textClassNames = classnames(
     'block', //
-    size === 'md' ? '!text-xl' : '!text-5xl',
+    size === 'md' ? '!text-xl/6' : '!text-5xl',
   );
   const subtextClassNames = classnames(
     'block', //

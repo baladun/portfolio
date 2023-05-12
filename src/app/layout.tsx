@@ -1,4 +1,4 @@
-import './globals.css';
+import './globals.scss';
 import classnames from 'classnames';
 import { madreRoseFont, montserratFont } from '@/app/fonts';
 import { LayoutRouteProps } from '@/types';

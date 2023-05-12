@@ -5,14 +5,12 @@ import { Base } from '../Base';
 
 export function Text({
   size = 'base', //
-  hoverUnderline,
   className,
   children,
   ...rest
 }: TextProps) {
   const classNames = classnames(
     getSizeCssClass(size), //
-    hoverUnderline && 'hover:underline underline-offset-4',
     className,
   );
 
@@ -26,3 +24,6 @@ export function Text({
     </Base>
   );
 }
+
+export type { TextProps };
+export { getSizeCssClass };
