@@ -1,12 +1,12 @@
-import { HTMLAttributes, PropsWithChildren, ReactNode } from 'react';
+import { ButtonHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
-export interface ButtonProps extends PropsWithChildren, HTMLAttributes<HTMLElement> {
-  type?: 'filled' | 'bordered' | 'text';
+export interface ButtonProps extends PropsWithChildren, ButtonHTMLAttributes<HTMLButtonElement> {
+  kind?: 'filled' | 'bordered' | 'text';
   color?: 'black' | 'orange' | 'brown';
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   icon?: ReactNode;
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
   loading?: boolean;
-  htmlType?: 'button' | 'submit' | 'reset';
+  type?: 'button' | 'submit' | 'reset';
 }

@@ -6,14 +6,14 @@ import { getAppearance, getDimensions, getDisabled, getFocus } from './utils';
 import { Children } from 'react';
 
 export function Button({
-  type = 'filled', //
+  kind = 'filled', //
   color = 'orange',
   size = 'md',
   icon,
   iconPosition = 'start',
   disabled,
   loading,
-  htmlType = 'button',
+  type = 'button',
   className,
   children,
   ...rest
@@ -25,8 +25,8 @@ export function Button({
   const classNames = classnames(
     'rounded-[0.5em]', //
     'font-normal',
-    getDimensions(size, type, iconOnly),
-    getAppearance(type, color),
+    getDimensions(size, kind, iconOnly),
+    getAppearance(kind, color),
     getFocus(color),
     disabled ? getDisabled() : '',
     className,
@@ -36,8 +36,6 @@ export function Button({
     <button
       {...rest}
       className={classNames}
-      disabled={disabled}
-      type={htmlType}
     >
       {icon && iconPosition === 'start' && <span className={iconAndContent ? 'pr-[0.5em]' : ''}>{icon}</span>}
 

@@ -1,6 +1,6 @@
 import { ButtonProps } from './types';
 
-type Type = Required<ButtonProps>['type'];
+type Kind = Required<ButtonProps>['kind'];
 type Size = Required<ButtonProps>['size'];
 type Color = Required<ButtonProps>['color'];
 
@@ -37,18 +37,18 @@ const ringColorByColor: ByColor = {
   brown: 'focus:ring-brown-100',
 };
 
-export const getDimensions = (size: Size, type: Type, iconOnly: boolean) => {
-  const py = type === 'bordered' ? 'py-[calc(0.5em-1px)]' : 'py-[0.5em]';
-  const pxIconOnly = iconOnly ? (type === 'bordered' ? 'px-[calc((1lh+1em)/2-0.5em-1px)]' : 'px-[calc((1lh+1em)/2-0.5em)]') : '';
-  const pxDefault = type === 'bordered' ? 'px-[calc(1em-1px)]' : 'px-[1em]';
+export const getDimensions = (size: Size, kind: Kind, iconOnly: boolean) => {
+  const py = kind === 'bordered' ? 'py-[calc(0.5em-1px)]' : 'py-[0.5em]';
+  const pxIconOnly = iconOnly ? (kind === 'bordered' ? 'px-[calc((1lh+1em)/2-0.5em-1px)]' : 'px-[calc((1lh+1em)/2-0.5em)]') : '';
+  const pxDefault = kind === 'bordered' ? 'px-[calc(1em-1px)]' : 'px-[1em]';
 
   return `${fontBySize[size]} ${py} ${pxIconOnly || pxDefault}`;
 };
 
-export const getAppearance = (type: Type, color: Color) => {
+export const getAppearance = (kind: Kind, color: Color) => {
   let appearance: string;
 
-  switch (type) {
+  switch (kind) {
     case 'filled':
       appearance = `text-snow ${filledByColor[color]}`;
       break;
