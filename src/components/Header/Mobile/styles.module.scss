@@ -1,0 +1,17 @@
+.modal {
+  &Enter {
+    @apply opacity-0;
+
+    &Active {
+      @apply opacity-100 transition-opacity;
+    }
+  }
+
+  &Exit {
+    @apply opacity-100;
+
+    &Active {
+      @apply opacity-0 transition-opacity;
+    }
+  }
+}

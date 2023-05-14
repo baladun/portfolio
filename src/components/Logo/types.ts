@@ -1,5 +1,5 @@
-import { HTMLAttributes } from 'react';
+import { AnchorHTMLAttributes, HTMLAttributes } from 'react';
 
-export interface LogoProps extends HTMLAttributes<HTMLDivElement> {
+export interface LogoProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   size: 'md' | 'lg';
 }

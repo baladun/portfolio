@@ -1,12 +1,14 @@
 import { Typography } from '@/components/Typography';
 import { LogoProps } from './types';
 import classnames from 'classnames';
+import Link from 'next/link';
 
 const { Text } = Typography;
 
 export function Logo({ size, className, ...rest }: LogoProps) {
   const rootClassNames = classnames(
     'max-w-min', //
+    'pointer',
     className,
   );
   const textClassNames = classnames(
@@ -20,8 +22,9 @@ export function Logo({ size, className, ...rest }: LogoProps) {
   );
 
   return (
-    <div
+    <Link
       {...rest}
+      href="/"
       className={rootClassNames}
     >
       <Text
@@ -42,6 +45,6 @@ export function Logo({ size, className, ...rest }: LogoProps) {
       >
         photogrApher
       </Text>
-    </div>
+    </Link>
   );
 }

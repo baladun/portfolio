@@ -12,6 +12,7 @@ export function NavLink(props: NavLinkProps) {
   const classNames = classnames(
     getSizeCssClass(size), //
     hoverUnderline ? 'underline-custom-animated' : '',
+    'cursor-pointer',
     className,
   );
 
