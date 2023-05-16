@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DB_PRISMA_URL") // uses connection pooling
+  directUrl         = env("DB_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("DB_URL_NON_POOLING") // used for migrations
+}
+
+model Category {
+  id           Int     @id @default(autoincrement())
+  name         String  @db.VarChar()
+  albums       Album[]
+  coverImageId Int?    @unique @map("cover_image_id")
+  coverImage   Image?  @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
+
+  @@map("category")
+}
+
+model Album {
+  id            Int      @id @default(autoincrement())
+  name          String   @db.VarChar()
+  description   String?
+  categoryId    Int      @map("category_id")
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  photos        Photo[]
+  coverImageId  Int?     @unique @map("cover_image_id")
+  coverImage    Image?   @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
+  showcaseOrder Int?     @unique @map("showcase_order")
+
+  @@map("album")
+}
+
+model Photo {
+  id      Int   @id @default(autoincrement())
+  imageId Int   @unique @map("image_id")
+  image   Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  albumId Int   @map("album_id")
+  album   Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  order   Int
+
+  @@map("photo")
+}
+
+model Image {
+  id       Int       @id @default(autoincrement())
+  mime     String    @db.VarChar(24)
+  Category Category?
+  Album    Album?
+  Photo    Photo?
+
+  @@map("image")
+}
