@@ -16,8 +16,9 @@ model Category {
   id           Int     @id @default(autoincrement())
   name         String  @db.VarChar()
   albums       Album[]
-  coverImageId Int?    @unique @map("cover_image_id")
+  coverImageId String? @unique @map("cover_image_id")
   coverImage   Image?  @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
+  order        Int
 
   @@map("category")
 }
@@ -29,30 +30,35 @@ model Album {
   categoryId    Int      @map("category_id")
   category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   photos        Photo[]
-  coverImageId  Int?     @unique @map("cover_image_id")
+  coverImageId  String?  @unique @map("cover_image_id")
   coverImage    Image?   @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
+  categoryOrder Int
   showcaseOrder Int?     @unique @map("showcase_order")
 
   @@map("album")
 }
 
 model Photo {
-  id      Int   @id @default(autoincrement())
-  imageId Int   @unique @map("image_id")
-  image   Image @relation(fields: [imageId], references: [id], onDelete: Cascade)
-  albumId Int   @map("album_id")
-  album   Album @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  id      Int    @id @default(autoincrement())
+  imageId String @unique @map("image_id")
+  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  albumId Int    @map("album_id")
+  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
   order   Int
 
   @@map("photo")
 }
 
 model Image {
-  id       Int       @id @default(autoincrement())
-  mime     String    @db.VarChar(24)
-  Category Category?
-  Album    Album?
-  Photo    Photo?
+  id          String    @id @default(uuid())
+  mime        String    @db.VarChar(24)
+  width       Int       @db.SmallInt
+  height      Int       @db.SmallInt
+  blurDataUrl Bytes     @map("blur_data_url")
+  createdAt   DateTime  @default(now()) @db.Timestamptz()
+  Category    Category?
+  Album       Album?
+  Photo       Photo?
 
   @@map("image")
 }
