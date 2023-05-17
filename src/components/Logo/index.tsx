@@ -1,4 +1,4 @@
-import { Typography } from '@/components/Typography';
+import { Typography } from '@/shared/Typography';
 import { LogoProps } from './types';
 import classnames from 'classnames';
 import Link from 'next/link';

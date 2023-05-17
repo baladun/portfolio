@@ -1,5 +1,5 @@
 import 'server-only';
-import { Typography } from '@/components/Typography';
+import { Typography } from '@/shared/Typography';
 import { SocialsProps } from './types';
 import { socialsConfig } from './utils';
 

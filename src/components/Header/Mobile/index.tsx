@@ -2,8 +2,8 @@
 
 import styles from './styles.module.scss';
 import { Logo } from '@/components/Logo';
-import { Button } from '@/components/Button';
-import { IconPark } from '@/components/IconPark';
+import { Button } from '@/shared/Button';
+import { IconPark } from '@/shared/IconPark';
 import { useRef, useState } from 'react';
 import classnames from 'classnames';
 import { MobileProps } from './types';

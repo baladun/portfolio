@@ -2,7 +2,7 @@
 
 import Icon from '@icon-park/react/es/all';
 import { IconParkProps } from './types';
-import { NoSsr } from '@/helpers/NoSsr';
+import { NoSsr } from '@/shared/NoSsr';
 
 export function IconPark({ ...rest }: IconParkProps) {
   return (

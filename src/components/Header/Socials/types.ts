@@ -1,4 +1,4 @@
-import { TextProps } from '@/components/Typography/Text';
+import { TextProps } from '@/shared/Typography/Text';
 import { HTMLAttributes } from 'react';
 
 export interface SocialsProps extends HTMLAttributes<HTMLElement> {

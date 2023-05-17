@@ -1,7 +1,7 @@
 'use client';
 
 import { HeaderProps } from './types';
-import { NoSsr } from '@/helpers/NoSsr';
+import { NoSsr } from '@/shared/NoSsr';
 import { useMatchMedia } from '@/hooks/useMatchMedia';
 
 export function Header({ desktop, mobile }: HeaderProps) {

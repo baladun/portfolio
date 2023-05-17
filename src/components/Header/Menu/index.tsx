@@ -1,7 +1,7 @@
 import 'server-only';
 import { MenuProps } from './types';
 import { menuConfig } from './utils';
-import { Typography } from '@/components/Typography';
+import { Typography } from '@/shared/Typography';
 import classnames from 'classnames';
 
 const { NavLink } = Typography;
