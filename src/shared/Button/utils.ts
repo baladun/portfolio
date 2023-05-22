@@ -19,12 +19,14 @@ const filledByColor: ByColor = {
   black: 'bg-black hover:enabled:bg-black-700',
   orange: 'bg-orange hover:enabled:bg-orange-700',
   brown: 'bg-brown hover:enabled:bg-brown-700',
+  snow: 'text-black! bg-snow hover:enabled:bg-snow-700',
 };
 
 const borderedByColor: ByColor = {
-  black: 'text-black hover:enabled:bg-black-50/70',
-  orange: 'text-orange hover:enabled:bg-orange-50/70',
-  brown: 'text-brown hover:enabled:bg-brown-50/70',
+  black: 'text-black hover:enabled:bg-black-700/10',
+  orange: 'text-orange hover:enabled:bg-orange-700/10',
+  brown: 'text-brown hover:enabled:bg-brown-700/10',
+  snow: 'text-snow hover:enabled:bg-snow-700/10',
 };
 
 const textByColor: ByColor = {
@@ -35,6 +37,7 @@ const ringColorByColor: ByColor = {
   black: 'focus:ring-black-100',
   orange: 'focus:ring-orange-100',
   brown: 'focus:ring-brown-100',
+  snow: 'focus:ring-snow-100',
 };
 
 export const getDimensions = (size: Size, kind: Kind, iconOnly: boolean) => {

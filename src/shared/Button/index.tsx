@@ -1,5 +1,6 @@
 'use client';
 
+import styles from './styles.module.scss';
 import { ButtonProps } from './types';
 import classnames from 'classnames';
 import { getAppearance, getDimensions, getDisabled, getFocus } from './utils';
@@ -32,16 +33,22 @@ export function Button({
     className,
   );
 
+  const iconClassNames = classnames(
+    styles.icon, //
+    iconPosition === 'start' && iconAndContent ? 'pr-[0.5em]' : '',
+    iconPosition === 'end' && iconAndContent ? 'pl-[0.5em]' : '',
+  );
+
   return (
     <button
       {...rest}
       className={classNames}
     >
-      {icon && iconPosition === 'start' && <span className={iconAndContent ? 'pr-[0.5em]' : ''}>{icon}</span>}
+      {icon && iconPosition === 'start' && <span className={iconClassNames}>{icon}</span>}
 
       {(contentOnly || iconAndContent) && <span>{children}</span>}
 
-      {icon && iconPosition === 'end' && <span className={iconAndContent ? 'pl-[0.5em]' : ''}>{icon}</span>}
+      {icon && iconPosition === 'end' && <span className={iconClassNames}>{icon}</span>}
     </button>
   );
 }
