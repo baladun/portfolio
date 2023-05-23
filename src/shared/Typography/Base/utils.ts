@@ -24,6 +24,12 @@ const textColorByColor: { [K in Required<TypographyProps>['color']]: string } = 
   current: 'text-current',
 };
 
+const textAlignByAlign: { [K in Required<TypographyProps>['align']]: string } = {
+  start: 'text-start',
+  center: 'text-center',
+  end: 'text-end',
+};
+
 export const getWeightCssClass = (weight: TypographyProps['weight']): string => {
   return weight ? fontWeightByWeight[weight] : fontWeightByWeight.normal;
 };
@@ -34,4 +40,8 @@ export const getFamilyCssClass = (kind: TypographyProps['kind']): string => {
 
 export const getColorCssClass = (color: TypographyProps['color']): string => {
   return color ? textColorByColor[color] : textColorByColor.black;
+};
+
+export const getAlignCssClass = (align: TypographyProps['align']): string => {
+  return align ? textAlignByAlign[align] : '';
 };

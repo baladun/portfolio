@@ -10,7 +10,7 @@ export function Menu({ color, dir = 'horizontal', className, ...rest }: MenuProp
   // active links
   const classNames = classnames(
     'flex', //
-    dir === 'horizontal' ? 'items-center justify-between gap-14' : 'flex-col gap-12',
+    dir === 'horizontal' ? 'items-center justify-between gap-10' : 'flex-col gap-12',
     className,
   );
 

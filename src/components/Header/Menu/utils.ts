@@ -1,16 +1,20 @@
 interface Config {
-  path: '/about' | '/categories' | '/faq' | '/contacts';
+  path: '/about' | '/albums' | '/categories' | '/faq' | '/contacts';
   text: string;
 }
 
 export const menuConfig: Config[] = [
   {
-    path: '/about',
-    text: 'About me',
+    path: '/albums',
+    text: 'albums',
   },
   {
     path: '/categories',
     text: 'categories',
+  },
+  {
+    path: '/about',
+    text: 'About me',
   },
   {
     path: '/faq',

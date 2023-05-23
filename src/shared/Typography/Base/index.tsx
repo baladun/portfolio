@@ -1,6 +1,6 @@
 import { BaseProps } from './types';
 import classnames from 'classnames';
-import { getColorCssClass, getFamilyCssClass, getWeightCssClass } from './utils';
+import { getAlignCssClass, getColorCssClass, getFamilyCssClass, getWeightCssClass } from './utils';
 import { forwardRef } from 'react';
 
 // eslint-disable-next-line react/display-name
@@ -12,6 +12,7 @@ export const Base = forwardRef<unknown, BaseProps>(
       weight,
       color,
       uppercase,
+      align,
       className,
       children,
       ...rest
@@ -23,6 +24,7 @@ export const Base = forwardRef<unknown, BaseProps>(
       getWeightCssClass(weight),
       getColorCssClass(color),
       uppercase ? 'uppercase' : '',
+      getAlignCssClass(align),
       className,
     );
 

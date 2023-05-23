@@ -5,6 +5,7 @@ export interface TypographySelfConfig {
   weight?: 'thin' | 'extralight' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
   color?: 'black' | 'snow' | 'inherit' | 'current';
   uppercase?: boolean;
+  align?: 'start' | 'center' | 'end';
 }
 
 export type TypographyProps = PropsWithChildren<TypographySelfConfig> & HTMLAttributes<HTMLElement>;
