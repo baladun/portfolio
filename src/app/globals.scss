@@ -6,6 +6,9 @@
 @tailwind utilities;
 
 @layer utilities {
+  .positioner {
+    @include utils.positioner();
+  }
   .underline-custom-animated {
     @include utils.underline-custom-animated()
   }

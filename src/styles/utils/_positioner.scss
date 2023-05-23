@@ -1,0 +1,19 @@
+@mixin positioner() {
+  @media (max-width: theme('screens.3xl')) {
+    padding-inline: 0;
+  }
+
+  @media (max-width: theme('screens.lg')) {
+    padding-inline: 1.5rem;
+  }
+
+  @screen lg {
+    padding-inline: 3rem;
+  }
+
+  @screen xl {
+    padding-inline: 5.375rem;
+  }
+
+  @apply max-w-screen-3xl mx-auto;
+}

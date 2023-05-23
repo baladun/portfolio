@@ -63,6 +63,11 @@ module.exports = {
         900: '#e44300',
       },
     },
+    extend: {
+      screens: {
+        '3xl': '1800px',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'), //

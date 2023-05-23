@@ -11,7 +11,7 @@ import { CSSTransition } from 'react-transition-group';
 
 export function Mobile({ menu, socials }: MobileProps) {
   const [isOpened, setIsOpened] = useState(false);
-  const headerRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef(null);
 
   const iconClassNames = classnames(
@@ -22,8 +22,8 @@ export function Mobile({ menu, socials }: MobileProps) {
 
   return (
     <>
-      <header
-        className={`relative z-[1] flex items-center justify-between px-6 py-[0.875rem] ${isOpened ? 'invert' : ''}`}
+      <div
+        className={`positioner relative z-[2] flex items-center justify-between px-6 py-[0.875rem] lg:hidden ${isOpened ? 'invert' : ''}`}
         ref={headerRef}
       >
         <Logo size="md" />
@@ -39,7 +39,7 @@ export function Mobile({ menu, socials }: MobileProps) {
           }
           onClick={() => setIsOpened(!isOpened)}
         />
-      </header>
+      </div>
 
       <CSSTransition
         nodeRef={dialogRef}
@@ -56,7 +56,7 @@ export function Mobile({ menu, socials }: MobileProps) {
         <div
           ref={dialogRef}
           style={{ paddingTop: `${headerRef.current?.clientHeight || 0}px` }}
-          className={`absolute left-0 top-0 h-screen w-screen bg-black px-6`}
+          className={`absolute left-0 top-0 z-[1] h-screen w-screen bg-black px-6`}
         >
           <div className="flex h-full w-max flex-col justify-between py-12 invert">
             <div onClick={() => setIsOpened(false)}>{menu}</div>
