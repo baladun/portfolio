@@ -34,10 +34,10 @@ const textByColor: ByColor = {
 };
 
 const ringColorByColor: ByColor = {
-  black: 'focus:ring-black-100',
-  orange: 'focus:ring-orange-100',
-  brown: 'focus:ring-brown-100',
-  snow: 'focus:ring-snow-100',
+  black: 'focus:ring-black-700/30',
+  orange: 'focus:ring-orange-700/30',
+  brown: 'focus:ring-brown-700/30',
+  snow: 'focus:ring-snow-700/30',
 };
 
 export const getDimensions = (size: Size, kind: Kind, iconOnly: boolean) => {
