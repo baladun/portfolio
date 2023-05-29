@@ -16,3 +16,14 @@
     @include utils.underline-custom-active()
   }
 }
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+  text-rendering: optimizeLegibility;
+}
