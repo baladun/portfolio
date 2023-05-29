@@ -1,7 +1,8 @@
 import * as IconSvgMap from './icons';
 import { IconSvgProps } from './types';
+import { memo } from 'react';
 
-export function IconSvg({ type }: IconSvgProps) {
+export const IconSvg = memo(function IconSvg({ type }: IconSvgProps) {
   const Icon = IconSvgMap[type];
 
   return (
@@ -13,4 +14,4 @@ export function IconSvg({ type }: IconSvgProps) {
       />
     </span>
   );
-}
+});

@@ -2,8 +2,15 @@ import { NavLinkExternalProps } from './types';
 import classnames from 'classnames';
 import { getSizeCssClass } from '../Text';
 import { Base } from '../Base';
+import { memo } from 'react';
 
-export function NavLinkExternal({ size = 'base', hoverUnderline, className, children, ...rest }: NavLinkExternalProps) {
+export const NavLinkExternal = memo(function NavLinkExternal({
+  size = 'base',
+  hoverUnderline,
+  className,
+  children,
+  ...rest
+}: NavLinkExternalProps) {
   const classNames = classnames(
     getSizeCssClass(size), //
     hoverUnderline ? 'underline-custom-animated' : '',
@@ -19,4 +26,4 @@ export function NavLinkExternal({ size = 'base', hoverUnderline, className, chil
       {children}
     </Base>
   );
-}
+});

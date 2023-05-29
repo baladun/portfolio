@@ -4,9 +4,9 @@ import styles from './styles.module.scss';
 import { ButtonProps } from './types';
 import classnames from 'classnames';
 import { getAppearance, getDimensions, getDisabled, getFocus } from './utils';
-import { Children } from 'react';
+import { Children, memo } from 'react';
 
-export function Button({
+export const Button = memo(function Button({
   kind = 'filled', //
   color = 'orange',
   size = 'md',
@@ -51,4 +51,4 @@ export function Button({
       {icon && iconPosition === 'end' && <span className={iconClassNames}>{icon}</span>}
     </button>
   );
-}
+});

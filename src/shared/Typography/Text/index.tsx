@@ -2,8 +2,9 @@ import { TextProps } from './types';
 import classnames from 'classnames';
 import { getSizeCssClass } from './utils';
 import { Base } from '../Base';
+import { memo } from 'react';
 
-export function Text({
+export const Text = memo(function Text({
   size = 'base', //
   className,
   children,
@@ -23,7 +24,7 @@ export function Text({
       {children}
     </Base>
   );
-}
+});
 
 export type { TextProps };
 export { getSizeCssClass };

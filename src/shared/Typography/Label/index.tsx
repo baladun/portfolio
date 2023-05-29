@@ -2,8 +2,9 @@ import { LabelProps } from './types';
 import classnames from 'classnames';
 import { getSizeCssClass } from './utils';
 import { Base } from '../Base';
+import { memo } from 'react';
 
-export function Label({
+export const Label = memo(function Label({
   size = 'sm', //
   className,
   children,
@@ -24,4 +25,4 @@ export function Label({
       {children}
     </Base>
   );
-}
+});
