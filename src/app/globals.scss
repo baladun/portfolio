@@ -26,4 +26,8 @@ html {
   text-size-adjust: 100%;
   touch-action: manipulation;
   text-rendering: optimizeLegibility;
+
+  &:has(dialog[open]) {
+    overflow: hidden;
+  }
 }
