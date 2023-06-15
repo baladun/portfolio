@@ -1,9 +1,19 @@
+@use 'src/styles/components' as components;
 @use 'src/styles/utils' as utils;
 @import '@icon-park/react/styles/index.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .button-group-horizontal {
+    @include components.button-group(map-get(components.$button-group-direction, horizontal));
+  }
+  .button-group-vertical {
+    @include components.button-group(map-get(components.$button-group-direction, vertical));
+  }
+}
 
 @layer utilities {
   .positioner {

@@ -1,0 +1,32 @@
+$button-group-direction: (horizontal: 'horizontal', vertical: 'vertical');
+
+@mixin button-group($direction) {
+  // if there is more than one item
+  &:has(> *:nth-child(2)) {
+    > *:not(:first-child):not(:last-child) {
+      @apply rounded-none;
+    }
+
+    @if ($direction == map-get($button-group-direction, horizontal)) {
+      > *:first-child {
+        @apply rounded-r-none;
+      }
+
+      > *:last-child {
+        @apply rounded-l-none;
+      }
+    } @else {
+      & {
+        @apply flex flex-col;
+      }
+
+      > *:first-child {
+        @apply rounded-b-none;
+      }
+
+      > *:last-child {
+        @apply rounded-t-none;
+      }
+    }
+  }
+}
