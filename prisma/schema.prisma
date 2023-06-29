@@ -54,7 +54,7 @@ model Image {
   mime        String    @db.VarChar(24)
   width       Int       @db.SmallInt
   height      Int       @db.SmallInt
-  blurDataUrl Bytes     @map("blur_data_url")
+  blurDataUrl String    @map("blur_data_url") @db.Text
   createdAt   DateTime  @default(now()) @db.Timestamptz()
   Category    Category?
   Album       Album?
