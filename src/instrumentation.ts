@@ -16,7 +16,9 @@ export function register() {
       GCP_PROJECT_ID: str(),
       GCP_CLIENT_EMAIL: email(),
       GCP_PRIVATE_KEY: str(),
-      GCP_BUCKET_NAME: str(),
+      NEXT_PUBLIC_GCP_BUCKET_NAME: str(),
+
+      NEXT_PUBLIC_HOST: url(),
     });
   }
 }

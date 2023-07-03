@@ -7,6 +7,7 @@ import { cloneElement, CSSProperties, useContext, useEffect, useRef, useState } 
 import { ScrollDirectionSwitch } from '@/components/ScrollDirectionSwitch';
 import { ScrollDirectionContext } from '@/context/ScrollDirectionContext';
 import { NoSsr } from '@/shared/NoSsr';
+import classnames from 'classnames';
 
 export function PageLayout({ heading, children }: PageLayoutProps) {
   const { scrollDirection } = useContext(ScrollDirectionContext);
@@ -15,7 +16,7 @@ export function PageLayout({ heading, children }: PageLayoutProps) {
 
   const overriddenHeading = cloneElement(heading, {
     ...heading.props,
-    className: `${heading.props.className} text-right leading-9 whitespace-nowrap`,
+    className: classnames('text-right leading-9 whitespace-nowrap', heading.props.className),
   });
 
   useEffect(() => {

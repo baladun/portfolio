@@ -1,8 +1,9 @@
 import './globals.scss';
 import classnames from 'classnames';
-import { madreRoseFont, montserratFont } from '@/app/fonts';
+import { madreRoseFont, montserratFont } from './fonts';
 import { LayoutRouteProps } from '@/types';
 import { Providers } from './Providers';
+import { Toastr } from '@/shared/Toastr';
 
 export const metadata = {
   title: 'Maxim Fadeev Photographer',
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: LayoutRouteProps) {
     <html lang="en">
       <body className={classNames}>
         <Providers>{children}</Providers>
+        <Toastr />
       </body>
     </html>
   );

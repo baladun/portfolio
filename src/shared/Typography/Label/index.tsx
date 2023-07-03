@@ -5,7 +5,8 @@ import { Base } from '../Base';
 import { memo } from 'react';
 
 export const Label = memo(function Label({
-  size = 'sm', //
+  size = 'xs', //
+  weight = 'medium',
   className,
   children,
   ...rest
@@ -19,6 +20,7 @@ export const Label = memo(function Label({
   return (
     <Base
       {...rest}
+      weight={weight}
       as="label"
       className={classNames}
     >

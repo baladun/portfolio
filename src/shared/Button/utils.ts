@@ -16,17 +16,17 @@ const fontBySize: BySize = {
 };
 
 const filledByColor: ByColor = {
-  black: 'bg-black hover:enabled:bg-black-700',
-  orange: 'bg-orange hover:enabled:bg-orange-700',
-  brown: 'bg-brown hover:enabled:bg-brown-700',
-  snow: 'text-black! bg-snow hover:enabled:bg-snow-700',
+  black: 'bg-black hover:enabled:bg-black-700 disabled:bg-black-700/30',
+  orange: 'bg-orange hover:enabled:bg-orange-700 disabled:bg-orange-700/30',
+  brown: 'bg-brown hover:enabled:bg-brown-700 disabled:bg-brown-700/30',
+  snow: 'text-black! bg-snow hover:enabled:bg-snow-700 disabled:bg-snow-700/30',
 };
 
 const borderedByColor: ByColor = {
-  black: 'text-black hover:enabled:bg-black-700/10',
-  orange: 'text-orange hover:enabled:bg-orange-700/10',
-  brown: 'text-brown hover:enabled:bg-brown-700/10',
-  snow: 'text-snow hover:enabled:bg-snow-700/10',
+  black: 'text-black hover:enabled:bg-black-700/10 disabled:text-black/30',
+  orange: 'text-orange hover:enabled:bg-orange-700/10 disabled:text-orange/30',
+  brown: 'text-brown hover:enabled:bg-brown-700/10 disabled:text-brown/30',
+  snow: 'text-snow hover:enabled:bg-snow-700/10 disabled:text-orange/30',
 };
 
 const textByColor: ByColor = {
@@ -53,7 +53,7 @@ export const getAppearance = (kind: Kind, color: Color) => {
 
   switch (kind) {
     case 'filled':
-      appearance = `text-snow ${filledByColor[color]}`;
+      appearance = `text-snow disabled:text-snow/70 ${filledByColor[color]}`;
       break;
     case 'bordered':
       appearance = `bg-transparent border border-solid ${borderedByColor[color]}`;
@@ -71,5 +71,5 @@ export const getFocus = (color: Color) => {
 };
 
 export const getDisabled = () => {
-  return `disabled:opacity-30 cursor-no-drop`;
+  return `cursor-no-drop`;
 };

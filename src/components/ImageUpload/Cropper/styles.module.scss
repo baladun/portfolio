@@ -1,0 +1,7 @@
+.cropper {
+  :global {
+    .ReactCrop__crop-selection {
+      animation: none !important;
+    }
+  }
+}

@@ -5,6 +5,7 @@ import { ButtonProps } from './types';
 import classnames from 'classnames';
 import { getAppearance, getDimensions, getDisabled, getFocus } from './utils';
 import { Children, forwardRef, memo } from 'react';
+import { Loading } from './Loading';
 
 export const Button = memo(
   forwardRef<HTMLButtonElement, ButtonProps>(
@@ -34,7 +35,7 @@ export const Button = memo(
         getDimensions(size, kind, iconOnly),
         getAppearance(kind, color),
         getFocus(color),
-        disabled ? getDisabled() : '',
+        disabled || loading ? getDisabled() : '',
         className,
       );
 
@@ -48,6 +49,8 @@ export const Button = memo(
         <button
           ref={ref}
           {...rest}
+          type={type}
+          disabled={disabled || loading}
           className={classNames}
         >
           {icon && iconPosition === 'start' && <span className={iconClassNames}>{icon}</span>}
@@ -55,6 +58,15 @@ export const Button = memo(
           {(contentOnly || iconAndContent) && <span>{children}</span>}
 
           {icon && iconPosition === 'end' && <span className={iconClassNames}>{icon}</span>}
+
+          {loading && (
+            <div className="relative -top-full h-full">
+              <Loading
+                className="absolute left-0 top-0 h-full w-full"
+                kind={kind}
+              />
+            </div>
+          )}
         </button>
       );
     },

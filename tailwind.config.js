@@ -62,6 +62,18 @@ module.exports = {
         800: '#e85600',
         900: '#e44300',
       },
+      red: {
+        50: '#fbe5e5',
+        100: '#f5bebe',
+        200: '#ee9393',
+        300: '#e76767',
+        400: '#e14747',
+        DEFAULT: '#dc2626',
+        600: '#d82222',
+        700: '#d31c1c',
+        800: '#ce1717',
+        900: '#c50d0d',
+      },
     },
     extend: {
       screens: {
@@ -71,6 +83,8 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'), //
-    require('@tailwindcss/forms'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
   ],
 };

@@ -13,6 +13,6 @@ export const bucket =
       client_email: process.env.GCP_CLIENT_EMAIL,
       private_key: process.env.GCP_PRIVATE_KEY,
     },
-  }).bucket(process.env.GCP_BUCKET_NAME as string);
+  }).bucket(process.env.NEXT_PUBLIC_GCP_BUCKET_NAME as string);
 
 if (process.env.NODE_ENV !== 'production') globalForBucket.bucket = bucket;

@@ -8,4 +8,4 @@ export interface TypographySelfConfig {
   align?: 'start' | 'center' | 'end';
 }
 
-export type TypographyProps = PropsWithChildren<TypographySelfConfig> & HTMLAttributes<HTMLElement>;
+export type TypographyProps<Attributes = HTMLAttributes<HTMLElement>> = PropsWithChildren<TypographySelfConfig> & Attributes;

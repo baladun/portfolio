@@ -14,16 +14,13 @@ export function Mobile({ menu, socials }: MobileProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef(null);
 
-  const iconClassNames = classnames(
-    isOpened ? 'rotate-[45deg]' : 'rotate-0', //
-    'transition-transform',
-    'duration-300',
-  );
-
   return (
     <>
       <div
-        className={`positioner relative z-[2] flex items-center justify-between px-6 py-[0.875rem] lg:hidden ${isOpened ? 'invert' : ''}`}
+        className={classnames(
+          'positioner relative z-[2] flex items-center justify-between px-6 py-[0.875rem] lg:hidden',
+          isOpened ? 'invert' : '',
+        )}
         ref={headerRef}
       >
         <Logo size="md" />
@@ -34,7 +31,7 @@ export function Mobile({ menu, socials }: MobileProps) {
           icon={
             <IconPark
               type="Plus"
-              className={iconClassNames}
+              className={classnames('transition-transform duration-300', isOpened ? 'rotate-[45deg]' : 'rotate-0')}
             />
           }
           onClick={() => setIsOpened(!isOpened)}
