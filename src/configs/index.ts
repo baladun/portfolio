@@ -1,3 +1,4 @@
 export { localStorageKeys } from './local-storage-keys';
-export { validationMessages } from './validation-messages';
+export { validationMsg } from './validation-msg';
+export { toastMsg } from './toast-msg';
 export { tailwindConfig } from './tailwind-config';

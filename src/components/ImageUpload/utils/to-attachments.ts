@@ -20,7 +20,7 @@ export async function toAttachments(
     const blob = await modifyImage({ image, canvas, crop, rotation, mime });
 
     return {
-      id: randomInteger(1, 10000),
+      id: String(randomInteger(1, 10000)),
       raw,
       modification: {
         crop,

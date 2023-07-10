@@ -1,10 +1,8 @@
 import { CategoryAddDialogProps } from './types';
-import { Form } from '@/shared/Form';
-import { Control } from '@/shared/Form/Control';
-import { InputText } from '@/shared/Form/InputText';
+import { Control, Form, InputText } from '@/shared/Form';
 import { Dialog } from '@/shared/Dialog';
 import { Controller, useForm } from 'react-hook-form';
-import { newCategoryFormValidationSchema, NewCategoryFormValue } from './utils';
+import { addCategoryFormValidationSchema, AddCategoryFormValue } from './utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { submitEvent } from '@/utils';
@@ -19,9 +17,9 @@ export function CategoryAddDialog({ open, onOk, onCancel }: CategoryAddDialogPro
     reset,
     getValues,
     formState: { errors },
-  } = useForm<NewCategoryFormValue>({
+  } = useForm<AddCategoryFormValue>({
     mode: 'onBlur',
-    resolver: yupResolver(newCategoryFormValidationSchema),
+    resolver: yupResolver(addCategoryFormValidationSchema),
   });
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
@@ -55,7 +53,7 @@ export function CategoryAddDialog({ open, onOk, onCancel }: CategoryAddDialogPro
   return (
     <Dialog
       open={open}
-      headingText="New Category"
+      headingText="Add Category"
       loading={loading}
       onOk={handleOk}
       onCancel={handleCancel}

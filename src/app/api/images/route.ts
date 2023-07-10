@@ -1,16 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { bucket } from '@/bucket';
 import { nanoid } from 'nanoid';
 import { getPlaiceholder } from 'plaiceholder';
 import { db } from '@/db';
-import { Exception } from '@/api';
-import { exceptionMsg } from '../../exception-msg';
+import { commonErrorRes, createdRes, noPayloadErrorRes } from '../responses';
+import { toImageDto } from '@/api';
 
 export async function POST(req: NextRequest) {
   const arrayBuffer = await req.arrayBuffer();
 
   if (!arrayBuffer.byteLength) {
-    return NextResponse.json(exceptionMsg.NO_PAYLOAD, { status: 400 });
+    return noPayloadErrorRes();
   }
 
   const buffer = Buffer.from(arrayBuffer);
@@ -39,8 +39,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(image, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json(new Exception(err.message || exceptionMsg.NOT_EXECUTE), { status: 400 });
+    return createdRes(toImageDto(image));
+  } catch (e: any) {
+    return commonErrorRes(e);
   }
 }

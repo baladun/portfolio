@@ -3,6 +3,9 @@ import { Typography } from '@/shared/Typography';
 import { Cover } from '@/components/Cover';
 import { CategoryAdd } from '@/components/CategoryAdd';
 import { getCategories } from '@/api';
+import { CategoryMove } from '@/components/CategoryMove';
+import { CategoryDelete } from '@/components/CategoryDelete';
+import { CategoryEdit } from '@/components/CategoryEdit';
 
 const { Heading, Text } = Typography;
 
@@ -18,6 +21,10 @@ export default async function Page() {
           color="snow"
         >
           categorIes / <wbr /> <span>alex andr</span>
+          <CategoryMove
+            categories={categories}
+            className="ml-2 align-top"
+          />
         </Heading>
       }
     >
@@ -33,6 +40,12 @@ export default async function Page() {
             >
               {el.name}
             </Text>
+          }
+          actions={
+            <>
+              <CategoryEdit category={el} />
+              <CategoryDelete category={el} />
+            </>
           }
         />
       ))}

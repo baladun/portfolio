@@ -44,3 +44,6 @@ export function CategoryAdd() {
     </>
   );
 }
+
+export { addCategoryFormValidationSchema } from './utils';
+export type { AddCategoryFormValue } from './utils';

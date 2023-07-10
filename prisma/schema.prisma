@@ -13,12 +13,13 @@ datasource db {
 }
 
 model Category {
-  id           Int     @id @default(autoincrement())
-  name         String  @db.VarChar()
+  id           Int      @id @default(autoincrement())
+  name         String   @db.VarChar()
   albums       Album[]
-  coverImageId String? @unique @map("cover_image_id")
-  coverImage   Image?  @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
+  coverImageId String?  @unique @map("cover_image_id")
+  coverImage   Image?   @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
   order        Int
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
   @@map("category")
 }
@@ -32,19 +33,21 @@ model Album {
   photos        Photo[]
   coverImageId  String?  @unique @map("cover_image_id")
   coverImage    Image?   @relation(fields: [coverImageId], references: [id], onDelete: SetNull)
-  categoryOrder Int
+  categoryOrder Int      @map("category_order")
   showcaseOrder Int?     @unique @map("showcase_order")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
   @@map("album")
 }
 
 model Photo {
-  id      Int    @id @default(autoincrement())
-  imageId String @unique @map("image_id")
-  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
-  albumId Int    @map("album_id")
-  album   Album  @relation(fields: [albumId], references: [id], onDelete: Cascade)
-  order   Int
+  id        Int      @id @default(autoincrement())
+  imageId   String   @unique @map("image_id")
+  image     Image    @relation(fields: [imageId], references: [id], onDelete: Cascade)
+  albumId   Int      @map("album_id")
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  order     Int
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
 
   @@map("photo")
 }
@@ -55,7 +58,7 @@ model Image {
   width       Int       @db.SmallInt
   height      Int       @db.SmallInt
   blurDataUrl String    @map("blur_data_url") @db.Text
-  createdAt   DateTime  @default(now()) @db.Timestamptz()
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz()
   Category    Category?
   Album       Album?
   Photo       Photo?

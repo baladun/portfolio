@@ -24,6 +24,7 @@ export const ImageUpload = memo(
     {
       multiple = false, //
       shape = 'rectangle',
+      preloaded,
       className,
       onUpdate,
       ...rest
@@ -35,6 +36,12 @@ export const ImageUpload = memo(
     const [selectedAttachment, setSelectedAttachment] = useState<Attachment>();
     const debouncedSelectedAttachment = useDebounce(selectedAttachment, 500);
     const [filesInProcess, setFilesInProcess] = useState(false);
+
+    useEffect(() => {
+      if (preloaded) {
+        addFiles(Array.isArray(preloaded) ? preloaded : [preloaded]);
+      }
+    }, [preloaded]);
 
     const addFiles = async (files: File[]) => {
       setFilesInProcess(true);

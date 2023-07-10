@@ -13,3 +13,6 @@ export const Form = memo(
     );
   }),
 );
+
+export { Control } from './Control';
+export { InputText } from './InputText';

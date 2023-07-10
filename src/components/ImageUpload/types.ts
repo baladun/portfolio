@@ -4,6 +4,7 @@ import { HTMLAttributes } from 'react';
 export interface ImageUploadProps extends HTMLAttributes<HTMLDivElement> {
   multiple?: boolean;
   shape?: 'square' | 'rectangle';
+  preloaded?: File | File[];
   onUpdate?: (value?: Blob[] | null) => void;
 }
 
@@ -14,7 +15,7 @@ export enum AspectRatios {
 }
 
 export interface Attachment {
-  id: number;
+  id: string;
   raw: {
     dataUrl: string;
     mime: string;

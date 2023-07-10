@@ -5,14 +5,17 @@ import Image from 'next/image';
 import { Frame } from '@/components/Frame';
 import { getPublicObjectUrl } from '@/utils';
 import { IconPark } from '@/shared/IconPark';
+import { ImagePlaceholder } from '@/shared/ImagePlaceholder';
 
-export function Cover({ image, subtitle, className, ...rest }: CoverProps) {
+export function Cover({ image, subtitle, actions, className, ...rest }: CoverProps) {
   return (
     <div
       {...rest}
       className={classnames('max-w-max', className)}
     >
       <Frame className="mb-4 lg:mb-6">
+        {actions && <div className="absolute right-0 top-0 [&:not(:empty)]:p-3 [&>*:not(:last-child)]:mr-2">{actions}</div>}
+
         {image ? (
           <Image
             src={getPublicObjectUrl(image.id)}
@@ -24,10 +27,7 @@ export function Cover({ image, subtitle, className, ...rest }: CoverProps) {
             className="aspect-square cursor-pointer object-cover"
           />
         ) : (
-          <IconPark
-            type="Picture"
-            className="text-[25rem] text-orange"
-          />
+          <ImagePlaceholder />
         )}
       </Frame>
 

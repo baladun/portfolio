@@ -1,5 +1,5 @@
-import { Attachment } from '../types';
 import { PropsWithChildren } from 'react';
+import { Attachment } from '../types';
 
 export interface RawPreviewsProps extends PropsWithChildren {
   attachments: Attachment[];

@@ -1,15 +1,15 @@
 import { array, InferType, object, string } from 'yup';
-import { validationMessages } from '@/configs';
+import { validationMsg } from '@/configs';
 import { Expand } from '@/types';
 
-export const newCategoryFormValidationSchema = object({
-  name: string().required(validationMessages.REQUIRED),
+export const addCategoryFormValidationSchema = object({
+  name: string().required(validationMsg.REQUIRED),
   coverImage: array().nullable(),
 });
 
 // export type NewCategoryFormValue = InferType<typeof newCategoryFormValidationSchema>;
-export type NewCategoryFormValue = Expand<
-  Omit<InferType<typeof newCategoryFormValidationSchema>, 'coverImage'> & {
+export type AddCategoryFormValue = Expand<
+  Omit<InferType<typeof addCategoryFormValidationSchema>, 'coverImage'> & {
     coverImage?: Blob[];
   }
 >;
