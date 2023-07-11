@@ -2,34 +2,34 @@
 
 import { Button } from '@/shared/Button';
 import { IconPark } from '@/shared/IconPark';
-import { CategoryMoveProps } from './types';
+import { AlbumMoveProps } from './types';
 import { BottomSheet } from '@/shared/BottomSheet';
 import { useEffect, useState } from 'react';
 import { PreviewItem, Previews } from '@/components/Previews';
 import { mapToPreviews } from './utils';
-import { fetchTags, revalidateCache, updateCategories, UpdateCategoryDto } from '@/api';
+import { fetchTags, revalidateCache, UpdateAlbumDto, updateAlbums } from '@/api';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 import { useRouter } from 'next/navigation';
 
-export function CategoryMove({ categories, ...rest }: CategoryMoveProps) {
+export function AlbumMove({ albums, ...rest }: AlbumMoveProps) {
   const router = useRouter();
   const [previews, setPreviews] = useState<PreviewItem[]>([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setPreviews(mapToPreviews(categories));
-  }, [categories]);
+    setPreviews(mapToPreviews(albums));
+  }, [albums]);
 
   const onOk = async () => {
-    const reordered: UpdateCategoryDto[] = [];
+    const reordered: UpdateAlbumDto[] = [];
 
     previews.forEach(({ id: previewId }, order) => {
-      const category = categories.find(cat => cat.id === Number(previewId) && cat.order !== order);
-      if (category) {
-        const { id } = category;
-        reordered.push({ id, order });
+      const album = albums.find(alb => alb.id === Number(previewId) && alb.categoryOrder !== order);
+      if (album) {
+        const { id } = album;
+        reordered.push({ id, categoryOrder: order });
       }
     });
 
@@ -37,8 +37,8 @@ export function CategoryMove({ categories, ...rest }: CategoryMoveProps) {
       setLoading(true);
 
       try {
-        await updateCategories(reordered);
-        await revalidateCache({ tags: [fetchTags.GET_CATEGORIES] });
+        await updateAlbums(reordered);
+        await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
         setOpen(false);
@@ -53,13 +53,13 @@ export function CategoryMove({ categories, ...rest }: CategoryMoveProps) {
   };
 
   const onCancel = () => {
-    setPreviews(mapToPreviews(categories));
+    setPreviews(mapToPreviews(albums));
     setOpen(false);
   };
 
   return (
     <>
-      {!!categories.length && (
+      {!!albums.length && (
         <>
           <Button
             {...rest}

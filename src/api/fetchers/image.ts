@@ -1,6 +1,5 @@
 import { ImageDto, PathWithId } from '../models';
-import { buildUrl } from '../build-url';
-import { buildError } from '..//build-error';
+import { buildUrl, buildError, fetcherRes } from '../utils';
 
 export async function uploadImage(payload: Blob): Promise<ImageDto> {
   const res = await fetch(buildUrl('/images'), {
@@ -11,11 +10,7 @@ export async function uploadImage(payload: Blob): Promise<ImageDto> {
     },
   });
 
-  if (res.ok) {
-    return res.json();
-  }
-
-  throw buildError(await res.json());
+  return fetcherRes(res);
 }
 
 export async function getImage(id: PathWithId['id']): Promise<Blob> {
@@ -35,9 +30,5 @@ export async function deleteImage(id: PathWithId['id']): Promise<ImageDto> {
     method: 'DELETE',
   });
 
-  if (res.ok) {
-    return res.json();
-  }
-
-  throw buildError(await res.json());
+  return fetcherRes(res);
 }

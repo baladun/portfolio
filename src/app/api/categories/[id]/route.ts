@@ -2,19 +2,18 @@ import { NextRequest } from 'next/server';
 import { PathWithId, toCategoryDto } from '@/api';
 import { RouteContext } from '@/types';
 import { db } from '@/db';
-import { Prisma } from '@prisma/client';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes } from '../../responses';
 
-export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
+export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
   const { params } = context;
 
-  if (!params || !params.id) {
+  if (!params || !params.id || isNaN(Number(params.id))) {
     return incorrectParamsErrorRes();
   }
 
   try {
-    const toDelete = await db.category.findFirst({
+    const category = await db.category.findFirst({
       include: {
         coverImage: true,
       },
@@ -23,41 +22,85 @@ export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>
       },
     });
 
-    if (!toDelete) {
+    if (!category) {
       return notFoundErrorRes();
     }
 
-    await db.$transaction(
-      [
-        db.category.updateMany({
-          where: {
-            order: {
-              gt: toDelete.order,
-            },
-          },
-          data: {
-            order: {
-              decrement: 1,
-            },
-          },
-        }),
-        db.category.delete({
-          where: {
-            id: toDelete.id,
-          },
-        }),
-      ],
-      {
-        isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
-      },
-    );
+    return okRes(toCategoryDto(category));
+  } catch (e: any) {
+    return commonErrorRes(e);
+  }
+}
 
-    if (toDelete.coverImageId) {
-      await db.image.delete({ where: { id: toDelete.coverImageId } });
-      await bucket.file(toDelete.coverImageId).delete({ ignoreNotFound: true });
+export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
+  const { params } = context;
+
+  if (!params || !params.id || isNaN(Number(params.id))) {
+    return incorrectParamsErrorRes();
+  }
+
+  try {
+    const categoryToDelete = await db.category.findFirst({
+      include: {
+        coverImage: true,
+      },
+      where: {
+        id: Number(params.id),
+      },
+    });
+
+    if (!categoryToDelete) {
+      return notFoundErrorRes();
     }
 
-    return okRes(toCategoryDto(toDelete));
+    const albumCoverIdsToDelete = await db.album
+      .findMany({
+        where: {
+          categoryId: categoryToDelete.id,
+        },
+      })
+      .then(albums => albums.map(el => el.coverImageId).filter(Boolean) as string[]);
+
+    await db.$transaction([
+      db.category.updateMany({
+        where: {
+          order: {
+            gt: categoryToDelete.order,
+          },
+        },
+        data: {
+          order: {
+            decrement: 1,
+          },
+        },
+      }),
+      db.category.delete({
+        where: {
+          id: categoryToDelete.id,
+        },
+      }),
+    ]);
+
+    if (categoryToDelete.coverImageId) {
+      await db.image.delete({ where: { id: categoryToDelete.coverImageId } });
+      await bucket.file(categoryToDelete.coverImageId).delete({ ignoreNotFound: true });
+    }
+
+    if (albumCoverIdsToDelete.length) {
+      await db.$transaction([
+        ...albumCoverIdsToDelete.map(id =>
+          db.image.delete({
+            where: {
+              id,
+            },
+          }),
+        ),
+      ]);
+
+      await Promise.allSettled(albumCoverIdsToDelete.map(id => bucket.file(id).delete({ ignoreNotFound: true })));
+    }
+
+    return okRes(toCategoryDto(categoryToDelete));
   } catch (e: any) {
     return commonErrorRes(e);
   }

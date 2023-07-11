@@ -1,0 +1,148 @@
+'use client';
+
+import { AlbumEditProps, PreloadedCover } from './types';
+import { Button } from '@/shared/Button';
+import { IconPark } from '@/shared/IconPark';
+import { useEffect, useRef, useState } from 'react';
+import { Dialog } from '@/shared/Dialog';
+import { Control, Form, InputText, TextArea } from '@/shared/Form';
+import { Controller, useForm } from 'react-hook-form';
+import { ImageUpload } from '@/components/ImageUpload';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { submitEvent } from '@/utils';
+import { deleteImage, fetchTags, getImage, ImageDto, revalidateCache, updateAlbums, uploadImage } from '@/api';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { toastMsg } from '@/configs';
+import { addAlbumFormValidationSchema, AddAlbumFormValue } from '@/components/AlbumAdd';
+
+export function AlbumEdit({ album }: AlbumEditProps) {
+  const {
+    control,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors },
+  } = useForm<AddAlbumFormValue>({
+    mode: 'onBlur',
+    resolver: yupResolver(addAlbumFormValidationSchema),
+  });
+  const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [preloadedCover, setPreloadedCover] = useState<PreloadedCover>();
+
+  useEffect(() => {
+    if (album) {
+      if (album.coverImage && album.coverImage.id !== preloadedCover?.id) {
+        preloadCover();
+      }
+
+      if (!album.coverImage && preloadedCover) {
+        setPreloadedCover(undefined);
+      }
+
+      reset({ name: album.name, description: album.description || undefined });
+    }
+  }, [album]);
+
+  const preloadCover = async () => {
+    const coverImage = album.coverImage as ImageDto;
+    const blob = await getImage(coverImage.id);
+    setPreloadedCover({ id: coverImage.id, file: new File([blob], album.name, { type: coverImage.mime }) });
+  };
+
+  const handleOk = () => {
+    formRef?.current?.dispatchEvent(submitEvent);
+  };
+  const handleCancel = () => {
+    reset();
+    setOpen(false);
+  };
+
+  const onSubmit = async () => {
+    const { name, description, coverImage } = getValues();
+    setLoading(true);
+
+    try {
+      if (album.coverImage) {
+        await deleteImage(album.coverImage.id);
+      }
+
+      const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
+      await updateAlbums([{ id: album.id, name, description, coverImageId: image?.id }]);
+      await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
+      router.refresh();
+      toast.success(toastMsg.SUCCESS);
+      reset();
+      setOpen(false);
+    } catch (e: any) {
+      toast.error(toastMsg.WENT_WRONG);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <>
+      <Button
+        size="sm"
+        icon={<IconPark type="Pencil" />}
+        onClick={e => {
+          e.preventDefault();
+          setOpen(true);
+        }}
+      />
+
+      <Dialog
+        headingText="Edit Album"
+        open={open}
+        loading={loading}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form
+          ref={formRef}
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Control
+            label="Name"
+            error={errors.name}
+          >
+            <InputText
+              control={control}
+              name="name"
+            />
+          </Control>
+          <Control label="Description">
+            <TextArea
+              control={control}
+              name="description"
+            />
+          </Control>
+          <Control
+            label="Cover"
+            reserveErrorSpace={false}
+          >
+            <Controller
+              control={control}
+              name="coverImage"
+              render={({ field: { onChange, onBlur, ref } }) => (
+                <ImageUpload
+                  ref={ref}
+                  shape="square"
+                  preloaded={preloadedCover?.file}
+                  onUpdate={v => {
+                    onChange(v);
+                    onBlur();
+                  }}
+                />
+              )}
+            />
+          </Control>
+        </Form>
+      </Dialog>
+    </>
+  );
+}

@@ -14,16 +14,17 @@ export default async function Page() {
 
   return (
     <PageLayout
+      backHref="/"
       heading={
         <Heading
           level={5}
           kind="secondary"
           color="snow"
         >
-          categorIes / <wbr /> <span>alex andr</span>
+          categorIes
           <CategoryMove
             categories={categories}
-            className="ml-2 align-top"
+            className="ml-3 align-top"
           />
         </Heading>
       }
@@ -32,6 +33,9 @@ export default async function Page() {
         <Cover
           key={el.id}
           image={el.coverImage}
+          href={{
+            pathname: `/categories/${el.id}`,
+          }}
           subtitle={
             <Text
               color="snow"

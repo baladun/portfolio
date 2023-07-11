@@ -1,8 +1,8 @@
-import { CategoryDto } from '../models';
-import { Category, Image } from '@prisma/client';
+import { Album, Image } from '@prisma/client';
 import { toImageDto } from './to-image-dto';
+import { AlbumDto } from '../models';
 
-export function toCategoryDto(model: Category & { coverImage: Image | null }): CategoryDto {
+export function toAlbumDto(model: Album & { coverImage: Image | null }): AlbumDto {
   const { coverImage, coverImageId, createdAt, ...rest } = model;
 
   return {

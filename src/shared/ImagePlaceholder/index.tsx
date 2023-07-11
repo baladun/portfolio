@@ -7,8 +7,8 @@ export const ImagePlaceholder = memo(function ImagePlaceholder({ className, styl
   return (
     <Image
       src="/images/pic.svg"
-      width={512}
-      height={512}
+      width={1024}
+      height={1024}
       alt="image-placeholder"
       className={classnames('pointer-events-none aspect-square select-none object-cover', className)}
       style={style}

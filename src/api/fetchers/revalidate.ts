@@ -1,6 +1,5 @@
 import { RevalidateDto } from '../models';
-import { buildUrl } from '../build-url';
-import { buildError } from '../build-error';
+import { buildUrl, fetcherRes } from '../utils';
 
 export async function revalidateCache(body: RevalidateDto): Promise<unknown> {
   const res = await fetch(buildUrl(`/revalidate`), {
@@ -8,9 +7,5 @@ export async function revalidateCache(body: RevalidateDto): Promise<unknown> {
     body: JSON.stringify(body),
   });
 
-  if (res.ok) {
-    return res.json();
-  }
-
-  throw buildError(await res.json());
+  return fetcherRes(res);
 }
