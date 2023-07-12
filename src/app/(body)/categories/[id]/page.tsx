@@ -25,7 +25,7 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
     return notFound();
   }
 
-  const albums = await getAlbums({ categoryId });
+  const albums = await getAlbums({ categoryId, sort: 'categoryOrder,asc' });
 
   return (
     <PageLayout

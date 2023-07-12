@@ -1,4 +1,4 @@
-import { AlbumDto, AlbumQueryParams, CategoryDto, CreateAlbumDto, fetchTags, PathWithId, UpdateAlbumDto } from '@/api';
+import { AlbumDto, AlbumQueryParams, CreateAlbumDto, fetchTags, PathWithId, UpdateAlbumDto, UpdateAlbumOrderDto } from '@/api';
 import { buildUrl, fetcherRes } from '../utils';
 
 export async function getAlbums(query?: AlbumQueryParams): Promise<AlbumDto[]> {
@@ -17,8 +17,17 @@ export async function createAlbum(payload: CreateAlbumDto): Promise<AlbumDto> {
   return fetcherRes(res);
 }
 
-export async function updateAlbums(payload: UpdateAlbumDto[]): Promise<AlbumDto[]> {
+export async function updateAlbumsOrder(payload: UpdateAlbumOrderDto[]): Promise<AlbumDto[]> {
   const res = await fetch(buildUrl('/albums'), {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  });
+
+  return fetcherRes(res);
+}
+
+export async function updateAlbum(id: PathWithId['id'], payload: UpdateAlbumDto): Promise<AlbumDto> {
+  const res = await fetch(buildUrl(`/albums/${id}`), {
     method: 'PUT',
     body: JSON.stringify(payload),
   });

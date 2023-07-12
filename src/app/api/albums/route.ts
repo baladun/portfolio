@@ -1,13 +1,14 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { AlbumQueryParams, CreateAlbumDto, toAlbumDto, UpdateAlbumDto } from '@/api';
+import { AlbumQueryParams, AlbumSortKey, CreateAlbumDto, toAlbumDto, UpdateAlbumDto, UpdateAlbumOrderDto } from '@/api';
 import { commonErrorRes, createdRes, incorrectPayloadErrorRes, okRes } from '../responses';
 
 export async function GET(req: NextRequest) {
-  const { categoryId, name, createdDateFrom, createdDateTo } = Object.fromEntries(req.nextUrl.searchParams) as AlbumQueryParams;
+  const { categoryId, name, createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as AlbumQueryParams;
 
   try {
+    const [sortKey, sortValue] = (sort || '').split(',') as [AlbumSortKey, Prisma.SortOrder];
     const albums = await db.album.findMany({
       include: {
         coverImage: true,
@@ -23,7 +24,7 @@ export async function GET(req: NextRequest) {
           lte: createdDateTo,
         },
       },
-      orderBy: [{ categoryOrder: Prisma.SortOrder.asc }],
+      orderBy: !sort ? undefined : { [sortKey]: sortValue },
     });
 
     return okRes(albums.map(el => toAlbumDto(el)));
@@ -37,6 +38,9 @@ export async function POST(req: NextRequest) {
     const { name, categoryId, description, coverImageId } = (await req.json()) as CreateAlbumDto;
     const lastIdx = await db.album
       .aggregate({
+        where: {
+          categoryId,
+        },
         _max: {
           categoryOrder: true,
         },
@@ -63,7 +67,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const albums = (await req.json()) as UpdateAlbumDto[];
+    const albums = (await req.json()) as UpdateAlbumOrderDto[];
 
     if (!albums || !Array.isArray(albums) || !albums.length) {
       return incorrectPayloadErrorRes();

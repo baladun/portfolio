@@ -5,16 +5,26 @@ import { Button } from '@/shared/Button';
 import { IconPark } from '@/shared/IconPark';
 import { useEffect, useRef, useState } from 'react';
 import { Dialog } from '@/shared/Dialog';
-import { Control, Form, InputText, TextArea } from '@/shared/Form';
+import { Control, Form, InputText, Select, SelectOption, TextArea } from '@/shared/Form';
 import { Controller, useForm } from 'react-hook-form';
 import { ImageUpload } from '@/components/ImageUpload';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { submitEvent } from '@/utils';
-import { deleteImage, fetchTags, getImage, ImageDto, revalidateCache, updateAlbums, uploadImage } from '@/api';
+import {
+  deleteImage,
+  fetchTags,
+  getCategories,
+  getImage,
+  ImageDto,
+  revalidateCache,
+  updateAlbum,
+  updateAlbumsOrder,
+  uploadImage,
+} from '@/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { toastMsg } from '@/configs';
-import { addAlbumFormValidationSchema, AddAlbumFormValue } from '@/components/AlbumAdd';
+import { editAlbumFormValidationSchema, EditAlbumFormValue } from './utils';
 
 export function AlbumEdit({ album }: AlbumEditProps) {
   const {
@@ -23,15 +33,16 @@ export function AlbumEdit({ album }: AlbumEditProps) {
     reset,
     getValues,
     formState: { errors },
-  } = useForm<AddAlbumFormValue>({
+  } = useForm<EditAlbumFormValue>({
     mode: 'onBlur',
-    resolver: yupResolver(addAlbumFormValidationSchema),
+    resolver: yupResolver(editAlbumFormValidationSchema),
   });
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [preloadedCover, setPreloadedCover] = useState<PreloadedCover>();
+  const [categoryOptions, setCategoryOptions] = useState<SelectOption[]>([]);
 
   useEffect(() => {
     if (album) {
@@ -43,9 +54,16 @@ export function AlbumEdit({ album }: AlbumEditProps) {
         setPreloadedCover(undefined);
       }
 
-      reset({ name: album.name, description: album.description || undefined });
+      reset({ name: album.name, categoryId: album.categoryId, description: album.description || undefined });
     }
   }, [album]);
+
+  useEffect(() => {
+    getCategories().then(categories => {
+      const options: SelectOption[] = categories.map(({ id, name }) => ({ label: name, value: id }));
+      setCategoryOptions(options);
+    });
+  }, []);
 
   const preloadCover = async () => {
     const coverImage = album.coverImage as ImageDto;
@@ -62,7 +80,7 @@ export function AlbumEdit({ album }: AlbumEditProps) {
   };
 
   const onSubmit = async () => {
-    const { name, description, coverImage } = getValues();
+    const { name, categoryId, description, coverImage } = getValues();
     setLoading(true);
 
     try {
@@ -71,7 +89,7 @@ export function AlbumEdit({ album }: AlbumEditProps) {
       }
 
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
-      await updateAlbums([{ id: album.id, name, description, coverImageId: image?.id }]);
+      await updateAlbum(album.id, { name, categoryId: Number(categoryId), description, coverImageId: image?.id });
       await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
@@ -113,6 +131,16 @@ export function AlbumEdit({ album }: AlbumEditProps) {
             <InputText
               control={control}
               name="name"
+            />
+          </Control>
+          <Control
+            label="Category"
+            error={errors.categoryId}
+          >
+            <Select
+              control={control}
+              name="categoryId"
+              options={categoryOptions}
             />
           </Control>
           <Control label="Description">

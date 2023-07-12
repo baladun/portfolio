@@ -8,6 +8,7 @@ export type { CreateCategoryDto } from './create-category-dto';
 export type { UpdateCategoryDto } from './update-category-dto';
 export type { PathWithId } from './path-params';
 export type { AlbumDto } from './album-dto';
-export type { AlbumQueryParams } from './album-query-params';
+export type { AlbumQueryParams, AlbumSortKey } from './album-query-params';
 export type { CreateAlbumDto } from './create-album-dto';
 export type { UpdateAlbumDto } from './update-album-dto';
+export type { UpdateAlbumOrderDto } from './update-album-order-dto';

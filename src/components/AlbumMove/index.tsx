@@ -7,7 +7,7 @@ import { BottomSheet } from '@/shared/BottomSheet';
 import { useEffect, useState } from 'react';
 import { PreviewItem, Previews } from '@/components/Previews';
 import { mapToPreviews } from './utils';
-import { fetchTags, revalidateCache, UpdateAlbumDto, updateAlbums } from '@/api';
+import { fetchTags, revalidateCache, UpdateAlbumDto, UpdateAlbumOrderDto, updateAlbumsOrder } from '@/api';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 import { useRouter } from 'next/navigation';
@@ -23,7 +23,7 @@ export function AlbumMove({ albums, ...rest }: AlbumMoveProps) {
   }, [albums]);
 
   const onOk = async () => {
-    const reordered: UpdateAlbumDto[] = [];
+    const reordered: UpdateAlbumOrderDto[] = [];
 
     previews.forEach(({ id: previewId }, order) => {
       const album = albums.find(alb => alb.id === Number(previewId) && alb.categoryOrder !== order);
@@ -37,7 +37,7 @@ export function AlbumMove({ albums, ...rest }: AlbumMoveProps) {
       setLoading(true);
 
       try {
-        await updateAlbums(reordered);
+        await updateAlbumsOrder(reordered);
         await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
