@@ -10,7 +10,7 @@ import { CategoryEdit } from '@/components/CategoryEdit';
 const { Heading, Text } = Typography;
 
 export default async function Page() {
-  const categories = await getCategories();
+  const categories = await getCategories({ sort: 'order,asc' });
 
   return (
     <PageLayout

@@ -1,0 +1,105 @@
+import { db } from '@/db';
+import { Prisma } from '@prisma/client';
+import { NextRequest } from 'next/server';
+import { CreatePhotosDto, PhotoQueryParams, PhotoSortKey, toAlbumDto, toPhotoDto, UpdateAlbumOrderDto, UpdatePhotoOrderDto } from '@/api';
+import { commonErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+
+export async function GET(req: NextRequest) {
+  const { albumId, createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as PhotoQueryParams;
+
+  try {
+    const [sortKey, sortDir] = (sort || '').split(',') as [PhotoSortKey, Prisma.SortOrder];
+    const photos = await db.photo.findMany({
+      include: {
+        image: true,
+      },
+      where: {
+        albumId: albumId ? Number(albumId) : undefined,
+        createdAt: {
+          gte: createdDateFrom,
+          lte: createdDateTo,
+        },
+      },
+      orderBy: !sort ? undefined : { [sortKey]: sortDir },
+    });
+
+    return okRes(photos.map(el => toPhotoDto(el)));
+  } catch (e: any) {
+    return commonErrorRes(e);
+  }
+}
+
+export async function POST(req: NextRequest) {
+  const dto = (await req.json()) as CreatePhotosDto;
+
+  if (!dto) {
+    return incorrectPayloadErrorRes();
+  }
+
+  try {
+    const { albumId, imageIds } = dto;
+    const lastIdx = await db.photo
+      .aggregate({
+        where: {
+          albumId,
+        },
+        _max: {
+          order: true,
+        },
+      })
+      .then(res => res._max.order);
+
+    const startIdx = lastIdx != null ? lastIdx + 1 : 0;
+    await db.photo.createMany({
+      data: imageIds.map((imageId, idx) => ({
+        albumId,
+        imageId,
+        order: startIdx + idx,
+      })),
+    });
+
+    const created = await db.photo.findMany({
+      include: {
+        image: true,
+      },
+      where: {
+        albumId,
+        order: {
+          gte: startIdx,
+        },
+      },
+    });
+
+    return okRes(created.map(el => toPhotoDto(el)));
+  } catch (e: any) {
+    return commonErrorRes(e);
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const dtos = (await req.json()) as UpdatePhotoOrderDto[];
+
+    if (!dtos || !Array.isArray(dtos) || !dtos.length) {
+      return incorrectPayloadErrorRes();
+    }
+
+    const updated = await db.$transaction([
+      ...dtos.map(({ id, ...data }) =>
+        db.photo.update({
+          include: {
+            image: true,
+          },
+          where: {
+            id,
+          },
+          data,
+        }),
+      ),
+    ]);
+
+    return okRes(updated.map(el => toPhotoDto(el)));
+  } catch (e: any) {
+    return commonErrorRes(e);
+  }
+}

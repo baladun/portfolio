@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import Image from 'next/image';
 import { Frame } from '@/components/Frame';
 import { getPublicObjectUrl } from '@/utils';
-import { IconPark } from '@/shared/IconPark';
 import { ImagePlaceholder } from '@/shared/ImagePlaceholder';
 
 export function Cover({ image, subtitle, href, actions, className, ...rest }: CoverProps) {

@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const { categoryId, name, createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as AlbumQueryParams;
 
   try {
-    const [sortKey, sortValue] = (sort || '').split(',') as [AlbumSortKey, Prisma.SortOrder];
+    const [sortKey, sortDir] = (sort || '').split(',') as [AlbumSortKey, Prisma.SortOrder];
     const albums = await db.album.findMany({
       include: {
         coverImage: true,
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
           lte: createdDateTo,
         },
       },
-      orderBy: !sort ? undefined : { [sortKey]: sortValue },
+      orderBy: !sort ? undefined : { [sortKey]: sortDir },
     });
 
     return okRes(albums.map(el => toAlbumDto(el)));

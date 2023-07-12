@@ -1,16 +1,25 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { CreateCategoryDto, toCategoryDto, UpdateCategoryDto } from '@/api';
+import { CategoryQueryParams, CategorySortKey, CreateCategoryDto, toCategoryDto, UpdateCategoryDto } from '@/api';
 import { commonErrorRes, createdRes, incorrectPayloadErrorRes, okRes } from '../responses';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as CategoryQueryParams;
+
   try {
+    const [sortKey, sortDir] = (sort || '').split(',') as [CategorySortKey, Prisma.SortOrder];
     const categories = await db.category.findMany({
       include: {
         coverImage: true,
       },
-      orderBy: [{ order: Prisma.SortOrder.asc }],
+      where: {
+        createdAt: {
+          gte: createdDateFrom,
+          lte: createdDateTo,
+        },
+      },
+      orderBy: !sort ? undefined : { [sortKey]: sortDir },
     });
 
     return okRes(categories.map(el => toCategoryDto(el)));

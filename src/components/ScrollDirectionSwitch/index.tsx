@@ -6,7 +6,7 @@ import { Button } from '@/shared/Button';
 import { IconPark } from '@/shared/IconPark';
 import { ScrollDirectionSwitchProps } from './types';
 import { NoSsr } from '@/shared/NoSsr';
-import { useMatchMedia } from '@/hooks/useMatchMedia';
+import { useMatchMedia } from '@/hooks';
 import { tailwindConfig } from '@/configs';
 
 export function ScrollDirectionSwitch({ ...rest }: ScrollDirectionSwitchProps) {

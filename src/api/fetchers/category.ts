@@ -1,9 +1,10 @@
-import { CategoryDto, CreateCategoryDto, PathWithId, UpdateCategoryDto } from '../models';
+import { AlbumQueryParams, CategoryDto, CategoryQueryParams, CreateCategoryDto, PathWithId, UpdateCategoryDto } from '../models';
 import { buildUrl, fetchTags, fetcherRes } from '../utils';
 
-export async function getCategories(): Promise<CategoryDto[]> {
+export async function getCategories(query?: CategoryQueryParams): Promise<CategoryDto[]> {
   // const res = await fetch(buildUrl('/api/categories'), { cache: 'no-store' });
-  const res = await fetch(buildUrl('/categories'), { next: { tags: [fetchTags.GET_CATEGORIES] } });
+  const qs = query ? `?${new URLSearchParams(Object.entries(query)).toString()}` : '';
+  const res = await fetch(buildUrl(`/categories${qs}`), { next: { tags: [fetchTags.GET_CATEGORIES] } });
 
   return fetcherRes(res);
 }

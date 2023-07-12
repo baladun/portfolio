@@ -10,6 +10,7 @@ import { debounceTime } from '@/utils';
 import { InputFile } from './InputFile';
 import toast from 'react-hot-toast';
 import { useDebounce } from 'usehooks-ts';
+import { usePrevious } from '@/hooks';
 
 function ErrorMessage({ text }: { text: string }) {
   return (
@@ -33,8 +34,10 @@ export const ImageUpload = memo(
   ) {
     const canvas = useMemo(() => document.createElement('canvas'), []);
     const [attachments, setAttachments] = useState<Attachment[]>([]);
+    const prevAttachments = usePrevious(attachments);
     const [selectedAttachment, setSelectedAttachment] = useState<Attachment>();
     const debouncedSelectedAttachment = useDebounce(selectedAttachment, 500);
+    const prevDebouncedSelectedAttachment = usePrevious(debouncedSelectedAttachment);
     const [filesInProcess, setFilesInProcess] = useState(false);
 
     useEffect(() => {
@@ -103,8 +106,10 @@ export const ImageUpload = memo(
 
     useEffect(() => {
       if (onUpdate) {
-        const value = attachments.length ? attachments.map(att => att.result.blob) : null;
-        onUpdate(value);
+        if (attachments.length !== (prevAttachments || []).length || debouncedSelectedAttachment != prevDebouncedSelectedAttachment) {
+          const value = attachments.length ? attachments.map(att => att.result.blob) : null;
+          onUpdate(value);
+        }
       }
     }, [attachments, debouncedSelectedAttachment]);
 

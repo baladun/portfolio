@@ -8,6 +8,12 @@ export async function getAlbums(query?: AlbumQueryParams): Promise<AlbumDto[]> {
   return fetcherRes(res);
 }
 
+export async function getAlbum(id: PathWithId['id']): Promise<AlbumDto> {
+  const res = await fetch(buildUrl(`/albums/${id}`), { next: { tags: [fetchTags.GET_ALBUM] } });
+
+  return fetcherRes(res);
+}
+
 export async function createAlbum(payload: CreateAlbumDto): Promise<AlbumDto> {
   const res = await fetch(buildUrl('/albums'), {
     method: 'POST',

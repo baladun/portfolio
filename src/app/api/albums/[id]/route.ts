@@ -1,10 +1,37 @@
 import { NextRequest } from 'next/server';
-import { PathWithId, toAlbumDto, UpdateAlbumDto, UpdateAlbumOrderDto } from '@/api';
+import { PathWithId, toAlbumDto, UpdateAlbumDto } from '@/api';
 import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, notFoundErrorRes, okRes } from '../../responses';
 import { Album, Image } from '@prisma/client';
+
+export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
+  const { params } = context;
+
+  if (!params || !params.id || isNaN(Number(params.id))) {
+    return incorrectParamsErrorRes();
+  }
+
+  try {
+    const album = await db.album.findFirst({
+      include: {
+        coverImage: true,
+      },
+      where: {
+        id: Number(params.id),
+      },
+    });
+
+    if (!album) {
+      return notFoundErrorRes();
+    }
+
+    return okRes(toAlbumDto(album));
+  } catch (e: any) {
+    return commonErrorRes(e);
+  }
+}
 
 export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
   const { params } = context;
