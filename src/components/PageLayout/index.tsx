@@ -57,10 +57,9 @@ export function PageLayout({ heading, backHref, children }: PageLayoutProps) {
             <div className={scrollDirection === 'vertical' ? '' : 'relative -left-[calc((100vw-100%)/2)] w-screen'}>
               <div
                 className={classnames(
-                  'flex gap-4',
                   scrollDirection === 'vertical'
-                    ? 'flex-wrap'
-                    : `w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [&>*:first-child]:ml-[--space] [&>*:last-child]:mr-[--space] [&>*]:shrink-0`,
+                    ? 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 [&_a]:h-auto [&_a]:w-auto [&_button]:h-auto [&_button]:w-auto'
+                    : `flex w-full gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [&>*:first-child]:ml-[--space] [&>*:last-child]:mr-[--space] [&>*]:shrink-0`,
                 )}
               >
                 {children}

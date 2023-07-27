@@ -14,7 +14,7 @@ export function Cover({ image, subtitle, href, actions, className, ...rest }: Co
     >
       <Frame
         href={href}
-        className="mb-4 lg:mb-6"
+        className={classnames(subtitle ? 'mb-4 lg:mb-6' : '')}
       >
         {actions && <div className="absolute right-0 top-0 [&:not(:empty)]:p-3 [&>*:not(:last-child)]:mr-2">{actions}</div>}
 

@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export function Frame({ as = 'a', href, className, children, ...rest }: FrameProps) {
   const classNames = classnames(
-    'relative block mb-4 aspect-square w-full overflow-hidden rounded-xl md:h-[25rem] md:w-[25rem] lg:mb-6', //
+    'relative block aspect-square w-full overflow-hidden rounded-xl md:h-[25rem] md:w-[25rem]', //
     className,
   );
 
