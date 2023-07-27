@@ -1,9 +1,15 @@
-import { AlbumDto, CreatePhotosDto, PathWithId, PhotoDto, PhotoQueryParams, UpdatePhotoOrderDto } from '../models';
+import { CreatePhotosDto, PathWithId, PhotoDto, PhotoQueryParams, UpdatePhotoOrderDto } from '../models';
 import { buildUrl, fetcherRes, fetchTags } from '../utils';
 
 export async function getPhotos(query?: PhotoQueryParams): Promise<PhotoDto[]> {
   const qs = query ? `?${new URLSearchParams(Object.entries(query)).toString()}` : '';
   const res = await fetch(buildUrl(`/photos${qs}`), { next: { tags: [fetchTags.GET_PHOTOS] } });
+
+  return fetcherRes(res);
+}
+
+export async function getPhoto(id: PathWithId['id']): Promise<PhotoDto> {
+  const res = await fetch(buildUrl(`/photos/${id}`));
 
   return fetcherRes(res);
 }

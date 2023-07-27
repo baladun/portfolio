@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { PhotoAdd } from '@/components/PhotoAdd';
 import { PhotoMove } from '@/components/PhotoMove';
 import { PhotoDelete } from '@/components/PhotoDelete';
+import { cachedPhotos } from '@/utils/cached-photos';
 
 const { Heading } = Typography;
 
@@ -25,6 +26,7 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
   }
 
   const photos = await getPhotos({ albumId, sort: 'order,asc' });
+  cachedPhotos.set(photos);
 
   return (
     <PageLayout
@@ -47,6 +49,9 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
         <Cover
           key={el.id}
           image={el.image}
+          href={{
+            pathname: `/photos/${el.id}`,
+          }}
           actions={<PhotoDelete photo={el} />}
         />
       ))}

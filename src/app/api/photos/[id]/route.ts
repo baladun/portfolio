@@ -5,6 +5,33 @@ import { db } from '@/db';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes } from '../../responses';
 
+export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
+  const { params } = context;
+
+  if (!params || !params.id || isNaN(Number(params.id))) {
+    return incorrectParamsErrorRes();
+  }
+
+  try {
+    const photo = await db.photo.findFirst({
+      include: {
+        image: true,
+      },
+      where: {
+        id: Number(params.id),
+      },
+    });
+
+    if (!photo) {
+      return notFoundErrorRes();
+    }
+
+    return okRes(toPhotoDto(photo));
+  } catch (e: any) {
+    return commonErrorRes(e);
+  }
+}
+
 export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
   const { params } = context;
 
