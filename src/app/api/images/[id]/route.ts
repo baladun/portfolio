@@ -4,15 +4,18 @@ import { PathWithId, toImageDto } from '@/api';
 import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes } from '../../responses';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
+import { InferType } from 'yup';
+import { withStringIdValidationSchema } from '@/api/utils';
 
 export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id) {
+  let params: InferType<typeof withStringIdValidationSchema>;
+  try {
+    params = await withStringIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
-  const id = String(params.id);
+  const { id } = params;
 
   try {
     const image = await db.image.findFirst({ where: { id } });
@@ -39,13 +42,14 @@ export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
 }
 
 export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id) {
+  let params: InferType<typeof withStringIdValidationSchema>;
+  try {
+    params = await withStringIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
-  const id = String(params.id);
+  const { id } = params;
 
   try {
     const image = await db.image.findFirst({ where: { id } });

@@ -5,11 +5,14 @@ import { db } from '@/db';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, notFoundErrorRes, okRes } from '../../responses';
 import { Album, Image } from '@prisma/client';
+import { updateAlbumDtoValidationSchema, withNumberIdValidationSchema } from '@/api/utils';
+import { InferType } from 'yup';
 
 export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id || isNaN(Number(params.id))) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
@@ -19,7 +22,7 @@ export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
         coverImage: true,
       },
       where: {
-        id: Number(params.id),
+        id: params.id,
       },
     });
 
@@ -34,23 +37,24 @@ export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
 }
 
 export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id || isNaN(Number(params.id))) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
-  const dto = (await req.json()) as UpdateAlbumDto;
-  if (!dto) {
+  let dto: UpdateAlbumDto;
+  try {
+    dto = await updateAlbumDtoValidationSchema.validate(await req.json());
+  } catch (e) {
     return incorrectPayloadErrorRes();
   }
 
   try {
-    const id = Number(params.id);
-
     const curAlbum = await db.album.findFirst({
       where: {
-        id,
+        id: params.id,
       },
     });
 
@@ -66,7 +70,7 @@ export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
               coverImage: true,
             },
             where: {
-              id,
+              id: params.id,
             },
             data: dto,
           });
@@ -86,7 +90,7 @@ export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
           await db.$transaction([
             db.album.update({
               where: {
-                id,
+                id: params.id,
               },
               data: {
                 ...dto,
@@ -113,7 +117,7 @@ export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
               coverImage: true,
             },
             where: {
-              id,
+              id: params.id,
             },
           });
           updated && res(updated);
@@ -130,20 +134,20 @@ export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
 }
 
 export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id || isNaN(Number(params.id))) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
   try {
-    const id = Number(params.id);
     const albumToDelete = await db.album.findFirst({
       include: {
         coverImage: true,
       },
       where: {
-        id,
+        id: params.id,
       },
     });
 
@@ -167,7 +171,7 @@ export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>
       }),
       db.album.delete({
         where: {
-          id,
+          id: params.id,
         },
       }),
     ]);

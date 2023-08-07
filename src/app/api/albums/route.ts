@@ -1,11 +1,19 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { AlbumQueryParams, AlbumSortKey, CreateAlbumDto, toAlbumDto, UpdateAlbumDto, UpdateAlbumOrderDto } from '@/api';
-import { commonErrorRes, createdRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { AlbumQueryParams, AlbumSortKey, CreateAlbumDto, toAlbumDto, UpdateAlbumOrderDto } from '@/api';
+import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { albumQueryParamsValidationSchema, createAlbumDtoValidationSchema, updateAlbumOrderValidationSchema } from '@/api/utils';
 
 export async function GET(req: NextRequest) {
-  const { categoryId, name, createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as AlbumQueryParams;
+  let queryParams: AlbumQueryParams;
+  try {
+    queryParams = await albumQueryParamsValidationSchema.validate(Object.fromEntries(req.nextUrl.searchParams));
+  } catch (e) {
+    return incorrectParamsErrorRes();
+  }
+
+  const { categoryId, name, createdDateFrom, createdDateTo, sort } = queryParams;
 
   try {
     const [sortKey, sortDir] = (sort || '').split(',') as [AlbumSortKey, Prisma.SortOrder];
@@ -35,7 +43,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, categoryId, description, coverImageId } = (await req.json()) as CreateAlbumDto;
+    let dto: CreateAlbumDto;
+    try {
+      dto = await createAlbumDtoValidationSchema.validate(await req.json());
+    } catch (e) {
+      return incorrectPayloadErrorRes();
+    }
+
+    const { name, categoryId, description, coverImageId } = dto;
     const lastIdx = await db.album
       .aggregate({
         where: {
@@ -67,9 +82,10 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const albums = (await req.json()) as UpdateAlbumOrderDto[];
-
-    if (!albums || !Array.isArray(albums) || !albums.length) {
+    let albums: UpdateAlbumOrderDto[];
+    try {
+      albums = await updateAlbumOrderValidationSchema.validate(await req.json());
+    } catch (e) {
       return incorrectPayloadErrorRes();
     }
 

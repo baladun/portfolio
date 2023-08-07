@@ -4,11 +4,14 @@ import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes } from '../../responses';
+import { InferType } from 'yup';
+import { withNumberIdValidationSchema } from '@/api/utils';
 
 export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id || isNaN(Number(params.id))) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
@@ -18,7 +21,7 @@ export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
         coverImage: true,
       },
       where: {
-        id: Number(params.id),
+        id: params.id,
       },
     });
 
@@ -33,9 +36,10 @@ export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
 }
 
 export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
-  const { params } = context;
-
-  if (!params || !params.id || isNaN(Number(params.id))) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return incorrectParamsErrorRes();
   }
 
@@ -45,7 +49,7 @@ export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>
         coverImage: true,
       },
       where: {
-        id: Number(params.id),
+        id: params.id,
       },
     });
 

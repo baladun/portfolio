@@ -1,11 +1,19 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { CreatePhotosDto, PhotoQueryParams, PhotoSortKey, toAlbumDto, toPhotoDto, UpdateAlbumOrderDto, UpdatePhotoOrderDto } from '@/api';
-import { commonErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { CreatePhotosDto, PhotoQueryParams, PhotoSortKey, toPhotoDto, UpdatePhotoOrderDto } from '@/api';
+import { commonErrorRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { createPhotoDtoValidationSchema, photoQueryParamsValidationSchema, updatePhotoOrderValidationSchema } from '@/api/utils';
 
 export async function GET(req: NextRequest) {
-  const { albumId, createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as PhotoQueryParams;
+  let queryParams: PhotoQueryParams;
+  try {
+    queryParams = await photoQueryParamsValidationSchema.validate(Object.fromEntries(req.nextUrl.searchParams));
+  } catch (e) {
+    return incorrectParamsErrorRes();
+  }
+
+  const { albumId, createdDateFrom, createdDateTo, sort } = queryParams;
 
   try {
     const [sortKey, sortDir] = (sort || '').split(',') as [PhotoSortKey, Prisma.SortOrder];
@@ -30,9 +38,10 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const dto = (await req.json()) as CreatePhotosDto;
-
-  if (!dto) {
+  let dto: CreatePhotosDto;
+  try {
+    dto = await createPhotoDtoValidationSchema.validate(await req.json());
+  } catch (e) {
     return incorrectPayloadErrorRes();
   }
 
@@ -78,9 +87,10 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const dtos = (await req.json()) as UpdatePhotoOrderDto[];
-
-    if (!dtos || !Array.isArray(dtos) || !dtos.length) {
+    let dtos: UpdatePhotoOrderDto[];
+    try {
+      dtos = await updatePhotoOrderValidationSchema.validate(await req.json());
+    } catch (e) {
       return incorrectPayloadErrorRes();
     }
 

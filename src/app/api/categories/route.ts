@@ -2,10 +2,18 @@ import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
 import { CategoryQueryParams, CategorySortKey, CreateCategoryDto, toCategoryDto, UpdateCategoryDto } from '@/api';
-import { commonErrorRes, createdRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { categoryQueryParamsValidationSchema, createCategoryDtoValidationSchema, updateCategoryOrderValidationSchema } from '@/api/utils';
 
 export async function GET(req: NextRequest) {
-  const { createdDateFrom, createdDateTo, sort } = Object.fromEntries(req.nextUrl.searchParams) as CategoryQueryParams;
+  let queryParams: CategoryQueryParams;
+  try {
+    queryParams = await categoryQueryParamsValidationSchema.validate(Object.fromEntries(req.nextUrl.searchParams));
+  } catch (e) {
+    return incorrectParamsErrorRes();
+  }
+
+  const { createdDateFrom, createdDateTo, sort } = queryParams;
 
   try {
     const [sortKey, sortDir] = (sort || '').split(',') as [CategorySortKey, Prisma.SortOrder];
@@ -30,7 +38,14 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, coverImageId } = (await req.json()) as CreateCategoryDto;
+    let dto: CreateCategoryDto;
+    try {
+      dto = await createCategoryDtoValidationSchema.validate(await req.json());
+    } catch (e) {
+      return incorrectPayloadErrorRes();
+    }
+
+    const { name, coverImageId } = dto;
     const lastIdx = await db.category
       .aggregate({
         _max: {
@@ -57,9 +72,10 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    const categories = (await req.json()) as UpdateCategoryDto[];
-
-    if (!categories || !Array.isArray(categories) || !categories.length) {
+    let categories: UpdateCategoryDto[];
+    try {
+      categories = await updateCategoryOrderValidationSchema.validate(await req.json());
+    } catch (e) {
       return incorrectPayloadErrorRes();
     }
 
