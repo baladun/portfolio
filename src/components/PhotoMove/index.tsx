@@ -7,7 +7,7 @@ import { BottomSheet } from '@/shared/BottomSheet';
 import { useEffect, useState } from 'react';
 import { PreviewItem, Previews } from '@/components/Previews';
 import { mapToPreviews } from './utils';
-import { fetchTags, revalidateCache, UpdatePhotoOrderDto, updatePhotosOrder } from '@/api';
+import { fetchTags, revalidateCache, PhotoOrderUpdateDto, updatePhotosOrder } from '@/api';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 import { useRouter } from 'next/navigation';
@@ -23,7 +23,7 @@ export function PhotoMove({ photos, ...rest }: PhotoMoveProps) {
   }, [photos]);
 
   const onOk = async () => {
-    const reordered: UpdatePhotoOrderDto[] = [];
+    const reordered: PhotoOrderUpdateDto[] = [];
 
     previews.forEach(({ id: previewId }, order) => {
       const photo = photos.find(ph => ph.id === Number(previewId) && ph.order !== order);

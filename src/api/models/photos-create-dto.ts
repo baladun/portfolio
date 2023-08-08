@@ -1,4 +1,4 @@
-export interface CreatePhotosDto {
+export interface PhotosCreateDto {
   albumId: number;
   imageIds: string[];
 }

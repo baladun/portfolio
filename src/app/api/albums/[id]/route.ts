@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { PathWithId, toAlbumDto, UpdateAlbumDto } from '@/api';
+import { PathWithId, toAlbumDto, AlbumUpdateDto } from '@/api';
 import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
@@ -44,7 +44,7 @@ export async function PUT(req: NextRequest, context: RouteContext<PathWithId>) {
     return incorrectParamsErrorRes();
   }
 
-  let dto: UpdateAlbumDto;
+  let dto: AlbumUpdateDto;
   try {
     dto = await updateAlbumDtoValidationSchema.validate(await req.json());
   } catch (e) {

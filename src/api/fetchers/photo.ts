@@ -1,4 +1,4 @@
-import { CreatePhotosDto, PathWithId, PhotoDto, PhotoQueryParams, UpdatePhotoOrderDto } from '../models';
+import { PhotosCreateDto, PathWithId, PhotoDto, PhotoQueryParams, PhotoOrderUpdateDto } from '../models';
 import { buildUrl, fetcherRes, fetchTags } from '../utils';
 
 export async function getPhotos(query?: PhotoQueryParams): Promise<PhotoDto[]> {
@@ -14,7 +14,7 @@ export async function getPhoto(id: PathWithId['id']): Promise<PhotoDto> {
   return fetcherRes(res);
 }
 
-export async function createPhotos(payload: CreatePhotosDto): Promise<PhotoDto[]> {
+export async function createPhotos(payload: PhotosCreateDto): Promise<PhotoDto[]> {
   const res = await fetch(buildUrl('/photos'), {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -23,7 +23,7 @@ export async function createPhotos(payload: CreatePhotosDto): Promise<PhotoDto[]
   return fetcherRes(res);
 }
 
-export async function updatePhotosOrder(payload: UpdatePhotoOrderDto[]): Promise<PhotoDto[]> {
+export async function updatePhotosOrder(payload: PhotoOrderUpdateDto[]): Promise<PhotoDto[]> {
   const res = await fetch(buildUrl('/photos'), {
     method: 'PUT',
     body: JSON.stringify(payload),

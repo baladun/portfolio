@@ -1,7 +1,7 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { AlbumQueryParams, AlbumSortKey, CreateAlbumDto, toAlbumDto, UpdateAlbumOrderDto } from '@/api';
+import { AlbumQueryParams, AlbumSortKey, AlbumCreateDto, toAlbumDto, AlbumUpdateOrderDto } from '@/api';
 import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
 import { albumQueryParamsValidationSchema, createAlbumDtoValidationSchema, updateAlbumOrderValidationSchema } from '@/api/utils';
 
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    let dto: CreateAlbumDto;
+    let dto: AlbumCreateDto;
     try {
       dto = await createAlbumDtoValidationSchema.validate(await req.json());
     } catch (e) {
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    let albums: UpdateAlbumOrderDto[];
+    let albums: AlbumUpdateOrderDto[];
     try {
       albums = await updateAlbumOrderValidationSchema.validate(await req.json());
     } catch (e) {

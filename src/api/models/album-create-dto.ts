@@ -1,4 +1,4 @@
-export interface CreateAlbumDto {
+export interface AlbumCreateDto {
   name: string;
   categoryId: number;
   coverImageId?: string;

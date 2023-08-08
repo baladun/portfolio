@@ -1,4 +1,4 @@
-import { AlbumQueryParams, CategoryDto, CategoryQueryParams, CreateCategoryDto, PathWithId, UpdateCategoryDto } from '../models';
+import { AlbumQueryParams, CategoryDto, CategoryQueryParams, CategoryCreateDto, PathWithId, CategoryUpdateDto } from '../models';
 import { buildUrl, fetchTags, fetcherRes } from '../utils';
 
 export async function getCategories(query?: CategoryQueryParams): Promise<CategoryDto[]> {
@@ -15,7 +15,7 @@ export async function getCategory(id: PathWithId['id']): Promise<CategoryDto> {
   return fetcherRes(res);
 }
 
-export async function createCategory(payload: CreateCategoryDto): Promise<CategoryDto> {
+export async function createCategory(payload: CategoryCreateDto): Promise<CategoryDto> {
   const res = await fetch(buildUrl('/categories'), {
     method: 'POST',
     body: JSON.stringify(payload),
@@ -24,7 +24,7 @@ export async function createCategory(payload: CreateCategoryDto): Promise<Catego
   return fetcherRes(res);
 }
 
-export async function updateCategories(payload: UpdateCategoryDto[]): Promise<CategoryDto[]> {
+export async function updateCategories(payload: CategoryUpdateDto[]): Promise<CategoryDto[]> {
   const res = await fetch(buildUrl('/categories'), {
     method: 'PUT',
     body: JSON.stringify(payload),

@@ -1,7 +1,7 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { CreatePhotosDto, PhotoQueryParams, PhotoSortKey, toPhotoDto, UpdatePhotoOrderDto } from '@/api';
+import { PhotosCreateDto, PhotoQueryParams, PhotoSortKey, toPhotoDto, PhotoOrderUpdateDto } from '@/api';
 import { commonErrorRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
 import { createPhotoDtoValidationSchema, photoQueryParamsValidationSchema, updatePhotoOrderValidationSchema } from '@/api/utils';
 
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  let dto: CreatePhotosDto;
+  let dto: PhotosCreateDto;
   try {
     dto = await createPhotoDtoValidationSchema.validate(await req.json());
   } catch (e) {
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
   try {
-    let dtos: UpdatePhotoOrderDto[];
+    let dtos: PhotoOrderUpdateDto[];
     try {
       dtos = await updatePhotoOrderValidationSchema.validate(await req.json());
     } catch (e) {
