@@ -48,6 +48,9 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
         <Cover
           key={el.id}
           image={el.coverImage}
+          href={{
+            pathname: `/albums/${el.id}`,
+          }}
           subtitle={
             <Text
               color="snow"

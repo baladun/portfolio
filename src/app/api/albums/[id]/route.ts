@@ -4,7 +4,7 @@ import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, notFoundErrorRes, okRes } from '../../responses';
-import { Album, Image } from '@prisma/client';
+import { Album, Image, Photo } from '@prisma/client';
 import { updateAlbumDtoValidationSchema, withNumberIdValidationSchema } from '@/api/utils';
 import { InferType } from 'yup';
 
@@ -154,6 +154,12 @@ export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>
     if (!albumToDelete) {
       return notFoundErrorRes();
     }
+    const photosToDelete = (await db.photo.findMany({
+      where: {
+        albumId: albumToDelete.id,
+      },
+    })) as Photo[];
+    const photoImageIdsToDelete = photosToDelete.map(el => el.imageId);
 
     await db.$transaction([
       db.album.updateMany({
@@ -174,11 +180,16 @@ export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>
           id: params.id,
         },
       }),
+      ...(photoImageIdsToDelete.length ? photoImageIdsToDelete.map(id => db.image.delete({ where: { id } })) : []),
     ]);
 
     if (albumToDelete.coverImageId) {
       await db.image.delete({ where: { id: albumToDelete.coverImageId } });
       await bucket.file(albumToDelete.coverImageId).delete({ ignoreNotFound: true });
+    }
+
+    if (photoImageIdsToDelete.length) {
+      await Promise.allSettled(photoImageIdsToDelete.map(id => bucket.file(id).delete({ ignoreNotFound: true })));
     }
 
     return okRes(toAlbumDto(albumToDelete));
