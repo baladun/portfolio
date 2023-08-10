@@ -22,10 +22,12 @@ export default async function Page() {
           color="snow"
         >
           categorIes
-          <CategoryMove
-            categories={categories}
-            className="ml-3 align-top"
-          />
+          {categories?.length > 1 ? (
+            <CategoryMove
+              categories={categories}
+              className="ml-3 align-top"
+            />
+          ) : null}
         </Heading>
       }
     >

@@ -59,30 +59,26 @@ export function PhotoMove({ photos, ...rest }: PhotoMoveProps) {
 
   return (
     <>
-      {!!photos.length && (
-        <>
-          <Button
-            {...rest}
-            kind="bordered"
-            size="sm"
-            icon={<IconPark type="Move" />}
-            onClick={() => setOpen(!open)}
-          />
+      <Button
+        {...rest}
+        kind="bordered"
+        size="sm"
+        icon={<IconPark type="Move" />}
+        onClick={() => setOpen(!open)}
+      />
 
-          <BottomSheet
-            open={open}
-            fullWidth
-            loading={loading}
-            onOk={onOk}
-            onCancel={onCancel}
-          >
-            <Previews
-              items={previews}
-              onReorder={setPreviews}
-            />
-          </BottomSheet>
-        </>
-      )}
+      <BottomSheet
+        open={open}
+        fullWidth
+        loading={loading}
+        onOk={onOk}
+        onCancel={onCancel}
+      >
+        <Previews
+          items={previews}
+          onReorder={setPreviews}
+        />
+      </BottomSheet>
     </>
   );
 }

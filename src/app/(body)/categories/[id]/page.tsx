@@ -37,10 +37,12 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
           color="snow"
         >
           categorIes / <wbr /> {category.name}
-          <AlbumMove
-            albums={albums}
-            className="ml-3 align-top"
-          />
+          {albums?.length > 1 ? (
+            <AlbumMove
+              albums={albums}
+              className="ml-3 align-top"
+            />
+          ) : null}
         </Heading>
       }
     >
