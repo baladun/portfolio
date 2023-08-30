@@ -17,3 +17,5 @@ export type { PhotoDto } from './photo-dto';
 export type { PhotoQueryParams, PhotoSortKey } from './photo-query-params';
 export type { PhotosCreateDto } from './photos-create-dto';
 export type { PhotoOrderUpdateDto } from './photo-order-update-dto';
+export type { ShowcaseAddDto } from './showcase-add-dto';
+export type { ShowcaseUpdateDto } from './showcase-update-dto';

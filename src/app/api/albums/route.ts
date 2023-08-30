@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
         coverImage: true,
       },
       where: {
-        categoryId: categoryId ? Number(categoryId) : undefined,
+        categoryId: categoryId,
         name: {
           contains: name,
           mode: 'insensitive',

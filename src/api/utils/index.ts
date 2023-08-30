@@ -15,5 +15,7 @@ export {
   createPhotoDtoValidationSchema,
   updatePhotoOrderValidationSchema,
   photoQueryParamsValidationSchema,
+  showcaseAddDtoValidationSchema,
+  showcaseOrderUpdateDtoValidationSchema,
   revalidateDtoValidationSchema,
 } from './validation-schemas';

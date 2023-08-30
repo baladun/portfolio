@@ -1,4 +1,4 @@
-import { array, number, object, string } from 'yup';
+import { array, boolean, number, object, string } from 'yup';
 
 export const withNumberIdValidationSchema = object({
   id: number().integer().required(),
@@ -35,6 +35,7 @@ export const albumQueryParamsValidationSchema = object({
   categoryId: number().integer().optional(),
   createdDateFrom: string().optional(),
   createdDateTo: string().optional(),
+  showcaseOnly: boolean().optional(),
   sort: (string() as any).optional(),
 });
 
@@ -76,6 +77,17 @@ export const photoQueryParamsValidationSchema = object({
   createdDateTo: string().optional(),
   sort: (string() as any).optional(),
 });
+
+export const showcaseAddDtoValidationSchema = object({
+  albumId: number().integer().required(),
+});
+
+export const showcaseOrderUpdateDtoValidationSchema = array(
+  object({
+    albumId: number().integer().required(),
+    order: number().integer().required().nullable(),
+  }),
+).required();
 
 export const revalidateDtoValidationSchema = object({
   paths: array(string().required()).optional(),

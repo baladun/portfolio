@@ -18,3 +18,4 @@ export { Control } from './Control';
 export { InputText } from './InputText';
 export { TextArea } from './TextArea';
 export { Select, type SelectOption } from './Select';
+export { Checkbox } from './Checkbox';

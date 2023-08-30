@@ -1,6 +1,6 @@
 import { Album, Prisma } from '@prisma/client';
 
-export type AlbumSortKey = keyof Pick<Album, 'createdAt' | 'categoryOrder' | 'showcaseOrder'>;
+export type AlbumSortKey = keyof Pick<Album, 'createdAt' | 'categoryOrder'>;
 
 export interface AlbumQueryParams {
   name?: string;

@@ -1,4 +1,14 @@
-import { AlbumDto, AlbumQueryParams, AlbumCreateDto, fetchTags, PathWithId, AlbumUpdateDto, AlbumUpdateOrderDto } from '@/api';
+import {
+  AlbumCreateDto,
+  AlbumDto,
+  AlbumQueryParams,
+  AlbumUpdateDto,
+  AlbumUpdateOrderDto,
+  fetchTags,
+  PathWithId,
+  ShowcaseAddDto,
+  ShowcaseUpdateDto,
+} from '@/api';
 import { buildUrl, fetcherRes } from '../utils';
 
 export async function getAlbums(query?: AlbumQueryParams): Promise<AlbumDto[]> {
@@ -44,6 +54,30 @@ export async function updateAlbum(id: PathWithId['id'], payload: AlbumUpdateDto)
 export async function deleteAlbum(id: PathWithId['id']): Promise<AlbumDto> {
   const res = await fetch(buildUrl(`/albums/${id}`), {
     method: 'DELETE',
+  });
+
+  return fetcherRes(res);
+}
+
+export async function getShowcase(): Promise<AlbumDto[]> {
+  const res = await fetch(buildUrl(`/albums/showcase`), { next: { tags: [fetchTags.GET_SHOWCASE] } });
+
+  return fetcherRes(res);
+}
+
+export async function addToShowcase(payload: ShowcaseAddDto): Promise<AlbumDto> {
+  const res = await fetch(buildUrl('/albums/showcase'), {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+
+  return fetcherRes(res);
+}
+
+export async function updateShowcase(payload: ShowcaseUpdateDto[]): Promise<AlbumDto[]> {
+  const res = await fetch(buildUrl('/albums/showcase'), {
+    method: 'PUT',
+    body: JSON.stringify(payload),
   });
 
   return fetcherRes(res);
