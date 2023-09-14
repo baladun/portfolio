@@ -6,6 +6,7 @@ import { getCategories } from '@/api';
 import { CategoryMove } from '@/components/CategoryMove';
 import { CategoryDelete } from '@/components/CategoryDelete';
 import { CategoryEdit } from '@/components/CategoryEdit';
+import { Editable } from '@/components/Editable';
 
 const { Heading, Text } = Typography;
 
@@ -23,10 +24,12 @@ export default async function Page() {
         >
           categorIes
           {categories?.length > 1 ? (
-            <CategoryMove
-              categories={categories}
-              className="ml-3 align-top"
-            />
+            <Editable>
+              <CategoryMove
+                categories={categories}
+                className="ml-3 align-top"
+              />
+            </Editable>
           ) : null}
         </Heading>
       }
@@ -48,14 +51,16 @@ export default async function Page() {
             </Text>
           }
           actions={
-            <>
+            <Editable>
               <CategoryEdit category={el} />
               <CategoryDelete category={el} />
-            </>
+            </Editable>
           }
         />
       ))}
-      <CategoryAdd />
+      <Editable>
+        <CategoryAdd />
+      </Editable>
     </PageLayout>
   );
 }

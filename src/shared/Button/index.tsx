@@ -53,20 +53,20 @@ export const Button = memo(
           disabled={disabled || loading}
           className={classNames}
         >
-          {icon && iconPosition === 'start' && <span className={iconClassNames}>{icon}</span>}
+          <div className="relative">
+            {icon && iconPosition === 'start' && <span className={iconClassNames}>{icon}</span>}
 
-          {(contentOnly || iconAndContent) && <span>{children}</span>}
+            {(contentOnly || iconAndContent) && <span>{children}</span>}
 
-          {icon && iconPosition === 'end' && <span className={iconClassNames}>{icon}</span>}
+            {icon && iconPosition === 'end' && <span className={iconClassNames}>{icon}</span>}
 
-          {loading && (
-            <div className="relative -top-full h-full">
+            {loading && (
               <Loading
                 className="absolute left-0 top-0 h-full w-full"
                 kind={kind}
               />
-            </div>
-          )}
+            )}
+          </div>
         </button>
       );
     },

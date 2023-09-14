@@ -10,3 +10,4 @@ export const notFoundErrorRes = () => NextResponse.json(new Exception(exceptionM
 export const incorrectParamsErrorRes = () => NextResponse.json(new Exception(exceptionMsg.INCORRECT_PARAMS), { status: 400 });
 export const incorrectPayloadErrorRes = () => NextResponse.json(new Exception(exceptionMsg.INCORRECT_PAYLOAD), { status: 400 });
 export const noPayloadErrorRes = () => NextResponse.json(exceptionMsg.NO_PAYLOAD, { status: 400 });
+export const unauthorizedRes = () => NextResponse.json(exceptionMsg.UNAUTHORIZED, { status: 401 });

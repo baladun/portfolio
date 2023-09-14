@@ -16,6 +16,7 @@ export const Form = memo(
 
 export { Control } from './Control';
 export { InputText } from './InputText';
+export { InputPassword } from './InputPassword';
 export { TextArea } from './TextArea';
 export { Select, type SelectOption } from './Select';
 export { Checkbox } from './Checkbox';

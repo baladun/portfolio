@@ -20,6 +20,8 @@
     "@szhsin/react-accordion": "^1.2.3",
     "classnames": "^2.3.2",
     "envalid": "^7.3.1",
+    "firebase": "^10.3.1",
+    "firebase-admin": "^11.10.1",
     "nanoid": "^4.0.2",
     "next": "^13.4.19",
     "plaiceholder": "^3.0.0",

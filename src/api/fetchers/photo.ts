@@ -1,5 +1,5 @@
 import { PhotosCreateDto, PathWithId, PhotoDto, PhotoQueryParams, PhotoOrderUpdateDto } from '../models';
-import { buildUrl, fetcherRes, fetchTags } from '../utils';
+import { authorizeReq, buildUrl, fetcherRes, fetchTags } from '../utils';
 
 export async function getPhotos(query?: PhotoQueryParams): Promise<PhotoDto[]> {
   const qs = query ? `?${new URLSearchParams(Object.entries(query)).toString()}` : '';
@@ -15,27 +15,36 @@ export async function getPhoto(id: PathWithId['id']): Promise<PhotoDto> {
 }
 
 export async function createPhotos(payload: PhotosCreateDto): Promise<PhotoDto[]> {
-  const res = await fetch(buildUrl('/photos'), {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(
+    buildUrl('/photos'),
+    await authorizeReq({
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  );
 
   return fetcherRes(res);
 }
 
 export async function updatePhotosOrder(payload: PhotoOrderUpdateDto[]): Promise<PhotoDto[]> {
-  const res = await fetch(buildUrl('/photos'), {
-    method: 'PUT',
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(
+    buildUrl('/photos'),
+    await authorizeReq({
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+  );
 
   return fetcherRes(res);
 }
 
 export async function deletePhoto(id: PathWithId['id']): Promise<PhotoDto> {
-  const res = await fetch(buildUrl(`/photos/${id}`), {
-    method: 'DELETE',
-  });
+  const res = await fetch(
+    buildUrl(`/photos/${id}`),
+    await authorizeReq({
+      method: 'DELETE',
+    }),
+  );
 
   return fetcherRes(res);
 }

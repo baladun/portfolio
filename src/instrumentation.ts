@@ -19,6 +19,16 @@ export function register() {
       NEXT_PUBLIC_GCP_BUCKET_NAME: str(),
 
       NEXT_PUBLIC_HOST: url(),
+
+      NEXT_PUBLIC_FIREBASE_API_KEY: str(),
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: host(),
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: str(),
+      NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: host(),
+      NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: str(),
+      NEXT_PUBLIC_FIREBASE_APP_ID: str(),
+
+      FIREBASE_ADMIN_PRIVATE_KEY: str(),
+      FIREBASE_ADMIN_CLIENT_EMAIL: email(),
     });
   }
 }

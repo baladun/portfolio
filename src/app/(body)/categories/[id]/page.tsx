@@ -8,6 +8,7 @@ import { AlbumAdd } from '@/components/AlbumAdd';
 import { AlbumMove } from '@/components/AlbumMove';
 import { AlbumDelete } from '@/components/AlbumDelete';
 import { AlbumEdit } from '@/components/AlbumEdit';
+import { Editable } from '@/components/Editable';
 
 const { Heading, Text } = Typography;
 
@@ -38,10 +39,12 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
         >
           categorIes / <wbr /> {category.name}
           {albums?.length > 1 ? (
-            <AlbumMove
-              albums={albums}
-              className="ml-3 align-top"
-            />
+            <Editable>
+              <AlbumMove
+                albums={albums}
+                className="ml-3 align-top"
+              />
+            </Editable>
           ) : null}
         </Heading>
       }
@@ -63,15 +66,17 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
             </Text>
           }
           actions={
-            <>
+            <Editable>
               <AlbumEdit album={el} />
               <AlbumDelete album={el} />
-            </>
+            </Editable>
           }
         />
       ))}
 
-      <AlbumAdd categoryId={categoryId} />
+      <Editable>
+        <AlbumAdd categoryId={categoryId} />
+      </Editable>
     </PageLayout>
   );
 }

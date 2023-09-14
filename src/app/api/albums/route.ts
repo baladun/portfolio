@@ -1,9 +1,10 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { AlbumQueryParams, AlbumSortKey, AlbumCreateDto, toAlbumDto, AlbumUpdateOrderDto } from '@/api';
-import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { AlbumCreateDto, AlbumQueryParams, AlbumSortKey, AlbumUpdateOrderDto, toAlbumDto } from '@/api';
+import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes, unauthorizedRes } from '../responses';
 import { albumQueryParamsValidationSchema, createAlbumDtoValidationSchema, updateAlbumOrderValidationSchema } from '@/api/utils';
+import { isAuthorized } from '../is-authorized';
 
 export async function GET(req: NextRequest) {
   let queryParams: AlbumQueryParams;
@@ -81,6 +82,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  try {
+    await isAuthorized(req);
+  } catch (e: any) {
+    return unauthorizedRes();
+  }
+
   try {
     let albums: AlbumUpdateOrderDto[];
     try {

@@ -1,5 +1,5 @@
-import { AlbumQueryParams, CategoryDto, CategoryQueryParams, CategoryCreateDto, PathWithId, CategoryUpdateDto } from '../models';
-import { buildUrl, fetchTags, fetcherRes } from '../utils';
+import { CategoryCreateDto, CategoryDto, CategoryQueryParams, CategoryUpdateDto, PathWithId } from '../models';
+import { authorizeReq, buildUrl, fetcherRes, fetchTags } from '../utils';
 
 export async function getCategories(query?: CategoryQueryParams): Promise<CategoryDto[]> {
   // const res = await fetch(buildUrl('/api/categories'), { cache: 'no-store' });
@@ -16,27 +16,36 @@ export async function getCategory(id: PathWithId['id']): Promise<CategoryDto> {
 }
 
 export async function createCategory(payload: CategoryCreateDto): Promise<CategoryDto> {
-  const res = await fetch(buildUrl('/categories'), {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(
+    buildUrl('/categories'),
+    await authorizeReq({
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
+  );
 
   return fetcherRes(res);
 }
 
 export async function updateCategories(payload: CategoryUpdateDto[]): Promise<CategoryDto[]> {
-  const res = await fetch(buildUrl('/categories'), {
-    method: 'PUT',
-    body: JSON.stringify(payload),
-  });
+  const res = await fetch(
+    buildUrl('/categories'),
+    await authorizeReq({
+      method: 'PUT',
+      body: JSON.stringify(payload),
+    }),
+  );
 
   return fetcherRes(res);
 }
 
 export async function deleteCategory(id: PathWithId['id']): Promise<CategoryDto> {
-  const res = await fetch(buildUrl(`/categories/${id}`), {
-    method: 'DELETE',
-  });
+  const res = await fetch(
+    buildUrl(`/categories/${id}`),
+    await authorizeReq({
+      method: 'DELETE',
+    }),
+  );
 
   return fetcherRes(res);
 }

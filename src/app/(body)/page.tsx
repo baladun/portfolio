@@ -5,6 +5,7 @@ import { Typography } from '@/shared/Typography';
 import { ShowcaseAdd } from '@/components/ShowcaseAdd';
 import { ShowcaseMove } from '@/components/ShowcaseMove';
 import { ShowcaseDelete } from '@/components/ShowcaseDelete';
+import { Editable } from '@/components/Editable';
 
 const { Heading, Text } = Typography;
 
@@ -14,14 +15,16 @@ export default async function Home() {
   return (
     <PageLayout
       heading={
-        <Heading>
-          <ShowcaseAdd className="align-top" />
-          {albums?.length > 1 ? (
-            <ShowcaseMove
-              albums={albums}
-              className="ml-3 align-top"
-            />
-          ) : null}
+        <Heading className="min-h-[2.25rem]">
+          <Editable>
+            <ShowcaseAdd className="align-top" />
+            {albums?.length > 1 ? (
+              <ShowcaseMove
+                albums={albums}
+                className="ml-3 align-top"
+              />
+            ) : null}
+          </Editable>
         </Heading>
       }
       className="bg-transparent !py-0"
@@ -41,7 +44,11 @@ export default async function Home() {
               {el.name}
             </Text>
           }
-          actions={<ShowcaseDelete album={el} />}
+          actions={
+            <Editable>
+              <ShowcaseDelete album={el} />
+            </Editable>
+          }
         />
       ))}
 

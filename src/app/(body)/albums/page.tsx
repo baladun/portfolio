@@ -4,6 +4,7 @@ import { Cover } from '@/components/Cover';
 import { getAlbums } from '@/api';
 import { AlbumEdit } from '@/components/AlbumEdit';
 import { AlbumDelete } from '@/components/AlbumDelete';
+import { Editable } from '@/components/Editable';
 
 const { Heading, Text } = Typography;
 
@@ -40,10 +41,10 @@ export default async function Page() {
             </Text>
           }
           actions={
-            <>
+            <Editable>
               <AlbumEdit album={el} />
               <AlbumDelete album={el} />
-            </>
+            </Editable>
           }
         />
       ))}

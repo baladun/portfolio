@@ -8,6 +8,7 @@ import { PhotoAdd } from '@/components/PhotoAdd';
 import { PhotoMove } from '@/components/PhotoMove';
 import { PhotoDelete } from '@/components/PhotoDelete';
 import { cachedPhotos } from '@/utils/cached-photos';
+import { Editable } from '@/components/Editable';
 
 const { Heading } = Typography;
 
@@ -39,10 +40,12 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
         >
           albums / <wbr /> {album.name}
           {photos?.length > 1 ? (
-            <PhotoMove
-              photos={photos}
-              className="ml-3 align-top"
-            />
+            <Editable>
+              <PhotoMove
+                photos={photos}
+                className="ml-3 align-top"
+              />
+            </Editable>
           ) : null}
         </Heading>
       }
@@ -54,11 +57,17 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
           href={{
             pathname: `/photos/${el.id}`,
           }}
-          actions={<PhotoDelete photo={el} />}
+          actions={
+            <Editable>
+              <PhotoDelete photo={el} />
+            </Editable>
+          }
         />
       ))}
 
-      <PhotoAdd albumId={albumId} />
+      <Editable>
+        <PhotoAdd albumId={albumId} />
+      </Editable>
     </PageLayout>
   );
 }

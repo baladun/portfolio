@@ -19,3 +19,4 @@ export {
   showcaseOrderUpdateDtoValidationSchema,
   revalidateDtoValidationSchema,
 } from './validation-schemas';
+export { authorizeReq } from './authorize-req';

@@ -2,8 +2,9 @@ import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
 import { CategoryQueryParams, CategorySortKey, CategoryCreateDto, toCategoryDto, CategoryUpdateDto } from '@/api';
-import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes } from '../responses';
+import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes, unauthorizedRes } from '../responses';
 import { categoryQueryParamsValidationSchema, createCategoryDtoValidationSchema, updateCategoryOrderValidationSchema } from '@/api/utils';
+import { isAuthorized } from '../is-authorized';
 
 export async function GET(req: NextRequest) {
   let queryParams: CategoryQueryParams;
@@ -38,6 +39,12 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    await isAuthorized(req);
+  } catch (e: any) {
+    return unauthorizedRes();
+  }
+
+  try {
     let dto: CategoryCreateDto;
     try {
       dto = await createCategoryDtoValidationSchema.validate(await req.json());
@@ -71,6 +78,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  try {
+    await isAuthorized(req);
+  } catch (e: any) {
+    return unauthorizedRes();
+  }
+
   try {
     let categories: CategoryUpdateDto[];
     try {

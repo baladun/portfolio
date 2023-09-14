@@ -28,6 +28,7 @@ export function Mobile({ menu, socials }: MobileProps) {
         <Button
           kind="text"
           color="black"
+          className="-mr-3"
           icon={
             <IconPark
               type="Plus"

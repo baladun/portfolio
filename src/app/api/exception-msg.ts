@@ -4,4 +4,5 @@ export const exceptionMsg = Object.freeze({
   INCORRECT_PAYLOAD: 'Payload is not correct',
   INCORRECT_PARAMS: 'Request params are incorrect',
   NOT_FOUND: 'Nothing was found by the query',
+  UNAUTHORIZED: 'Unauthorized',
 });

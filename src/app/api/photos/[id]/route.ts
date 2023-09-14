@@ -3,9 +3,10 @@ import { PathWithId, toPhotoDto } from '@/api';
 import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
-import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes } from '../../responses';
+import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes, unauthorizedRes } from '../../responses';
 import { InferType } from 'yup';
 import { withNumberIdValidationSchema } from '@/api/utils';
+import { isAuthorized } from '../../is-authorized';
 
 export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
   let params: InferType<typeof withNumberIdValidationSchema>;
@@ -36,6 +37,12 @@ export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {
 }
 
 export async function DELETE(req: NextRequest, context: RouteContext<PathWithId>) {
+  try {
+    await isAuthorized(req);
+  } catch (e: any) {
+    return unauthorizedRes();
+  }
+
   let params: InferType<typeof withNumberIdValidationSchema>;
   try {
     params = await withNumberIdValidationSchema.validate(context.params);

@@ -1,6 +1,8 @@
 import { Logo } from '@/components/Logo';
 import { Socials } from '../Socials';
 import { Menu } from '../Menu';
+import { Editable } from '@/components/Editable';
+import { SignOut } from '@/components/SignOut';
 
 export function Desktop() {
   return (
@@ -10,6 +12,10 @@ export function Desktop() {
       <Menu />
 
       <Socials color="black" />
+
+      <Editable>
+        <SignOut className="-mr-3" />
+      </Editable>
     </div>
   );
 }
