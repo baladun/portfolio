@@ -6,8 +6,13 @@ import { ShowcaseAdd } from '@/components/ShowcaseAdd';
 import { ShowcaseMove } from '@/components/ShowcaseMove';
 import { ShowcaseDelete } from '@/components/ShowcaseDelete';
 import { Editable } from '@/components/Editable';
+import { Metadata } from 'next';
 
 const { Heading, Text } = Typography;
+
+export const metadata: Metadata = {
+  title: 'Photographer Warsaw, wedding, lifestyle, new born, family',
+};
 
 export default async function Home() {
   const albums = await getShowcase();

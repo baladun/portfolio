@@ -1,7 +1,7 @@
 import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
 import { AlbumDto, getAlbum, getPhotos, PathWithId } from '@/api';
-import { RouteContext } from '@/types';
+import { PageRouteProps, RouteContext } from '@/types';
 import { Cover } from '@/components/Cover';
 import { notFound } from 'next/navigation';
 import { PhotoAdd } from '@/components/PhotoAdd';
@@ -9,8 +9,28 @@ import { PhotoMove } from '@/components/PhotoMove';
 import { PhotoDelete } from '@/components/PhotoDelete';
 import { cachedPhotos } from '@/utils/cached-photos';
 import { Editable } from '@/components/Editable';
+import { Metadata } from 'next';
 
 const { Heading } = Typography;
+
+export async function generateMetadata({ params }: PageRouteProps): Promise<Metadata> {
+  const albumId = Number(params.id);
+
+  if (isNaN(albumId)) {
+    return {};
+  }
+
+  let album: AlbumDto;
+  try {
+    album = await getAlbum(albumId);
+  } catch (e) {
+    return {};
+  }
+
+  return {
+    title: `${album.name}`,
+  };
+}
 
 export default async function Page({ params }: RouteContext<PathWithId>) {
   const albumId = Number(params.id);

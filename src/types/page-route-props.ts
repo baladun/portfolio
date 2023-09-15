@@ -1,6 +1,6 @@
 export interface PageRouteProps {
   params: {
-    slug: string;
+    id: string;
   };
   searchParams: {
     [key: string]: string | string[] | undefined;

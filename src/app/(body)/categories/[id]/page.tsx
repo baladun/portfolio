@@ -1,7 +1,7 @@
 import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
 import { CategoryDto, getAlbums, getCategory, PathWithId } from '@/api';
-import { RouteContext } from '@/types';
+import { PageRouteProps, RouteContext } from '@/types';
 import { Cover } from '@/components/Cover';
 import { notFound } from 'next/navigation';
 import { AlbumAdd } from '@/components/AlbumAdd';
@@ -9,8 +9,28 @@ import { AlbumMove } from '@/components/AlbumMove';
 import { AlbumDelete } from '@/components/AlbumDelete';
 import { AlbumEdit } from '@/components/AlbumEdit';
 import { Editable } from '@/components/Editable';
+import { Metadata } from 'next';
 
 const { Heading, Text } = Typography;
+
+export async function generateMetadata({ params }: PageRouteProps): Promise<Metadata> {
+  const categoryId = Number(params.id);
+
+  if (isNaN(categoryId)) {
+    return {};
+  }
+
+  let category: CategoryDto;
+  try {
+    category = await getCategory(categoryId);
+  } catch (e) {
+    return {};
+  }
+
+  return {
+    title: `Photographer Warsaw ${category.name}`,
+  };
+}
 
 export default async function Page({ params }: RouteContext<PathWithId>) {
   const categoryId = Number(params.id);
