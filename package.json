@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:report": "concurrently -n NEXT,TS -c magenta,cyan \"next dev\" \"tsc --noEmit --incremental --preserveWatchOutput --pretty --watch\"",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
