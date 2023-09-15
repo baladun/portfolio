@@ -25,9 +25,9 @@ export default function Page() {
               color="snow"
               size="sm"
             >
-              I'm Maxim Fadeev, a passionate photographer dedicated to capturing life's most beautiful moments through the lens of my
-              camera. With a keen eye for detail and a love for creativity, I strive to create timeless images that resonate with emotions
-              and memories.
+              I&apos;m Maxim Fadeev, a passionate photographer dedicated to capturing life&apos;s most beautiful moments through the lens of
+              my camera. With a keen eye for detail and a love for creativity, I strive to create timeless images that resonate with
+              emotions and memories.
             </Text>
           </p>
 
@@ -36,10 +36,10 @@ export default function Page() {
               color="snow"
               size="sm"
             >
-              What sets me apart as a photographer is my dedication to understanding my subjects on a personal level. Whether it's a candid
-              family portrait, a breathtaking landscape, or a vibrant urban scene, I believe that genuine connections and authenticity are
-              at the heart of remarkable photography. Every photo I take tells a unique tale, and I'm committed to going the extra mile to
-              ensure that each image encapsulates the true essence of the moment.
+              What sets me apart as a photographer is my dedication to understanding my subjects on a personal level. Whether it&apos;s a
+              candid family portrait, a breathtaking landscape, or a vibrant urban scene, I believe that genuine connections and
+              authenticity are at the heart of remarkable photography. Every photo I take tells a unique tale, and I&apos;m committed to
+              going the extra mile to ensure that each image encapsulates the true essence of the moment.
             </Text>
           </p>
 
@@ -48,9 +48,9 @@ export default function Page() {
               color="snow"
               size="sm"
             >
-              When I'm not behind the camera, you can find me [mention a couple of personal interests or hobbies to give visitors a glimpse
-              of your personality outside of photography]. I believe that life's small pleasures fuel my creativity and enable me to bring a
-              unique perspective to every project I undertake.
+              When I&apos;m not behind the camera, you can find me [mention a couple of personal interests or hobbies to give visitors a
+              glimpse of your personality outside of photography]. I believe that life&apos;s small pleasures fuel my creativity and enable
+              me to bring a unique perspective to every project I undertake.
             </Text>
           </p>
 
@@ -59,7 +59,7 @@ export default function Page() {
               color="snow"
               size="sm"
             >
-              Let's embark on a visual journey together and create memories that will last a lifetime.
+              Let&apos;s embark on a visual journey together and create memories that will last a lifetime.
             </Text>
           </p>
         </div>

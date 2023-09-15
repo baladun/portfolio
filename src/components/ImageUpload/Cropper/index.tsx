@@ -41,6 +41,7 @@ export const Cropper = memo(function Cropper({ attachment, onChange }: CropperPr
             onChange={(_, crop) => onChange({ crop })}
             className={classnames('max-h-[32rem] max-w-2xl', styles.cropper)}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="Crop me"
               src={dataUrl}

@@ -15,6 +15,7 @@ export const ViewMode = memo(function ViewMode({ result }: ViewModeProps) {
   return (
     <>
       {url && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={url}
           alt="View result"
