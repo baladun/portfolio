@@ -12,6 +12,7 @@ export function register() {
       GCP_PRIVATE_KEY: str(),
       NEXT_PUBLIC_GCP_BUCKET_NAME: str(),
 
+      NEXT_PUBLIC_PROTOCOL: str(),
       NEXT_PUBLIC_VERCEL_URL: url(),
 
       NEXT_PUBLIC_FIREBASE_API_KEY: str(),
