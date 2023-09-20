@@ -1,4 +1,3 @@
-import { getShowcase } from '@/api';
 import { PageLayout } from '@/components/PageLayout';
 import { Cover } from '@/components/Cover';
 import { Typography } from '@/shared/Typography';
@@ -7,6 +6,9 @@ import { ShowcaseMove } from '@/components/ShowcaseMove';
 import { ShowcaseDelete } from '@/components/ShowcaseDelete';
 import { Editable } from '@/components/Editable';
 import { Metadata } from 'next';
+import { getSsrShowcase } from './ssr';
+import { ssrResponseHasError } from '@/types';
+import { notFound } from 'next/navigation';
 
 const { Heading, Text } = Typography;
 
@@ -15,7 +17,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  const albums = await getShowcase();
+  const albumsRes = await getSsrShowcase();
+
+  if (ssrResponseHasError(albumsRes)) {
+    return notFound();
+  }
 
   return (
     <PageLayout
@@ -23,9 +29,9 @@ export default async function Home() {
         <Heading className="min-h-[2.25rem]">
           <Editable>
             <ShowcaseAdd className="align-top" />
-            {albums?.length > 1 ? (
+            {albumsRes?.length > 1 ? (
               <ShowcaseMove
-                albums={albums}
+                albums={albumsRes}
                 className="ml-3 align-top"
               />
             ) : null}
@@ -34,7 +40,7 @@ export default async function Home() {
       }
       className="bg-transparent !py-0"
     >
-      {albums.map(el => (
+      {albumsRes.map(el => (
         <Cover
           key={el.id}
           image={el.coverImage}
@@ -57,7 +63,7 @@ export default async function Home() {
         />
       ))}
 
-      {!albums?.length ? <Text>No albums</Text> : null}
+      {!albumsRes?.length ? <Text>No albums</Text> : null}
     </PageLayout>
   );
 }

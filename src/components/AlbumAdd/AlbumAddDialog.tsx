@@ -39,7 +39,6 @@ export function AlbumAddDialog({ categoryId, open, onOk, onCancel }: AlbumAddDia
     try {
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
       const album = await createAlbum({ categoryId, name, coverImageId: image?.id, description });
-      await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
       toast.success(album.name);
       reset();
       onOk();

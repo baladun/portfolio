@@ -90,7 +90,6 @@ export function AlbumEdit({ album }: AlbumEditProps) {
 
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
       await updateAlbum(album.id, { name, categoryId: Number(categoryId), description, coverImageId: image?.id });
-      await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       reset();

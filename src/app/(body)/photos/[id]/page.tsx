@@ -1,20 +1,25 @@
-import { RouteContext } from '@/types';
-import { getPhoto, PathWithId, PhotoDto } from '@/api';
+import { RouteContext, ssrResponseHasError } from '@/types';
+import { PathWithId } from '@/api';
 import { notFound } from 'next/navigation';
 import { PhotoStatic } from '@/components/PhotoStatic';
+import { InferType } from 'yup';
+import { withNumberIdValidationSchema } from '@/api/utils';
+import { getSsrPhoto } from './ssr';
 
-export default async function Page({ params }: RouteContext<PathWithId>) {
-  let photo: PhotoDto;
+export default async function Page(context: RouteContext<PathWithId>) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
 
   try {
-    photo = await getPhoto(params.id);
+    params = await withNumberIdValidationSchema.validate(context.params);
   } catch (e) {
     return notFound();
   }
 
-  if (!photo) {
+  const photoRes = await getSsrPhoto(params.id);
+
+  if (ssrResponseHasError(photoRes)) {
     return notFound();
   }
 
-  return <PhotoStatic photo={photo} />;
+  return <PhotoStatic photo={photoRes} />;
 }

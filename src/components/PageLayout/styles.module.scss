@@ -1,0 +1,16 @@
+.itemsContainer {
+  container-type: inline-size;
+  container-name: itemsContainer;
+}
+
+.itemsWrapper {
+  @container itemsContainer (min-width: 1rem) {
+    & > *:first-child {
+      margin-left: calc((100vw - 100cqi) / 2);
+    }
+
+    & > *:last-child {
+      margin-right: calc((100vw - 100cqi) / 2);
+    }
+  }
+}

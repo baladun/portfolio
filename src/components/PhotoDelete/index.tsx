@@ -20,7 +20,6 @@ export function PhotoDelete({ photo }: PhotoDeleteProps) {
 
     try {
       await deletePhoto(photo.id);
-      await revalidateCache({ tags: [fetchTags.GET_PHOTOS] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       setOpen(false);

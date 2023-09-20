@@ -20,7 +20,6 @@ export function ShowcaseDelete({ album }: ShowcaseDeleteProps) {
 
     try {
       await updateShowcase([{ albumId: album.id, order: null }]);
-      await revalidateCache({ tags: [fetchTags.GET_SHOWCASE] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       setOpen(false);

@@ -52,7 +52,6 @@ export function PhotoAddDialog({ albumId, open, onOk, onCancel }: PhtotoAddDialo
 
       if (uploaded.length) {
         await createPhotos({ albumId, imageIds: uploaded.map(el => el.id) });
-        await revalidateCache({ tags: [fetchTags.GET_PHOTOS] });
         toast.success(toastMsg.SUCCESS);
         reset();
         onOk();

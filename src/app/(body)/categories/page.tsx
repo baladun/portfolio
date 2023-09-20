@@ -2,16 +2,22 @@ import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
 import { Cover } from '@/components/Cover';
 import { CategoryAdd } from '@/components/CategoryAdd';
-import { getCategories } from '@/api';
 import { CategoryMove } from '@/components/CategoryMove';
 import { CategoryDelete } from '@/components/CategoryDelete';
 import { CategoryEdit } from '@/components/CategoryEdit';
 import { Editable } from '@/components/Editable';
+import { getSsrCategories } from './ssr';
+import { notFound } from 'next/navigation';
+import { SsrErrors, ssrResponseHasError } from '@/types';
 
 const { Heading, Text } = Typography;
 
 export default async function Page() {
-  const categories = await getCategories({ sort: 'order,asc' });
+  const categoriesRes = await getSsrCategories();
+
+  if (ssrResponseHasError(categoriesRes)) {
+    return notFound();
+  }
 
   return (
     <PageLayout
@@ -23,10 +29,10 @@ export default async function Page() {
           color="snow"
         >
           categorIes
-          {categories?.length > 1 ? (
+          {categoriesRes?.length > 1 ? (
             <Editable>
               <CategoryMove
-                categories={categories}
+                categories={categoriesRes}
                 className="ml-3 align-top"
               />
             </Editable>
@@ -34,7 +40,7 @@ export default async function Page() {
         </Heading>
       }
     >
-      {categories.map(el => (
+      {categoriesRes.map(el => (
         <Cover
           key={el.id}
           image={el.coverImage}

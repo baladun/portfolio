@@ -1,15 +1,21 @@
 import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
 import { Cover } from '@/components/Cover';
-import { getAlbums } from '@/api';
 import { AlbumEdit } from '@/components/AlbumEdit';
 import { AlbumDelete } from '@/components/AlbumDelete';
 import { Editable } from '@/components/Editable';
+import { SsrErrors } from '@/types';
+import { notFound } from 'next/navigation';
+import { getSsrAlbums } from './ssr';
 
 const { Heading, Text } = Typography;
 
 export default async function Page() {
-  const albums = await getAlbums({ sort: 'createdAt,desc' });
+  const albumsRes = await getSsrAlbums();
+
+  if (albumsRes === SsrErrors.NotFound || albumsRes === SsrErrors.Internal) {
+    return notFound();
+  }
 
   return (
     <PageLayout
@@ -24,7 +30,7 @@ export default async function Page() {
         </Heading>
       }
     >
-      {albums.map(el => (
+      {albumsRes.map(el => (
         <Cover
           key={el.id}
           image={el.coverImage}

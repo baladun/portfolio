@@ -38,7 +38,6 @@ export function PhotoMove({ photos, ...rest }: PhotoMoveProps) {
 
       try {
         await updatePhotosOrder(reordered);
-        await revalidateCache({ tags: [fetchTags.GET_PHOTOS] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
         setOpen(false);

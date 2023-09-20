@@ -2,7 +2,6 @@ import { CategoryCreateDto, CategoryDto, CategoryQueryParams, CategoryUpdateDto,
 import { authorizeReq, buildUrl, fetcherRes, fetchTags } from '../utils';
 
 export async function getCategories(query?: CategoryQueryParams): Promise<CategoryDto[]> {
-  // const res = await fetch(buildUrl('/api/categories'), { cache: 'no-store' });
   const qs = query ? `?${new URLSearchParams(Object.entries(query)).toString()}` : '';
   const res = await fetch(buildUrl(`/categories${qs}`), { next: { tags: [fetchTags.GET_CATEGORIES] } });
 

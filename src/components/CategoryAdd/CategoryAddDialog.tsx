@@ -39,7 +39,6 @@ export function CategoryAddDialog({ open, onOk, onCancel }: CategoryAddDialogPro
     try {
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
       const category = await createCategory({ name, coverImageId: image?.id });
-      await revalidateCache({ tags: [fetchTags.GET_CATEGORIES] });
       toast.success(category.name);
       reset();
       onOk();

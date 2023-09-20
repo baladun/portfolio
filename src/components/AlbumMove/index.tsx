@@ -38,7 +38,6 @@ export function AlbumMove({ albums, ...rest }: AlbumMoveProps) {
 
       try {
         await updateAlbumsOrder(reordered);
-        await revalidateCache({ tags: [fetchTags.GET_ALBUMS] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
         setOpen(false);

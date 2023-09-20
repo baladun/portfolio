@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren } from 'react';
+import { createContext, PropsWithChildren, useState } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import { localStorageKeys } from '@/configs/local-storage-keys';
 
@@ -14,7 +14,8 @@ export const ScrollDirectionContext = createContext<ScrollDirectionContextValue>
 });
 
 export const ScrollDirectionContextProvider = (props: PropsWithChildren) => {
-  const [scrollDirection, setScrollDirection] = useLocalStorage<ScrollDirectionType>(localStorageKeys.SCROLL_DIRECTION, 'horizontal');
+  // const [scrollDirection, setScrollDirection] = useLocalStorage<ScrollDirectionType>(localStorageKeys.SCROLL_DIRECTION, 'horizontal');
+  const [scrollDirection, setScrollDirection] = useState<ScrollDirectionType>('horizontal');
 
   return (
     <ScrollDirectionContext.Provider value={{ scrollDirection, setScrollDirection }}>{props.children}</ScrollDirectionContext.Provider>

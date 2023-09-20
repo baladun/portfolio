@@ -1,7 +1,7 @@
 import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
-import { CategoryDto, getAlbums, getCategory, PathWithId } from '@/api';
-import { PageRouteProps, RouteContext } from '@/types';
+import { PathWithId } from '@/api';
+import { PageRouteProps, RouteContext, ssrResponseHasError } from '@/types';
 import { Cover } from '@/components/Cover';
 import { notFound } from 'next/navigation';
 import { AlbumAdd } from '@/components/AlbumAdd';
@@ -10,43 +10,47 @@ import { AlbumDelete } from '@/components/AlbumDelete';
 import { AlbumEdit } from '@/components/AlbumEdit';
 import { Editable } from '@/components/Editable';
 import { Metadata } from 'next';
+import { InferType } from 'yup';
+import { withNumberIdValidationSchema } from '@/api/utils';
+import { getSsrCategory, getSsrCategoryAlbums } from './ssr';
 
 const { Heading, Text } = Typography;
 
-export async function generateMetadata({ params }: PageRouteProps): Promise<Metadata> {
-  const categoryId = Number(params.id);
+export async function generateMetadata(context: PageRouteProps): Promise<Metadata> {
+  let params: InferType<typeof withNumberIdValidationSchema>;
 
-  if (isNaN(categoryId)) {
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return {};
   }
 
-  let category: CategoryDto;
-  try {
-    category = await getCategory(categoryId);
-  } catch (e) {
+  const categoryRes = await getSsrCategory(params.id);
+
+  if (ssrResponseHasError(categoryRes)) {
     return {};
   }
 
   return {
-    title: `Photographer Warsaw ${category.name}`,
+    title: `Photographer Warsaw ${categoryRes.name}`,
   };
 }
 
-export default async function Page({ params }: RouteContext<PathWithId>) {
-  const categoryId = Number(params.id);
+export default async function Page(context: RouteContext<PathWithId>) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
 
-  if (isNaN(categoryId)) {
-    return notFound();
-  }
-
-  let category: CategoryDto;
   try {
-    category = await getCategory(categoryId);
+    params = await withNumberIdValidationSchema.validate(context.params);
   } catch (e) {
     return notFound();
   }
 
-  const albums = await getAlbums({ categoryId, sort: 'categoryOrder,asc' });
+  const categoryRes = await getSsrCategory(params.id);
+  const albumsRes = await getSsrCategoryAlbums(params.id);
+
+  if (ssrResponseHasError(categoryRes) || ssrResponseHasError(albumsRes)) {
+    return notFound();
+  }
 
   return (
     <PageLayout
@@ -57,11 +61,11 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
           kind="secondary"
           color="snow"
         >
-          categorIes / <wbr /> {category.name}
-          {albums?.length > 1 ? (
+          categorIes / <wbr /> {categoryRes.name}
+          {albumsRes?.length > 1 ? (
             <Editable>
               <AlbumMove
-                albums={albums}
+                albums={albumsRes}
                 className="ml-3 align-top"
               />
             </Editable>
@@ -69,7 +73,7 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
         </Heading>
       }
     >
-      {albums.map(el => (
+      {albumsRes.map(el => (
         <Cover
           key={el.id}
           image={el.coverImage}
@@ -95,7 +99,7 @@ export default async function Page({ params }: RouteContext<PathWithId>) {
       ))}
 
       <Editable>
-        <AlbumAdd categoryId={categoryId} />
+        <AlbumAdd categoryId={params.id} />
       </Editable>
     </PageLayout>
   );

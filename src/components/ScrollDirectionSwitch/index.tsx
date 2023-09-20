@@ -8,6 +8,7 @@ import { ScrollDirectionSwitchProps } from './types';
 import { NoSsr } from '@/shared/NoSsr';
 import { useMatchMedia } from '@/hooks';
 import { tailwindConfig } from '@/configs';
+import { Tooltip } from '@/shared/Tooltip';
 
 export function ScrollDirectionSwitch({ ...rest }: ScrollDirectionSwitchProps) {
   const viewportLessThanMd = useMatchMedia(`(max-width: ${tailwindConfig.screens.md - 1}px)`);
@@ -29,15 +30,16 @@ export function ScrollDirectionSwitch({ ...rest }: ScrollDirectionSwitchProps) {
   return (
     <NoSsr>
       {!viewportLessThanMd && (
-        <Button
-          {...rest}
-          kind="text"
-          size="sm"
-          color="brown"
-          icon={<IconPark type={scrollDirection === 'horizontal' ? 'HorizontalTidyUp' : 'VerticalTidyUp'} />}
-          title={`Switch to ${scrollDirection === 'horizontal' ? 'vertical' : 'horizontal'} scroll`}
-          onClick={change}
-        />
+        <Tooltip content={`Switch to ${scrollDirection === 'horizontal' ? 'vertical' : 'horizontal'} scroll`}>
+          <Button
+            {...rest}
+            kind="text"
+            size="sm"
+            color="brown"
+            icon={<IconPark type={scrollDirection === 'horizontal' ? 'HorizontalTidyUp' : 'VerticalTidyUp'} />}
+            onClick={change}
+          />
+        </Tooltip>
       )}
     </NoSsr>
   );
