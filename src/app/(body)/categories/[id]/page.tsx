@@ -13,6 +13,7 @@ import { Metadata } from 'next';
 import { InferType } from 'yup';
 import { withNumberIdValidationSchema } from '@/api/utils';
 import { getSsrCategory, getSsrCategoryAlbums } from './ssr';
+import { getSsrCategories } from '../../categories/ssr';
 
 const { Heading, Text } = Typography;
 
@@ -47,8 +48,9 @@ export default async function Page(context: RouteContext<PathWithId>) {
 
   const categoryRes = await getSsrCategory(params.id);
   const albumsRes = await getSsrCategoryAlbums(params.id);
+  const categoriesRes = await getSsrCategories();
 
-  if (ssrResponseHasError(categoryRes) || ssrResponseHasError(albumsRes)) {
+  if (ssrResponseHasError(categoryRes) || ssrResponseHasError(albumsRes) || ssrResponseHasError(categoriesRes)) {
     return notFound();
   }
 
@@ -91,7 +93,10 @@ export default async function Page(context: RouteContext<PathWithId>) {
           }
           actions={
             <Editable>
-              <AlbumEdit album={el} />
+              <AlbumEdit
+                album={el}
+                categories={categoriesRes}
+              />
               <AlbumDelete album={el} />
             </Editable>
           }

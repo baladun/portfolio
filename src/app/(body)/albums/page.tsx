@@ -4,16 +4,18 @@ import { Cover } from '@/components/Cover';
 import { AlbumEdit } from '@/components/AlbumEdit';
 import { AlbumDelete } from '@/components/AlbumDelete';
 import { Editable } from '@/components/Editable';
-import { SsrErrors } from '@/types';
+import { ssrResponseHasError } from '@/types';
 import { notFound } from 'next/navigation';
 import { getSsrAlbums } from './ssr';
+import { getSsrCategories } from '../categories/ssr';
 
 const { Heading, Text } = Typography;
 
 export default async function Page() {
   const albumsRes = await getSsrAlbums();
+  const categoriesRes = await getSsrCategories();
 
-  if (albumsRes === SsrErrors.NotFound || albumsRes === SsrErrors.Internal) {
+  if (ssrResponseHasError(albumsRes) || ssrResponseHasError(categoriesRes)) {
     return notFound();
   }
 
@@ -48,7 +50,10 @@ export default async function Page() {
           }
           actions={
             <Editable>
-              <AlbumEdit album={el} />
+              <AlbumEdit
+                album={el}
+                categories={categoriesRes}
+              />
               <AlbumDelete album={el} />
             </Editable>
           }

@@ -10,23 +10,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { ImageUpload } from '@/components/ImageUpload';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { submitEvent } from '@/utils';
-import {
-  deleteImage,
-  fetchTags,
-  getCategories,
-  getImage,
-  ImageDto,
-  revalidateCache,
-  updateAlbum,
-  updateAlbumsOrder,
-  uploadImage,
-} from '@/api';
+import { deleteImage, getImage, ImageDto, updateAlbum, uploadImage } from '@/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { toastMsg } from '@/configs';
 import { editAlbumFormValidationSchema, EditAlbumFormValue } from './utils';
 
-export function AlbumEdit({ album }: AlbumEditProps) {
+export function AlbumEdit({ album, categories }: AlbumEditProps) {
   const {
     control,
     handleSubmit,
@@ -59,11 +49,9 @@ export function AlbumEdit({ album }: AlbumEditProps) {
   }, [album]);
 
   useEffect(() => {
-    getCategories().then(categories => {
-      const options: SelectOption[] = categories.map(({ id, name }) => ({ label: name, value: id }));
-      setCategoryOptions(options);
-    });
-  }, []);
+    const options: SelectOption[] = categories.map(({ id, name }) => ({ label: name, value: id }));
+    setCategoryOptions(options);
+  }, [categories]);
 
   const preloadCover = async () => {
     const coverImage = album.coverImage as ImageDto;
