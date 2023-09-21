@@ -3,6 +3,7 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
     instrumentationHook: true,
+    serverMinification: false,
   },
   images: {
     remotePatterns: [
