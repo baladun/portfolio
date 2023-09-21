@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 import { deleteAlbum, fetchTags, revalidateCache } from '@/api';
 import { useRouter } from 'next/navigation';
+import { Tooltip } from '@/shared/Tooltip';
 
 export function AlbumDelete({ album }: AlbumDeleteProps) {
   const router = useRouter();
@@ -20,7 +21,7 @@ export function AlbumDelete({ album }: AlbumDeleteProps) {
 
     try {
       await deleteAlbum(album.id);
-      await revalidateCache({ paths: ['/', '/albums'] });
+      await revalidateCache({ paths: ['/', '/albums'], tags: [fetchTags.GET_ALBUMS] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       setOpen(false);
@@ -33,14 +34,17 @@ export function AlbumDelete({ album }: AlbumDeleteProps) {
 
   return (
     <>
-      <Button
-        size="sm"
-        icon={<IconPark type="Delete" />}
-        onClick={e => {
-          e.preventDefault();
-          setOpen(true);
-        }}
-      />
+      <Tooltip content={album.showcaseOrder != null ? 'You can not delete album while it is on Showcase' : ''}>
+        <Button
+          size="sm"
+          icon={<IconPark type="Delete" />}
+          disabled={album.showcaseOrder != null}
+          onClick={e => {
+            e.preventDefault();
+            setOpen(true);
+          }}
+        />
+      </Tooltip>
 
       <Dialog
         headingText="Delete Album"
