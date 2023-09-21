@@ -13,6 +13,7 @@ import { Metadata } from 'next';
 import { InferType } from 'yup';
 import { withNumberIdValidationSchema } from '@/api/utils';
 import { getSsrAlbumPhotos, getSsrAlbumRes } from './ssr';
+import { getSsrShowcase } from '@/app/(body)/ssr';
 
 const { Heading } = Typography;
 
@@ -34,6 +35,16 @@ export async function generateMetadata(context: PageRouteProps): Promise<Metadat
   return {
     title: `${albumRes.name}`,
   };
+}
+
+export async function generateStaticParams() {
+  const showcaseAlbumsRes = await getSsrShowcase();
+
+  if (ssrResponseHasError(showcaseAlbumsRes)) {
+    return [];
+  }
+
+  return showcaseAlbumsRes.map(({ id }) => id);
 }
 
 export default async function Page(context: RouteContext<PathWithId>) {
