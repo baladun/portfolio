@@ -22,6 +22,7 @@ export function ShowcaseAddDialog({ allAlbums, open, onOk, onCancel }: ShowcaseA
 
       try {
         await addToShowcase({ albumId: selectedAlbum.id });
+        await revalidateCache({ paths: ['/'], tags: [fetchTags.GET_ALBUMS] });
         toast.success(toastMsg.SUCCESS);
         setSelectedAlbum(undefined);
         onOk();

@@ -3,17 +3,21 @@ import { Carousel } from '@/components/Carousel';
 import { RouteContext } from '@/types';
 import { PathWithId } from '@/api';
 import { notFound } from 'next/navigation';
+import { InferType } from 'yup';
+import { withNumberIdValidationSchema } from '@/api/utils';
 
-export default function Page({ params }: RouteContext<PathWithId>) {
-  const id = Number(params.id);
+export default async function Page(context: RouteContext<PathWithId>) {
+  let params: InferType<typeof withNumberIdValidationSchema>;
 
-  if (isNaN(id)) {
+  try {
+    params = await withNumberIdValidationSchema.validate(context.params);
+  } catch (e) {
     return notFound();
   }
 
   return (
     <Carousel
-      photoId={Number(params.id)}
+      photoId={params.id}
       cachedPhotos={cachedPhotos.get()}
     />
   );

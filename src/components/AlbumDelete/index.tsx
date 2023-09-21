@@ -20,6 +20,7 @@ export function AlbumDelete({ album }: AlbumDeleteProps) {
 
     try {
       await deleteAlbum(album.id);
+      await revalidateCache({ paths: ['/albums'] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       setOpen(false);

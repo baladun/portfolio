@@ -20,6 +20,7 @@ export function CategoryDelete({ category }: CategoryDeleteProps) {
 
     try {
       await deleteCategory(category.id);
+      await revalidateCache({ paths: ['/categories'], tags: [fetchTags.GET_CATEGORIES] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       setOpen(false);

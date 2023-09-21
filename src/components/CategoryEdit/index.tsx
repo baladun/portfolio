@@ -73,6 +73,7 @@ export function CategoryEdit({ category }: CategoryEditProps) {
 
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
       await updateCategories([{ id: curCategory.id, name, coverImageId: image?.id }]);
+      await revalidateCache({ paths: ['/categories'], tags: [fetchTags.GET_CATEGORIES] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       reset();

@@ -8,7 +8,7 @@ import { CategoryEdit } from '@/components/CategoryEdit';
 import { Editable } from '@/components/Editable';
 import { getSsrCategories } from './ssr';
 import { notFound } from 'next/navigation';
-import { SsrErrors, ssrResponseHasError } from '@/types';
+import { ssrResponseHasError } from '@/types';
 
 const { Heading, Text } = Typography;
 

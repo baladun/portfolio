@@ -38,6 +38,7 @@ export function ShowcaseMove({ albums, ...rest }: ShowcaseMoveProps) {
 
       try {
         await updateShowcase(reordered);
+        await revalidateCache({ paths: ['/'], tags: [fetchTags.GET_ALBUMS] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
         setOpen(false);

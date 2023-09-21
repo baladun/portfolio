@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { ImageUpload } from '@/components/ImageUpload';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { submitEvent } from '@/utils';
-import { deleteImage, getImage, ImageDto, updateAlbum, uploadImage } from '@/api';
+import { deleteImage, getImage, ImageDto, revalidateCache, updateAlbum, uploadImage } from '@/api';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { toastMsg } from '@/configs';
@@ -78,6 +78,7 @@ export function AlbumEdit({ album, categories }: AlbumEditProps) {
 
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
       await updateAlbum(album.id, { name, categoryId: Number(categoryId), description, coverImageId: image?.id });
+      await revalidateCache({ paths: ['/albums'] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       reset();

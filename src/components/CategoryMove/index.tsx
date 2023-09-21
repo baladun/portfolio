@@ -38,6 +38,7 @@ export function CategoryMove({ categories, ...rest }: CategoryMoveProps) {
 
       try {
         await updateCategories(reordered);
+        await revalidateCache({ paths: ['/categories'] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
         setOpen(false);
