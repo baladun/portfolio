@@ -78,7 +78,7 @@ export function AlbumEdit({ album, categories }: AlbumEditProps) {
 
       const image = coverImage?.length ? await uploadImage(coverImage[0]) : null;
       await updateAlbum(album.id, { name, categoryId: Number(categoryId), description, coverImageId: image?.id });
-      await revalidateCache({ paths: ['/albums'] });
+      await revalidateCache({ paths: ['/', '/albums'] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       reset();

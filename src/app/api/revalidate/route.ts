@@ -7,7 +7,7 @@ import { revalidateDtoValidationSchema } from '@/api/utils';
 export async function POST(req: NextRequest) {
   let body: RevalidateDto;
   try {
-    body = await revalidateDtoValidationSchema.validate(await req.json());
+    body = (await revalidateDtoValidationSchema.validate(await req.json())) as RevalidateDto;
   } catch (e) {
     return incorrectPayloadErrorRes();
   }

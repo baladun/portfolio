@@ -7,8 +7,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { submitEvent } from '@/utils';
 import { ImageUpload } from '@/components/ImageUpload';
-import { createAlbum, Exception, fetchTags, revalidateCache, uploadImage } from '@/api';
+import { createAlbum, revalidateCache, uploadImage } from '@/api';
 import toast from 'react-hot-toast';
+import { toastMsg } from '@/configs';
 
 export function AlbumAddDialog({ categoryId, open, onOk, onCancel }: AlbumAddDialogProps) {
   const {
@@ -44,7 +45,7 @@ export function AlbumAddDialog({ categoryId, open, onOk, onCancel }: AlbumAddDia
       reset();
       onOk();
     } catch (e: any) {
-      toast.error((e as Exception).message);
+      toast.error(toastMsg.WENT_WRONG);
     } finally {
       setLoading(false);
     }

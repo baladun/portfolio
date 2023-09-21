@@ -5,6 +5,7 @@ import { faqConfig } from './config';
 
 const { Heading } = Typography;
 
+export const revalidate = 86_400;
 export default function Page() {
   return (
     <PageLayoutStatic

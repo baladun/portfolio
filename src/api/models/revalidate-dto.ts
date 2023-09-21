@@ -1,4 +1,7 @@
+import { InternalPath } from '@/types';
+import { fetchTags } from '@/api';
+
 export interface RevalidateDto {
-  paths?: string[];
-  tags?: string[];
+  paths?: InternalPath[];
+  tags?: (keyof typeof fetchTags)[];
 }

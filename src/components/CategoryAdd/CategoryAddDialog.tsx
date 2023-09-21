@@ -7,8 +7,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { submitEvent } from '@/utils';
 import { ImageUpload } from '@/components/ImageUpload';
-import { createCategory, Exception, fetchTags, revalidateCache, uploadImage } from '@/api';
+import { createCategory, fetchTags, revalidateCache, uploadImage } from '@/api';
 import toast from 'react-hot-toast';
+import { toastMsg } from '@/configs';
 
 export function CategoryAddDialog({ open, onOk, onCancel }: CategoryAddDialogProps) {
   const {
@@ -44,7 +45,7 @@ export function CategoryAddDialog({ open, onOk, onCancel }: CategoryAddDialogPro
       reset();
       onOk();
     } catch (e: any) {
-      toast.error((e as Exception).message);
+      toast.error(toastMsg.WENT_WRONG);
     } finally {
       setLoading(false);
     }

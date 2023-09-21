@@ -12,6 +12,7 @@ import { notFound } from 'next/navigation';
 
 const { Heading, Text } = Typography;
 
+export const revalidate = 86_400;
 export const metadata: Metadata = {
   title: 'Photographer Warsaw, wedding, lifestyle, new born, family',
 };

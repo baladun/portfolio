@@ -5,7 +5,7 @@ import { Dialog } from '@/shared/Dialog';
 import { Typography } from '@/shared/Typography';
 import { AlbumPreview } from './AlbumPreview';
 import { useState } from 'react';
-import { addToShowcase, AlbumDto, Exception, fetchTags, revalidateCache } from '@/api';
+import { addToShowcase, AlbumDto, fetchTags, revalidateCache } from '@/api';
 import classnames from 'classnames';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
@@ -27,7 +27,7 @@ export function ShowcaseAddDialog({ allAlbums, open, onOk, onCancel }: ShowcaseA
         setSelectedAlbum(undefined);
         onOk();
       } catch (e: any) {
-        toast.error((e as Exception).message);
+        toast.error(toastMsg.WENT_WRONG);
       } finally {
         setLoading(false);
       }

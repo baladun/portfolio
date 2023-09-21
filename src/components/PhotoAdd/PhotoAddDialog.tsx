@@ -1,5 +1,5 @@
 import { PhtotoAddDialogProps } from './types';
-import { Control, Form, InputText, TextArea } from '@/shared/Form';
+import { Control, Form } from '@/shared/Form';
 import { Dialog } from '@/shared/Dialog';
 import { Controller, FieldError, useForm } from 'react-hook-form';
 import { addPhotosFormValidationSchema, AddPhotosFormValue } from './utils';
@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { submitEvent } from '@/utils';
 import { ImageUpload } from '@/components/ImageUpload';
-import { createAlbum, createPhotos, Exception, fetchTags, ImageDto, revalidateCache, uploadImage } from '@/api';
+import { createPhotos, ImageDto, uploadImage } from '@/api';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 
@@ -57,7 +57,7 @@ export function PhotoAddDialog({ albumId, open, onOk, onCancel }: PhtotoAddDialo
         onOk();
       }
     } catch (e: any) {
-      toast.error((e as Exception).message);
+      toast.error(toastMsg.WENT_WRONG);
     } finally {
       setLoading(false);
     }

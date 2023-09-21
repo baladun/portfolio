@@ -3,6 +3,7 @@ import { PageLayoutStatic } from '@/components/PageLayoutStatic';
 
 const { Heading, NavLinkExternal } = Typography;
 
+export const revalidate = 86_400;
 export default function Page() {
   return (
     <PageLayoutStatic
@@ -32,7 +33,7 @@ export default function Page() {
             href="tel:375291234546"
             color="snow"
           >
-            +375 29 123 45 46
+            +44 514 782 278
           </NavLinkExternal>
         </div>
 
