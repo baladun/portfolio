@@ -2,6 +2,7 @@ import 'server-only';
 import { Typography } from '@/shared/Typography';
 import { SocialsProps } from './types';
 import { socialsConfig } from './utils';
+import classnames from 'classnames';
 
 const { NavLinkExternal } = Typography;
 
@@ -9,7 +10,7 @@ export function Socials({ color, className, ...rest }: SocialsProps) {
   return (
     <div
       {...rest}
-      className={`flex items-center justify-between gap-6 ${className}`}
+      className={classnames('flex items-center justify-between gap-6', className)}
     >
       {socialsConfig.map((conf, idx) => (
         <NavLinkExternal

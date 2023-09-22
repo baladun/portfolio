@@ -3,14 +3,15 @@
 import { useForm } from 'react-hook-form';
 import { signInFormValidationSchema, SignInFormValue } from './utils';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRef, useState } from 'react';
-import { submitEvent } from '@/utils';
+import { useEffect, useRef, useState } from 'react';
 import { Control, Form, InputPassword, InputText } from '@/shared/Form';
 import { Button } from '@/shared/Button';
 import { SignInProps } from './types';
 import { firebaseClientApp } from '@/firebase-client';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import { useMatchMedia } from '@/hooks';
+import { tailwindConfig } from '@/configs';
 
 const auth = getAuth(firebaseClientApp);
 
@@ -28,6 +29,13 @@ export function SignIn({ className }: SignInProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const viewportGreaterThanLg = useMatchMedia(`(min-width: ${tailwindConfig.screens.lg}px)`);
+
+  useEffect(() => {
+    if (!viewportGreaterThanLg) {
+      router.replace('/');
+    }
+  }, []);
 
   const onSubmit = async () => {
     const { email, password } = getValues();

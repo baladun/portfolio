@@ -11,11 +11,13 @@ export function Desktop() {
 
       <Menu />
 
-      <Socials color="black" />
+      <div className="flex gap-4">
+        <Socials color="black" />
 
-      <Editable>
-        <SignOut className="-mr-3" />
-      </Editable>
+        <Editable>
+          <SignOut className="-mr-3" />
+        </Editable>
+      </div>
     </div>
   );
 }
