@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { Exception, RevalidateDto } from '@/api';
+import { Exception, RevalidateDto } from '@/api-client';
 import { incorrectPayloadErrorRes, okRes } from '../responses';
-import { revalidateDtoValidationSchema } from '@/api/utils';
+import { revalidateDtoValidationSchema } from '@/api-client';
 
 export async function POST(req: NextRequest) {
   let body: RevalidateDto;

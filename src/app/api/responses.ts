@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Exception } from '@/api';
+import { Exception } from '@/api-client';
 import { exceptionMsg } from './exception-msg';
 
 export const okRes = <T>(body: T) => NextResponse.json(body);

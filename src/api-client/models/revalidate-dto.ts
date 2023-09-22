@@ -1,5 +1,5 @@
 import { InternalPath } from '@/types';
-import { fetchTags } from '@/api';
+import { fetchTags } from '../utils';
 
 export interface RevalidateDto {
   paths?: InternalPath[];

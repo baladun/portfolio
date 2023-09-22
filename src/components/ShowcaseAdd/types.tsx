@@ -1,4 +1,4 @@
-import { AlbumDto, ImageDto } from '@/api';
+import { AlbumDto, ImageDto } from '@/api-client';
 import { DialogProps } from '@/shared/Dialog';
 import { HTMLAttributes, ReactElement } from 'react';
 

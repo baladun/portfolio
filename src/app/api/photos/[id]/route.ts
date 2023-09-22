@@ -1,11 +1,11 @@
 import { NextRequest } from 'next/server';
-import { PathWithId, toPhotoDto } from '@/api';
+import { PathWithId, toPhotoDto } from '@/api-client';
 import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
 import { commonErrorRes, incorrectParamsErrorRes, notFoundErrorRes, okRes, unauthorizedRes } from '../../responses';
 import { InferType } from 'yup';
-import { withNumberIdValidationSchema } from '@/api/utils';
+import { withNumberIdValidationSchema } from '@/api-client';
 import { isAuthorized } from '../../is-authorized';
 
 export async function GET(req: NextRequest, context: RouteContext<PathWithId>) {

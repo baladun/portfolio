@@ -1,5 +1,5 @@
 import { SsrErrors, SsrResponse } from '@/types';
-import { PhotoDto, toPhotoDto } from '@/api';
+import { PhotoDto, toPhotoDto } from '@/api-client';
 import { db } from '@/db';
 
 export async function getSsrPhoto(id: number): Promise<SsrResponse<PhotoDto>> {

@@ -8,7 +8,7 @@ import { PreviewItem, Previews } from '@/components/Previews';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { mapToPreviews } from './utils';
-import { fetchTags, revalidateCache, ShowcaseUpdateDto, updateShowcase } from '@/api';
+import { fetchTags, revalidateCache, ShowcaseUpdateDto, updateShowcase } from '@/api-client';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 

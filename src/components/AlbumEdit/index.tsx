@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { ImageUpload } from '@/components/ImageUpload';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { submitEvent } from '@/utils';
-import { deleteImage, getImage, ImageDto, revalidateCache, updateAlbum, uploadImage } from '@/api';
+import { deleteImage, getImage, ImageDto, revalidateCache, updateAlbum, uploadImage } from '@/api-client';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { toastMsg } from '@/configs';

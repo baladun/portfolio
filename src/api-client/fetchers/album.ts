@@ -4,12 +4,11 @@ import {
   AlbumQueryParams,
   AlbumUpdateDto,
   AlbumUpdateOrderDto,
-  fetchTags,
   PathWithId,
   ShowcaseAddDto,
   ShowcaseUpdateDto,
-} from '@/api';
-import { buildUrl, fetcherRes, authorizeReq } from '../utils';
+} from '../models';
+import { fetchTags, buildUrl, fetcherRes, authorizeReq } from '../utils';
 
 export async function getAlbums(query?: AlbumQueryParams): Promise<AlbumDto[]> {
   const qs = query ? `?${new URLSearchParams(Object.entries(query)).toString()}` : '';

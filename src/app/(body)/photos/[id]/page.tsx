@@ -1,9 +1,9 @@
 import { RouteContext, SsrErrors, ssrResponseHasError } from '@/types';
-import { PathWithId } from '@/api';
+import { PathWithId } from '@/api-client';
 import { notFound } from 'next/navigation';
 import { PhotoStatic } from '@/components/PhotoStatic';
 import { InferType } from 'yup';
-import { withNumberIdValidationSchema } from '@/api/utils';
+import { withNumberIdValidationSchema } from '@/api-client';
 import { getSsrPhoto } from './ssr';
 
 export default async function Page(context: RouteContext<PathWithId>) {

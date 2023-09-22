@@ -4,7 +4,7 @@ import { ShowcaseAddProps } from './types';
 import { IconPark } from '@/shared/IconPark';
 import { Button } from '@/shared/Button';
 import { useState } from 'react';
-import { AlbumDto, getAlbums } from '@/api';
+import { AlbumDto, getAlbums } from '@/api-client';
 import { ShowcaseAddDialog } from './ShowcaseAddDialog';
 import { useRouter } from 'next/navigation';
 

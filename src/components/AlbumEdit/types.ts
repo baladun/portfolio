@@ -1,4 +1,4 @@
-import { AlbumDto, CategoryDto } from '@/api';
+import { AlbumDto, CategoryDto } from '@/api-client';
 
 export interface AlbumEditProps {
   album: AlbumDto;

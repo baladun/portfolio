@@ -1,5 +1,5 @@
 import { SsrErrors, SsrResponse } from '@/types';
-import { AlbumDto, PhotoDto, toAlbumDto, toPhotoDto } from '@/api';
+import { AlbumDto, PhotoDto, toAlbumDto, toPhotoDto } from '@/api-client';
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 

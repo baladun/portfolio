@@ -11,7 +11,7 @@ import { ImageUpload } from '@/components/ImageUpload';
 import { addCategoryFormValidationSchema, AddCategoryFormValue } from '@/components/CategoryAdd';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { submitEvent } from '@/utils';
-import { deleteImage, fetchTags, getImage, ImageDto, revalidateCache, updateCategories, uploadImage } from '@/api';
+import { deleteImage, fetchTags, getImage, ImageDto, revalidateCache, updateCategories, uploadImage } from '@/api-client';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { toastMsg } from '@/configs';

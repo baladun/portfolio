@@ -7,7 +7,7 @@ import { Dialog } from '@/shared/Dialog';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
-import { deleteCategory, fetchTags, getAlbums, revalidateCache } from '@/api';
+import { deleteCategory, fetchTags, getAlbums, revalidateCache } from '@/api-client';
 import { useRouter } from 'next/navigation';
 
 export function CategoryDelete({ category }: CategoryDeleteProps) {

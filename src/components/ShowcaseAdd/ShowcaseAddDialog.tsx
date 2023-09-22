@@ -5,7 +5,7 @@ import { Dialog } from '@/shared/Dialog';
 import { Typography } from '@/shared/Typography';
 import { AlbumPreview } from './AlbumPreview';
 import { useState } from 'react';
-import { addToShowcase, AlbumDto, fetchTags, revalidateCache } from '@/api';
+import { addToShowcase, AlbumDto, fetchTags, revalidateCache } from '@/api-client';
 import classnames from 'classnames';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';

@@ -1,5 +1,5 @@
 import { HTMLAttributes, ReactElement, ReactNode } from 'react';
-import { ImageDto } from '@/api';
+import { ImageDto } from '@/api-client';
 import { InternalHref } from '@/types';
 
 export interface CoverProps extends HTMLAttributes<HTMLDivElement> {

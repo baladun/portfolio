@@ -1,9 +1,9 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { PhotosCreateDto, PhotoQueryParams, PhotoSortKey, toPhotoDto, PhotoOrderUpdateDto } from '@/api';
+import { PhotosCreateDto, PhotoQueryParams, PhotoSortKey, toPhotoDto, PhotoOrderUpdateDto } from '@/api-client';
 import { commonErrorRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes, unauthorizedRes } from '../responses';
-import { createPhotoDtoValidationSchema, photoQueryParamsValidationSchema, updatePhotoOrderValidationSchema } from '@/api/utils';
+import { createPhotoDtoValidationSchema, photoQueryParamsValidationSchema, updatePhotoOrderValidationSchema } from '@/api-client';
 import { isAuthorized } from '../is-authorized';
 
 export async function GET(req: NextRequest) {

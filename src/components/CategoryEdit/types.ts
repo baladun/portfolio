@@ -1,4 +1,4 @@
-import { CategoryDto } from '@/api';
+import { CategoryDto } from '@/api-client';
 
 export interface CategoryEditProps {
   category: CategoryDto;

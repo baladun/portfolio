@@ -1,4 +1,4 @@
-import { AlbumDto } from '@/api';
+import { AlbumDto } from '@/api-client';
 
 export interface ShowcaseMoveProps {
   albums: AlbumDto[];

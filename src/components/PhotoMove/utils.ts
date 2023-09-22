@@ -1,5 +1,5 @@
 import { PreviewItem } from '@/components/Previews';
-import { PhotoDto } from '@/api';
+import { PhotoDto } from '@/api-client';
 import { getPublicObjectUrl } from '@/utils';
 
 export function mapToPreviews(photos: PhotoDto[]): PreviewItem[] {

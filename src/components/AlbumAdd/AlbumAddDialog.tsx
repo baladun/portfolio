@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useRef, useState } from 'react';
 import { submitEvent } from '@/utils';
 import { ImageUpload } from '@/components/ImageUpload';
-import { createAlbum, revalidateCache, uploadImage } from '@/api';
+import { createAlbum, revalidateCache, uploadImage } from '@/api-client';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 

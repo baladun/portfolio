@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { PathWithId, toAlbumDto, AlbumUpdateDto } from '@/api';
+import { PathWithId, toAlbumDto, AlbumUpdateDto } from '@/api-client';
 import { RouteContext } from '@/types';
 import { db } from '@/db';
 import { bucket } from '@/bucket';
@@ -12,7 +12,7 @@ import {
   unauthorizedRes,
 } from '../../responses';
 import { Album, Image, Photo } from '@prisma/client';
-import { updateAlbumDtoValidationSchema, withNumberIdValidationSchema } from '@/api/utils';
+import { updateAlbumDtoValidationSchema, withNumberIdValidationSchema } from '@/api-client';
 import { InferType } from 'yup';
 import { isAuthorized } from '../../is-authorized';
 

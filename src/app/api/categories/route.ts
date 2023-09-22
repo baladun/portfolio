@@ -1,9 +1,9 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { CategoryQueryParams, CategorySortKey, CategoryCreateDto, toCategoryDto, CategoryUpdateDto } from '@/api';
+import { CategoryQueryParams, CategorySortKey, CategoryCreateDto, toCategoryDto, CategoryUpdateDto } from '@/api-client';
 import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes, unauthorizedRes } from '../responses';
-import { categoryQueryParamsValidationSchema, createCategoryDtoValidationSchema, updateCategoryOrderValidationSchema } from '@/api/utils';
+import { categoryQueryParamsValidationSchema, createCategoryDtoValidationSchema, updateCategoryOrderValidationSchema } from '@/api-client';
 import { isAuthorized } from '../is-authorized';
 
 export async function GET(req: NextRequest) {

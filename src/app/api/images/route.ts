@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { getPlaiceholder } from 'plaiceholder';
 import { db } from '@/db';
 import { commonErrorRes, createdRes, noPayloadErrorRes, unauthorizedRes } from '../responses';
-import { toImageDto } from '@/api';
+import { toImageDto } from '@/api-client';
 import { isAuthorized } from '../is-authorized';
 
 export async function POST(req: NextRequest) {

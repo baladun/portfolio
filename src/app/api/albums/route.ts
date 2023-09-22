@@ -1,9 +1,9 @@
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
 import { NextRequest } from 'next/server';
-import { AlbumCreateDto, AlbumQueryParams, AlbumSortKey, AlbumUpdateOrderDto, toAlbumDto } from '@/api';
+import { AlbumCreateDto, AlbumQueryParams, AlbumSortKey, AlbumUpdateOrderDto, toAlbumDto } from '@/api-client';
 import { commonErrorRes, createdRes, incorrectParamsErrorRes, incorrectPayloadErrorRes, okRes, unauthorizedRes } from '../responses';
-import { albumQueryParamsValidationSchema, createAlbumDtoValidationSchema, updateAlbumOrderValidationSchema } from '@/api/utils';
+import { albumQueryParamsValidationSchema, createAlbumDtoValidationSchema, updateAlbumOrderValidationSchema } from '@/api-client';
 import { isAuthorized } from '../is-authorized';
 
 export async function GET(req: NextRequest) {

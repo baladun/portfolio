@@ -1,6 +1,6 @@
 import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
-import { PathWithId } from '@/api';
+import { PathWithId } from '@/api-client';
 import { PageRouteProps, RouteContext, SsrErrors, ssrResponseHasError } from '@/types';
 import { Cover } from '@/components/Cover';
 import { notFound } from 'next/navigation';
@@ -11,7 +11,7 @@ import { cachedPhotos } from '@/utils/cached-photos';
 import { Editable } from '@/components/Editable';
 import { Metadata } from 'next';
 import { InferType } from 'yup';
-import { withNumberIdValidationSchema } from '@/api/utils';
+import { withNumberIdValidationSchema } from '@/api-client';
 import { getSsrAlbumPhotos, getSsrAlbumRes } from './ssr';
 import { getSsrShowcase } from '@/app/(body)/ssr';
 

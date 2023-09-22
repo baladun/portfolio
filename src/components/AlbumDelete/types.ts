@@ -1,4 +1,4 @@
-import { AlbumDto } from '@/api';
+import { AlbumDto } from '@/api-client';
 
 export interface AlbumDeleteProps {
   album: AlbumDto;

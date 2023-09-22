@@ -7,7 +7,7 @@ import { Dialog } from '@/shared/Dialog';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
-import { deleteAlbum, fetchTags, revalidateCache } from '@/api';
+import { deleteAlbum, fetchTags, revalidateCache } from '@/api-client';
 import { useRouter } from 'next/navigation';
 import { Tooltip } from '@/shared/Tooltip';
 

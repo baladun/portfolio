@@ -7,7 +7,7 @@ import { BottomSheet } from '@/shared/BottomSheet';
 import { useEffect, useState } from 'react';
 import { PreviewItem, Previews } from '@/components/Previews';
 import { mapToPreviews } from './utils';
-import { fetchTags, revalidateCache, PhotoOrderUpdateDto, updatePhotosOrder } from '@/api';
+import { fetchTags, revalidateCache, PhotoOrderUpdateDto, updatePhotosOrder } from '@/api-client';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 import { useRouter } from 'next/navigation';

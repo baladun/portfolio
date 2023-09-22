@@ -1,5 +1,5 @@
 import { Photo } from '@prisma/client';
-import { ImageDto } from '@/api';
+import { ImageDto } from './image-dto';
 import { Expand } from '@/types';
 
 export type PhotoDto = Expand<

@@ -1,8 +1,8 @@
 import { commonErrorRes, incorrectPayloadErrorRes, okRes, unauthorizedRes } from '@/app/api/responses';
 import { db } from '@/db';
 import { Prisma } from '@prisma/client';
-import { ShowcaseAddDto, ShowcaseUpdateDto, toAlbumDto } from '@/api';
-import { showcaseAddDtoValidationSchema, showcaseOrderUpdateDtoValidationSchema } from '@/api/utils';
+import { ShowcaseAddDto, ShowcaseUpdateDto, toAlbumDto } from '@/api-client';
+import { showcaseAddDtoValidationSchema, showcaseOrderUpdateDtoValidationSchema } from '@/api-client';
 import { NextRequest } from 'next/server';
 import { isAuthorized } from '../../is-authorized';
 

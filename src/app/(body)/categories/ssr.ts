@@ -1,4 +1,4 @@
-import { CategoryDto, toCategoryDto } from '@/api';
+import { CategoryDto, toCategoryDto } from '@/api-client';
 import { Prisma } from '@prisma/client';
 import { db } from '@/db';
 import { SsrErrors, SsrResponse } from '@/types';
