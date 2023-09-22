@@ -21,6 +21,7 @@ const textColorByColor: { [K in Required<TypographyProps>['color']]: string } = 
   black: 'text-black',
   snow: 'text-snow',
   brown: 'text-brown',
+  orange: 'text-orange',
   inherit: 'text-inherit',
   current: 'text-current',
 };

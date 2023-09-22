@@ -3,7 +3,7 @@ import { HTMLAttributes, PropsWithChildren } from 'react';
 export interface TypographySelfConfig {
   kind?: 'primary' | 'secondary';
   weight?: 'thin' | 'extralight' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
-  color?: 'black' | 'snow' | 'brown' | 'inherit' | 'current';
+  color?: 'black' | 'snow' | 'brown' | 'orange' | 'inherit' | 'current';
   uppercase?: boolean;
   align?: 'start' | 'center' | 'end';
 }

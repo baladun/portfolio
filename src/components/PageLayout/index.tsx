@@ -9,6 +9,7 @@ import { ScrollDirectionSwitch } from '@/components/ScrollDirectionSwitch';
 import { ScrollDirectionContext } from '@/context/ScrollDirectionContext';
 import classnames from 'classnames';
 import { useRouter } from 'next/navigation';
+import { CacheWarning } from '@/components/CacheWarning';
 
 export function PageLayout({ heading, backHref, children, className }: PageLayoutProps) {
   const router = useRouter();
@@ -24,6 +25,8 @@ export function PageLayout({ heading, backHref, children, className }: PageLayou
   return (
     <div className={classnames('h-full bg-black py-[0.875rem] sm:py-10 xl:py-20', className)}>
       <div className="positioner flex h-full flex-col">
+        <CacheWarning />
+
         <div className="relative mb-[0.875rem] flex sm:mb-6 xl:mb-10">
           {backHref && (
             <Button
