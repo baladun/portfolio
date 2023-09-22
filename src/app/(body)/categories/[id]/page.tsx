@@ -1,7 +1,7 @@
 import { PageLayout } from '@/components/PageLayout';
 import { Typography } from '@/shared/Typography';
 import { PathWithId } from '@/api';
-import { PageRouteProps, RouteContext, ssrResponseHasError } from '@/types';
+import { PageRouteProps, RouteContext, SsrErrors, ssrResponseHasError } from '@/types';
 import { Cover } from '@/components/Cover';
 import { notFound } from 'next/navigation';
 import { AlbumAdd } from '@/components/AlbumAdd';
@@ -43,7 +43,7 @@ export default async function Page(context: RouteContext<PathWithId>) {
   try {
     params = await withNumberIdValidationSchema.validate(context.params);
   } catch (e) {
-    return notFound();
+    throw new Error();
   }
 
   const categoryRes = await getSsrCategory(params.id);
@@ -51,6 +51,10 @@ export default async function Page(context: RouteContext<PathWithId>) {
   const categoriesRes = await getSsrCategories();
 
   if (ssrResponseHasError(categoryRes) || ssrResponseHasError(albumsRes) || ssrResponseHasError(categoriesRes)) {
+    if (categoryRes === SsrErrors.Internal || albumsRes === SsrErrors.Internal || categoriesRes === SsrErrors.Internal) {
+      throw new Error();
+    }
+
     return notFound();
   }
 

@@ -1,4 +1,4 @@
-import { RouteContext, ssrResponseHasError } from '@/types';
+import { RouteContext, SsrErrors, ssrResponseHasError } from '@/types';
 import { PathWithId } from '@/api';
 import { notFound } from 'next/navigation';
 import { PhotoStatic } from '@/components/PhotoStatic';
@@ -12,12 +12,16 @@ export default async function Page(context: RouteContext<PathWithId>) {
   try {
     params = await withNumberIdValidationSchema.validate(context.params);
   } catch (e) {
-    return notFound();
+    throw new Error();
   }
 
   const photoRes = await getSsrPhoto(params.id);
 
   if (ssrResponseHasError(photoRes)) {
+    if (photoRes === SsrErrors.Internal) {
+      throw new Error();
+    }
+
     return notFound();
   }
 

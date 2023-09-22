@@ -1,4 +1,4 @@
 export interface ErrorRouteProps {
-  error: Error;
+  error: Error & { digest?: string };
   reset: () => void;
 }

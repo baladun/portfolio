@@ -2,7 +2,6 @@ import { cachedPhotos } from '@/utils/cached-photos';
 import { Carousel } from '@/components/Carousel';
 import { RouteContext } from '@/types';
 import { PathWithId } from '@/api';
-import { notFound } from 'next/navigation';
 import { InferType } from 'yup';
 import { withNumberIdValidationSchema } from '@/api/utils';
 
@@ -12,7 +11,7 @@ export default async function Page(context: RouteContext<PathWithId>) {
   try {
     params = await withNumberIdValidationSchema.validate(context.params);
   } catch (e) {
-    return notFound();
+    throw new Error();
   }
 
   return (

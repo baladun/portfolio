@@ -4,7 +4,7 @@ import { Cover } from '@/components/Cover';
 import { AlbumEdit } from '@/components/AlbumEdit';
 import { AlbumDelete } from '@/components/AlbumDelete';
 import { Editable } from '@/components/Editable';
-import { ssrResponseHasError } from '@/types';
+import { SsrErrors, ssrResponseHasError } from '@/types';
 import { notFound } from 'next/navigation';
 import { getSsrAlbums } from './ssr';
 import { getSsrCategories } from '../categories/ssr';
@@ -17,6 +17,10 @@ export default async function Page() {
   const categoriesRes = await getSsrCategories();
 
   if (ssrResponseHasError(albumsRes) || ssrResponseHasError(categoriesRes)) {
+    if (albumsRes === SsrErrors.Internal || categoriesRes === SsrErrors.Internal) {
+      throw new Error();
+    }
+
     return notFound();
   }
 

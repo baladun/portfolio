@@ -8,7 +8,7 @@ import { CategoryEdit } from '@/components/CategoryEdit';
 import { Editable } from '@/components/Editable';
 import { getSsrCategories } from './ssr';
 import { notFound } from 'next/navigation';
-import { ssrResponseHasError } from '@/types';
+import { SsrErrors, ssrResponseHasError } from '@/types';
 
 const { Heading, Text } = Typography;
 
@@ -17,6 +17,10 @@ export default async function Page() {
   const categoriesRes = await getSsrCategories();
 
   if (ssrResponseHasError(categoriesRes)) {
+    if (categoriesRes === SsrErrors.Internal) {
+      throw new Error();
+    }
+
     return notFound();
   }
 
