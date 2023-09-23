@@ -65,3 +65,13 @@ model Image {
 
   @@map("image")
 }
+
+model Visitor {
+  id        String   @id
+  timezone  String   @db.VarChar()
+  count     Int      @default(1) @db.SmallInt
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()
+
+  @@map("visitor")
+}

@@ -1,4 +1,5 @@
 export { revalidateCache } from './revalidate';
+export { upsertVisitor } from './visitor';
 export { uploadImage, getImage, deleteImage } from './image';
 export { getCategories, getCategory, createCategory, updateCategories, deleteCategory } from './category';
 export {

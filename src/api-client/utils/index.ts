@@ -18,5 +18,6 @@ export {
   showcaseAddDtoValidationSchema,
   showcaseOrderUpdateDtoValidationSchema,
   revalidateDtoValidationSchema,
+  upsertVisitorDtoValidationSchema,
 } from './validation-schemas';
 export { authorizeReq } from './authorize-req';

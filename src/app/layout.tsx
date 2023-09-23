@@ -4,6 +4,7 @@ import { madreRoseFont, montserratFont } from './fonts';
 import { LayoutRouteProps } from '@/types';
 import { Providers } from './Providers';
 import { Toastr } from '@/shared/Toastr';
+import { Visitor } from '@/components/Visitor';
 
 export const metadata = {
   title: 'Maxim Fadeev Photographer',
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: LayoutRouteProps) {
       <body className={classNames}>
         <Providers>{children}</Providers>
         <Toastr />
+        <Visitor />
       </body>
     </html>
   );

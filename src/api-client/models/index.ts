@@ -1,6 +1,8 @@
 export { Exception } from './exception';
 
 export type { RevalidateDto } from './revalidate-dto';
+export type { VisitorDto } from './visitor-dto';
+export type { VisitorUpsertDto } from './visitor-upsert-dto';
 
 export type { ImageDto } from './image-dto';
 export type { CategoryDto } from './category-dto';

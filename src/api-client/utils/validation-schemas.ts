@@ -93,3 +93,8 @@ export const revalidateDtoValidationSchema = object({
   paths: array(string().required()).optional(),
   tags: array(string().required()).optional(),
 });
+
+export const upsertVisitorDtoValidationSchema = object({
+  id: string().required(),
+  timezone: string().required(),
+});
