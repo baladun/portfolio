@@ -7,8 +7,9 @@ import { Dialog } from '@/shared/Dialog';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
-import { deletePhoto, fetchTags, revalidateCache } from '@/api-client';
+import { deletePhoto, revalidateCache } from '@/api-client';
 import { useRouter } from 'next/navigation';
+import { InternalPath } from '@/types';
 
 export function PhotoDelete({ photo }: PhotoDeleteProps) {
   const router = useRouter();
@@ -20,6 +21,7 @@ export function PhotoDelete({ photo }: PhotoDeleteProps) {
 
     try {
       await deletePhoto(photo.id);
+      await revalidateCache({ paths: [`/albums/${photo.albumId}` as InternalPath] });
       router.refresh();
       toast.success(toastMsg.SUCCESS);
       setOpen(false);

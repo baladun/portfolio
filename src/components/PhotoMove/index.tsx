@@ -11,6 +11,7 @@ import { fetchTags, revalidateCache, PhotoOrderUpdateDto, updatePhotosOrder } fr
 import toast from 'react-hot-toast';
 import { toastMsg } from '@/configs';
 import { useRouter } from 'next/navigation';
+import { InternalPath } from '@/types';
 
 export function PhotoMove({ photos, ...rest }: PhotoMoveProps) {
   const router = useRouter();
@@ -38,6 +39,7 @@ export function PhotoMove({ photos, ...rest }: PhotoMoveProps) {
 
       try {
         await updatePhotosOrder(reordered);
+        await revalidateCache({ paths: [`/albums/${photos[0].albumId}` as InternalPath] });
         router.refresh();
         toast.success(toastMsg.SUCCESS);
         setOpen(false);

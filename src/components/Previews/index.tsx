@@ -1,4 +1,4 @@
-import { Children, memo, useState } from 'react';
+import { Children, memo, useEffect, useRef, useState } from 'react';
 import { PreviewItem, PreviewsProps } from './types';
 import {
   closestCenter,
@@ -15,8 +15,11 @@ import { arrayMove, horizontalListSortingStrategy, SortableContext, sortableKeyb
 import { Draggable } from './Draggable';
 import { Item } from './Item';
 import classnames from 'classnames';
+import { usePrevious } from '@/hooks';
 
 const Previews = memo(function Previews({ items, selected, deletable, onSelect, onReorder, onDelete, className, children }: PreviewsProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const prevItems = usePrevious(items);
   const [dragging, setDragging] = useState<PreviewItem>();
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -28,6 +31,12 @@ const Previews = memo(function Previews({ items, selected, deletable, onSelect, 
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  useEffect(() => {
+    if (prevItems) {
+      containerRef.current?.scrollTo({ left: 10000, behavior: 'smooth' });
+    }
+  }, [items]);
 
   const onDragStart = (event: DragStartEvent) => {
     const { active } = event;
@@ -51,6 +60,7 @@ const Previews = memo(function Previews({ items, selected, deletable, onSelect, 
 
   return (
     <div
+      ref={containerRef}
       className={classnames(
         'max-w-2xl overflow-x-auto whitespace-nowrap leading-[0] [&::-webkit-scrollbar]:hidden [&>*:not(:last-child)]:mr-1.5',
         className,
