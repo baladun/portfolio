@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthContext } from '@/context/AuthContext';
+import { useAuthContext } from '@/context';
 import { EditableProps } from './types';
 import { useMatchMedia } from '@/hooks';
 import { tailwindConfig } from '@/configs';

@@ -27,8 +27,8 @@ export function Item({ data: { src, name, width, height }, deletable, onDelete, 
         <Image
           src={src}
           alt={name}
-          width={width}
-          height={height}
+          width={128}
+          height={128}
           className={classnames('pointer-events-none aspect-square select-none object-cover')}
         />
       ) : (

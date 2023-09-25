@@ -6,7 +6,7 @@ import { Button } from '@/shared/Button';
 import { IconSvg } from '@/shared/IconSvg';
 import { cloneElement, useContext } from 'react';
 import { ScrollDirectionSwitch } from '@/components/ScrollDirectionSwitch';
-import { ScrollDirectionContext } from '@/context/ScrollDirectionContext';
+import { ScrollDirectionContext } from '@/context';
 import classnames from 'classnames';
 import { useRouter } from 'next/navigation';
 import { CacheWarning } from '@/components/CacheWarning';

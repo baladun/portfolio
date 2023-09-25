@@ -31,7 +31,7 @@ export function RawPreviews({ attachments, selectedAttachment, onSelect, onReord
       items={items}
       selected={selected}
       deletable
-      className="py-3"
+      className="py-3 max-w-2xl"
       onSelect={handleSelect}
       onReorder={handleReorder}
       onDelete={onDelete}

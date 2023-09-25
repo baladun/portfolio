@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 import { Logo } from '@/components/Logo';
 import { Button } from '@/shared/Button';
 import { IconPark } from '@/shared/IconPark';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import classnames from 'classnames';
 import { MobileProps } from './types';
 import { CSSTransition } from 'react-transition-group';
@@ -13,6 +13,10 @@ export function Mobile({ menu, socials }: MobileProps) {
   const [isOpened, setIsOpened] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   const dialogRef = useRef(null);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpened ? 'hidden' : '';
+  }, [isOpened]);
 
   return (
     <>
@@ -54,7 +58,7 @@ export function Mobile({ menu, socials }: MobileProps) {
         <div
           ref={dialogRef}
           style={{ paddingTop: `${headerRef.current?.clientHeight || 0}px` }}
-          className={`absolute left-0 top-0 z-[1] h-screen w-screen bg-black px-6`}
+          className={`absolute left-0 top-0 z-[1] h-[100dvh] w-screen bg-black px-6`}
         >
           <div className="flex h-full w-max flex-col justify-between py-12 invert">
             <div onClick={() => setIsOpened(false)}>{menu}</div>

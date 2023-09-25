@@ -19,7 +19,7 @@ export function PhotoStatic({ photo }: PhotoStaticProps) {
         fill
       />
 
-      <div className="relative flex aspect-[3/2] max-h-[80vh] items-center justify-center lg:w-11/12">
+      <div className="relative flex aspect-[2/2] max-h-[80vh] items-center justify-center lg:w-11/12">
         <Image
           src={getPublicObjectUrl(photo.image.id)}
           width={photo.image.width}

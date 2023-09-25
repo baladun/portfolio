@@ -9,9 +9,12 @@ import { Button } from '@/shared/Button';
 import classnames from 'classnames';
 import { useSwipeable } from 'react-swipeable';
 import { useKeyPress } from '@/hooks';
+import { useContext, useEffect } from 'react';
+import { AlbumPhotosContext } from '@/context';
 
-export function Carousel({ photoId, cachedPhotos }: CarouselProps) {
+export function Carousel({ photoId }: CarouselProps) {
   const router = useRouter();
+  const { photos: cachedPhotos } = useContext(AlbumPhotosContext);
   const curIdx = cachedPhotos.findIndex(cachedPhoto => cachedPhoto.id === photoId) as number;
   const lastIdx = cachedPhotos.length - 1;
   const prevPhotoId = curIdx ? cachedPhotos[curIdx - 1].id : null;
@@ -23,38 +26,43 @@ export function Carousel({ photoId, cachedPhotos }: CarouselProps) {
   useKeyPress('ArrowLeft', () => back());
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => back(),
-    onSwipedRight: () => forward(),
+    onSwipedLeft: () => forward(),
+    onSwipedRight: () => back(),
     trackMouse: true,
   });
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
 
   if (!photo) {
     return notFound();
   }
-
   const forward = () => nextPhotoId && changePhotoId(nextPhotoId);
   const back = () => prevPhotoId && changePhotoId(prevPhotoId);
 
   const changePhotoId = (id: number) => {
-    router.push(`/photos/${id}`);
+    router.replace(`/photos/${id}`);
   };
 
   const closeModal = () => {
-    // hack because Next does not close modal
-    window.location.href = `/albums/${photo.albumId}`;
+    router.back();
   };
 
   return (
-    <div className="fixed left-0 top-0 z-10 flex h-screen w-screen items-center justify-center bg-black backdrop-blur-xl">
+    <div className="fixed left-0 top-0 z-10 flex h-[100dvh] w-screen items-center justify-center bg-black backdrop-blur-xl">
       {/* Main */}
       <div
-        className="relative flex aspect-[3/2] max-h-[80vh] items-center justify-center lg:w-11/12"
+        className="relative flex aspect-[1.6/2] max-h-[80vh] items-center justify-center lg:w-11/12"
         {...handlers}
       >
         <Image
           src={getPublicObjectUrl(photo.image.id)}
-          width={photo.image.width}
-          height={photo.image.height}
+          width={photo.image.width > photo.image.height ? 1200 : 800}
+          height={photo.image.height > photo.image.width ? 1200 : 800}
           priority
           alt="Main image"
           className="max-h-full rounded-xl object-contain"
@@ -91,7 +99,7 @@ export function Carousel({ photoId, cachedPhotos }: CarouselProps) {
 
       {/* Preview */}
       <div className="fixed bottom-0 w-full overflow-hidden">
-        <div className="mx-auto mb-6 mt-6 flex aspect-[3/2] h-14 justify-center">
+        <div className="mx-auto mb-6 mt-6 flex aspect-[3/2] h-14">
           {cachedPhotos.map(({ id, image: { id: imageId } }) => (
             <span
               onClick={() => changePhotoId(id)}
@@ -101,8 +109,8 @@ export function Carousel({ photoId, cachedPhotos }: CarouselProps) {
                 id === photoId ? 'z-20 rounded-md shadow shadow-black/50' : 'z-10',
               )}
               style={{
-                translate: `${Math.max((curIdx - 1) * -100, 15 * -100)}% 0`,
-                scale: id === photoId ? 1.25 : 1,
+                translate: `${Math.max((curIdx + 1 - 1) * -100, cachedPhotos.length * -100)}% 0`,
+                scale: id === photoId ? 1.5 : 1,
               }}
             >
               <Image

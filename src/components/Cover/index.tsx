@@ -21,8 +21,8 @@ export function Cover({ image, subtitle, href, actions, className, ...rest }: Co
         {image ? (
           <Image
             src={getPublicObjectUrl(image.id)}
-            width={image.width}
-            height={image.height}
+            width={600}
+            height={600}
             blurDataURL={image.blurDataUrl}
             placeholder="blur"
             alt="image"

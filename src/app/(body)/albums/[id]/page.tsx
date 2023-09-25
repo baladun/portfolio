@@ -7,13 +7,13 @@ import { notFound } from 'next/navigation';
 import { PhotoAdd } from '@/components/PhotoAdd';
 import { PhotoMove } from '@/components/PhotoMove';
 import { PhotoDelete } from '@/components/PhotoDelete';
-import { cachedPhotos } from '@/utils/cached-photos';
 import { Editable } from '@/components/Editable';
 import { Metadata } from 'next';
 import { InferType } from 'yup';
 import { withNumberIdValidationSchema } from '@/api-client';
 import { getSsrAlbumPhotos, getSsrAlbumRes } from './ssr';
-import { getSsrShowcase } from '@/app/(body)/ssr';
+import { getSsrShowcase } from '../../ssr';
+import { AlbumPhotosHelper } from '@/components/AlbumPhotosHelper';
 
 const { Heading } = Typography;
 
@@ -67,8 +67,6 @@ export default async function Page(context: RouteContext<PathWithId>) {
     return notFound();
   }
 
-  cachedPhotos.set(photosRes);
-
   return (
     <PageLayout
       backHref="/albums"
@@ -104,6 +102,8 @@ export default async function Page(context: RouteContext<PathWithId>) {
           }
         />
       ))}
+
+      <AlbumPhotosHelper photos={photosRes} />
 
       <Editable>
         <PhotoAdd albumId={params.id} />

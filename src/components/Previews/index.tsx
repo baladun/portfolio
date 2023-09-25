@@ -33,7 +33,7 @@ const Previews = memo(function Previews({ items, selected, deletable, onSelect, 
   );
 
   useEffect(() => {
-    if (prevItems) {
+    if (prevItems && items.length > prevItems.length) {
       containerRef.current?.scrollTo({ left: 10000, behavior: 'smooth' });
     }
   }, [items]);
@@ -62,7 +62,7 @@ const Previews = memo(function Previews({ items, selected, deletable, onSelect, 
     <div
       ref={containerRef}
       className={classnames(
-        'max-w-2xl overflow-x-auto whitespace-nowrap leading-[0] [&::-webkit-scrollbar]:hidden [&>*:not(:last-child)]:mr-1.5',
+        'overflow-x-auto whitespace-nowrap leading-[0] [&::-webkit-scrollbar]:hidden [&>*:not(:last-child)]:mr-1.5',
         className,
       )}
     >

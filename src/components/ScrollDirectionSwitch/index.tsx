@@ -1,7 +1,7 @@
 'use client';
 
 import { useContext, useEffect, useState } from 'react';
-import { ScrollDirectionContext } from '@/context/ScrollDirectionContext';
+import { ScrollDirectionContext } from '@/context';
 import { Button } from '@/shared/Button';
 import { IconPark } from '@/shared/IconPark';
 import { ScrollDirectionSwitchProps } from './types';
