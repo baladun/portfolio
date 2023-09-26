@@ -92,6 +92,7 @@ export default async function Page(context: RouteContext<PathWithId>) {
         <Cover
           key={el.id}
           image={el.image}
+          imageCssClass="!cursor-zoom-in"
           href={{
             pathname: `/photos/${el.id}`,
           }}

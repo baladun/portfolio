@@ -7,4 +7,5 @@ export interface CoverProps extends HTMLAttributes<HTMLDivElement> {
   image?: ImageDto | null;
   href?: InternalHref;
   actions?: ReactNode;
+  imageCssClass?: string;
 }

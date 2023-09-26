@@ -6,7 +6,7 @@ import { Frame } from '@/components/Frame';
 import { getPublicObjectUrl } from '@/utils';
 import { ImagePlaceholder } from '@/shared/ImagePlaceholder';
 
-export function Cover({ image, subtitle, href, actions, className, ...rest }: CoverProps) {
+export function Cover({ image, subtitle, href, actions, className, imageCssClass, ...rest }: CoverProps) {
   return (
     <div
       {...rest}
@@ -26,7 +26,7 @@ export function Cover({ image, subtitle, href, actions, className, ...rest }: Co
             blurDataURL={image.blurDataUrl}
             placeholder="blur"
             alt="image"
-            className="aspect-square cursor-pointer object-cover"
+            className={classnames('aspect-square cursor-pointer object-cover', imageCssClass)}
           />
         ) : (
           <ImagePlaceholder />

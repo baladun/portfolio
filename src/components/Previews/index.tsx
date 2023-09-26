@@ -85,7 +85,7 @@ const Previews = memo(function Previews({ items, selected, deletable, onSelect, 
                 data={itm}
                 deletable={deletable && itm.id !== dragging?.id}
                 className={classnames(
-                  selected?.id === itm.id ? 'outline outline-2 -outline-offset-2 outline-orange' : '',
+                  selected?.id === itm.id ? 'outline outline-4 -outline-offset-4 outline-orange' : '',
                   dragging?.id === itm.id ? 'opacity-20' : '',
                 )}
                 title={itm.name}
