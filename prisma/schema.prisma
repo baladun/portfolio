@@ -69,6 +69,8 @@ model Image {
 model Visitor {
   id        String   @id
   timezone  String   @db.VarChar()
+  platform  String?  @db.VarChar()
+  vendor    String?  @db.VarChar()
   count     Int      @default(1) @db.SmallInt
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz()
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz()

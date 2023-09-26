@@ -97,4 +97,6 @@ export const revalidateDtoValidationSchema = object({
 export const upsertVisitorDtoValidationSchema = object({
   id: string().required(),
   timezone: string().required(),
+  platform: string().required().nullable(),
+  vendor: string().required().nullable(),
 });

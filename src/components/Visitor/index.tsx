@@ -11,13 +11,15 @@ export function Visitor() {
 
       const {
         visitorId,
-        components: { timezone },
+        components: { timezone, platform, vendor },
       } = await fp.get();
 
       try {
         await upsertVisitor({
           id: visitorId,
           timezone: (timezone as any).value,
+          platform: (platform as any).value || null,
+          vendor: (vendor as any).value || null,
         });
       } catch (e) {}
     };

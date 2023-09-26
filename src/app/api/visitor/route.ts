@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     return incorrectPayloadErrorRes();
   }
 
-  const { id, timezone } = body;
+  const { id, timezone, platform, vendor } = body;
 
   try {
     const visitor = await db.visitor.upsert({
@@ -28,6 +28,8 @@ export async function POST(req: NextRequest) {
       create: {
         id,
         timezone,
+        platform,
+        vendor,
       },
     });
 
