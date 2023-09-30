@@ -50,7 +50,7 @@ export default async function Page() {
               size="sm"
               className="block text-center"
             >
-              {el.name}
+              {categoriesRes.find(cat => cat.id === el.categoryId)?.name || ''} / {el.name}
             </Text>
           }
           actions={
