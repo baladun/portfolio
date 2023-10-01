@@ -45,7 +45,21 @@ export function Carousel({ photoId }: CarouselProps) {
   const back = () => prevPhotoId && changePhotoId(prevPhotoId);
 
   const changePhotoId = (id: number) => {
+    prefetch();
     router.replace(`/photos/${id}`);
+  };
+
+  const prefetch = () => {
+    const beforePhotoId = cachedPhotos[curIdx - 1] ? cachedPhotos[curIdx - 1].id : null;
+    const afterPhotoId = cachedPhotos[curIdx + 1] ? cachedPhotos[curIdx + 1].id : null;
+
+    if (beforePhotoId) {
+      router.prefetch(`/photos/${beforePhotoId}`);
+    }
+
+    if (afterPhotoId) {
+      router.prefetch(`/photos/${afterPhotoId}`);
+    }
   };
 
   const closeModal = () => {
