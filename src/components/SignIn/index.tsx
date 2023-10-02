@@ -10,7 +10,6 @@ import { SignInProps } from './types';
 import { firebaseClientApp } from '@/firebase-client';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
-import { useMatchMedia } from '@/hooks';
 import { tailwindConfig } from '@/configs';
 
 const auth = getAuth(firebaseClientApp);
@@ -29,10 +28,9 @@ export function SignIn({ className }: SignInProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const viewportGreaterThanLg = useMatchMedia(`(min-width: ${tailwindConfig.screens.lg}px)`);
 
   useEffect(() => {
-    if (!viewportGreaterThanLg) {
+    if (document.documentElement.clientWidth < tailwindConfig.screens.lg) {
       router.replace('/');
     }
   }, []);

@@ -67,7 +67,7 @@ export default async function Page(context: RouteContext<PathWithId>) {
           kind="secondary"
           color="snow"
         >
-          categorIes / <wbr /> {categoryRes.name}
+          categorIes / <wbr /> <span className="whitespace-normal">{categoryRes.name}</span>
           {albumsRes?.length > 1 ? (
             <Editable>
               <AlbumMove

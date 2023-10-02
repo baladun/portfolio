@@ -4,7 +4,7 @@ import { getPublicObjectUrl } from '@/utils';
 import { ImagePlaceholder } from '@/shared/ImagePlaceholder';
 import classnames from 'classnames';
 
-const selectedCssClassNames = 'outline outline-2 -outline-offset-2 outline-orange';
+const selectedCssClassNames = 'outline outline-4 -outline-offset-4 outline-orange';
 
 export function AlbumPreview({ image, subtitle, selected, className, ...rest }: AlbumPreviewProps) {
   return (
